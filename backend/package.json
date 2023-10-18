@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsx --watch ./src",
+    "start": "tsx --watch ./src/app.ts",
     "migrate:make": "knex migrate:make --migrations-directory ./src/database/migrations -x ts",
     "migrate:up": "knex migrate:up --knexfile ./src/database/knexfile.ts",
     "migrate:latest": "knex migrate:latest --knexfile ./src/database/knexfile.ts",
@@ -16,6 +16,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/express-session": "^1.17.9",
+    "camelcase-keys": "^9.1.2",
+    "connect-session-knex": "^3.0.1",
+    "decamelize-keys": "^2.0.1",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
