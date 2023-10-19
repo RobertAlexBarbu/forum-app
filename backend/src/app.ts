@@ -1,10 +1,7 @@
-import dotenv from 'dotenv';
 import express from "express";
-import {sessionMiddleware} from "./sessionMiddleware";
-import {database} from "./database/database";
+import {sessionMiddleware} from "./session/sessionMiddleware";
 import {DatabaseRepository} from "./database/DatabaseRepository";
 
-dotenv.config();
 const app = express();
 
 const UsersRepository = new DatabaseRepository('users');
@@ -17,7 +14,7 @@ app.use(async (req, res, next) => {
     //     passwordHash: 'TestHash3',
     //     salt: 'TestSalt3'
     // });
-    const user = await UsersRepository.getByCol('username', 'Test5');
+    const user = await UsersRepository.getByCol('username', 'Test3');
         console.log(user);
     } catch(err) {
         console.log(err);

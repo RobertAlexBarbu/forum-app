@@ -1,16 +1,4 @@
 import {knex} from "knex";
+import {databaseConfig} from "./databaseConfig";
 
-export const database = knex({
-    client: "postgresql",
-    connection: {
-        database: "forum",
-        user: "postgres",
-    },
-    pool: {
-        min: 2,
-        max: 10
-    },
-    migrations: {
-        tableName: "knex_migrations"
-    }
-});
+export const database = knex(databaseConfig.development);
