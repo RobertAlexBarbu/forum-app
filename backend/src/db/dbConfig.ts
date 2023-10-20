@@ -1,4 +1,4 @@
-export const databaseConfig = {
+export const dbConfig = {
     development: {
         client: "postgresql",
         connection: {

@@ -1,11 +1,11 @@
 import connectSessionKnex from "connect-session-knex";
 import expressSession from "express-session";
-import {database} from "../database/database";
+import {db} from "../../db/db";
+
 
 const SessionStore = connectSessionKnex(expressSession);
 
 export const sessionStore = new SessionStore({
-    // @ts-ignore
-    knex: database,
+    knex: db,
     clearInterval: 50
 })
