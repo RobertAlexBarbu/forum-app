@@ -13,8 +13,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "ajv": "^8.12.0",
     "camelcase-keys": "^6.2.2",
     "connect-session-knex": "^3.0.1",
+    "cors": "^2.8.5",
     "decamelcase-keys": "^1.1.1",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
@@ -25,10 +27,12 @@
     "pg": "^8.11.3"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.15",
     "@types/express": "^4.17.19",
     "@types/express-session": "^1.17.9",
     "@types/node": "^20.8.6",
     "@types/passport": "^1.0.14",
+    "@types/passport-local": "^1.0.37",
     "dbmate": "^2.6.0",
     "tsx": "^3.13.0",
     "type-fest": "^4.5.0",

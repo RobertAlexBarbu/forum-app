@@ -1,0 +1,19 @@
+<p>navbar works!</p>
+<ng-container *ngIf="authState$ | async as authState">
+  <div>{{authState | json}}</div>
+  <button routerLink="/">home</button>
+  <ng-container *ngIf="!(authState | isAuth)">
+    <button routerLink="/login">login</button>
+    <button routerLink="/signup">signup</button>
+  </ng-container>
+  <ng-container *ngIf="authState | isAuth">
+    <button routerLink="/user">user</button>
+    <button routerLink="/admin" *ngIf="authState | isModerator">moderator</button>
+    <button routerLink="/admin" *ngIf="authState | isAdmin">admin</button>
+    <button (click)="logout()">logout</button>
+  </ng-container>
+
+</ng-container>
+
+
+

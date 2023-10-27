@@ -1,0 +1,7 @@
+<p>login-page works!</p>
+<form [formGroup]="loginForm" (ngSubmit)="submitForm()">
+    <input type="text" pInputText formControlName="username">
+    <input type="password" pInputText formControlName="password">
+    <button type="submit">Submit</button>
+  <div>{{error$ | async}}</div>
+</form>

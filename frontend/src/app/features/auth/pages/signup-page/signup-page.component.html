@@ -1,0 +1,8 @@
+<p>signup-page works!</p>
+<form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <input type="text" pInputText formControlName="username">
+    <input type="email" pInputText formControlName="email">
+    <input type="password" pInputText formControlName="password">
+    <button type="submit">Submit</button>
+  <div>{{error$ | async}}</div>
+</form>
