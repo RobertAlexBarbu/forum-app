@@ -30,10 +30,10 @@
       </button>
     </ng-container>
     <ng-container *ngIf="!(authState | isAuth)">
-      <button routerLinkActive="active-link" pButton class="p-button-sm p-button-text" routerLink="/login"
+      <button routerLinkActive="active-link" pButton class="p-button-sm p-button-text login" routerLink="/login"
               (click)="closeMenu()">Log In
       </button>
-      <button routerLinkActive="active-link" pButton class="p-button-sm p-button-text " routerLink="/signup"
+      <button routerLinkActive="active-link" pButton class="p-button-sm p-button-text signup" routerLink="/signup"
               (click)="closeMenu()">Sign Up
       </button>
     </ng-container>

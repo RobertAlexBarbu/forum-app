@@ -26,11 +26,11 @@
   display: flex;
 }
 .first {
-  width: 70%;
+  width: 85%;
   padding-top: 3rem;
 }
 .second {
-  width: 30%;
+  width: 15%;
   display: flex;
   padding-top: 0.8rem;
   padding-right: 1rem;

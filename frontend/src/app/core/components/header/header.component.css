@@ -6,12 +6,17 @@
   padding: 0.8rem 1rem;
   border-bottom: 1px solid var(--border);
   align-items: center;
+  width: 100%;
+}
+.desktop {
+  display: none;
 }
 .buttons {
   display: none;
 }
 .name {
   font-weight: 500;
+  margin-right: 1rem;
 }
 @media (min-width: 768px) {
   .buttons {
@@ -20,5 +25,12 @@
   }
   .hamburger {
     display: none;
+  }
+  .header {
+    justify-content: start;
+  }
+  .desktop {
+    display: block;
+    width: 100%;
   }
 }
