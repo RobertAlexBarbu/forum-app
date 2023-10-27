@@ -1,0 +1,12 @@
+<div class="hamburger-menu">
+    <div class="menu-content">
+      <div class="first">
+        <app-navbar (navigate)="closeMenu()"></app-navbar>
+      </div>
+      <div class="second">
+        <button pButton class="p-button-sm p-button-text close-menu" icon="pi" (click)="closeMenu()">
+          <ng-icon name="jamClose" size="2.5rem"></ng-icon>
+        </button>
+      </div>
+    </div>
+</div>

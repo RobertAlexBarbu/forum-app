@@ -1,0 +1,40 @@
+.hamburger-menu {
+  display: none;
+  background-color: var(--base);
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  overflow-y: hidden;
+}
+.hamburger-menu.hamburger-menu-active {
+  animation: fadeIn 200ms ease-in-out;
+}
+.hamburger-menu-closed {
+  animation: fadeOut 200ms ease-in-out;
+}
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes fadeOut {
+  0% { opacity: 1 }
+  100% { opacity: 0;}
+}
+
+.menu-content {
+  display: flex;
+}
+.first {
+  width: 70%;
+  padding-top: 3rem;
+}
+.second {
+  width: 30%;
+  display: flex;
+  padding-top: 0.8rem;
+  padding-right: 1rem;
+}
+.close-menu {
+  margin-left: auto;
+}

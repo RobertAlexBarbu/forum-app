@@ -1,0 +1,24 @@
+.header {
+  font-size: 1.5rem;
+  background-color: var(--base);
+  display: flex;
+  justify-content: space-between;
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+}
+.buttons {
+  display: none;
+}
+.name {
+  font-weight: 500;
+}
+@media (min-width: 768px) {
+  .buttons {
+    display: flex;
+    column-gap: 5px;
+  }
+  .hamburger {
+    display: none;
+  }
+}

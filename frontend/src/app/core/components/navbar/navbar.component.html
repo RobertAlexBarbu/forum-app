@@ -1,19 +1,47 @@
-<p>navbar works!</p>
-<ng-container *ngIf="authState$ | async as authState">
-  <div>{{authState | json}}</div>
-  <button routerLink="/">home</button>
-  <ng-container *ngIf="!(authState | isAuth)">
-    <button routerLink="/login">login</button>
-    <button routerLink="/signup">signup</button>
-  </ng-container>
-  <ng-container *ngIf="authState | isAuth">
-    <button routerLink="/user">user</button>
-    <button routerLink="/admin" *ngIf="authState | isModerator">moderator</button>
-    <button routerLink="/admin" *ngIf="authState | isAdmin">admin</button>
-    <button (click)="logout()">logout</button>
-  </ng-container>
+<div class="navbar"  ontouchstart="">
+  <ng-container *ngIf="authState$ | async as authState">
 
-</ng-container>
+    <button [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active-link" pButton
+            class="p-button-sm p-button-text " routerLink="/" (click)="closeMenu()"><ng-icon name="jamHomeF"></ng-icon>Home
+    </button>
+    <button [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active-link" pButton
+            class="p-button-sm p-button-text " routerLink="/forums" (click)="closeMenu()"><ng-icon name="jamMessagesF"></ng-icon>Forums
+    </button>
+    <ng-container *ngIf="authState | isAuth">
+      <button routerLinkActive="active-link" pButton class="p-button-sm p-button-text " routerLink="/user"
+              (click)="closeMenu()">user
+      </button>
+      <button routerLinkActive="active-link" pButton class="p-button-sm p-button-text " routerLink="/admin"
+              *ngIf="authState | isModerator"
+              (click)="closeMenu()">moderator
+      </button>
+      <button routerLinkActive="active-link" pButton class="p-button-sm p-button-text " routerLink="/admin"
+              *ngIf="authState | isAdmin"
+              (click)="closeMenu()">admin
+      </button>
+
+    </ng-container>
+    <div class="separator"></div>
+    <ng-container *ngIf="authState | isAuth">
+
+      <button routerLinkActive="active-link" pButton class="p-button-sm p-button-text"
+              (click)="logout(); closeMenu()"
+      >Log Out
+      </button>
+    </ng-container>
+    <ng-container *ngIf="!(authState | isAuth)">
+      <button routerLinkActive="active-link" pButton class="p-button-sm p-button-text" routerLink="/login"
+              (click)="closeMenu()">Log In
+      </button>
+      <button routerLinkActive="active-link" pButton class="p-button-sm p-button-text " routerLink="/signup"
+              (click)="closeMenu()">Sign Up
+      </button>
+    </ng-container>
+
+
+
+  </ng-container>
+</div>
 
 
 
