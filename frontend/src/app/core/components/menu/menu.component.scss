@@ -6,6 +6,7 @@
   position: fixed;
   top: 0;
   overflow-y: hidden;
+  z-index: 999999;
 }
 .hamburger-menu.hamburger-menu-active {
   animation: fadeIn 200ms ease-in-out;

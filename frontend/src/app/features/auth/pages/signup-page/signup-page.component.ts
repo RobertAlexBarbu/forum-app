@@ -1,4 +1,8 @@
-import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {
   FormControl,
@@ -8,21 +12,21 @@ import {
   Validators
 } from "@angular/forms";
 import {InputTextModule} from "primeng/inputtext";
-import {HttpService} from "../../../../core/services/http/http.service";
-import {Router} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {Store} from "@ngrx/store";
 import {login, signup} from "../../../../core/store/auth/auth.actions";
-import {SessionDataModel} from "../../../../core/model/session-data.model";
 import {Subject} from "rxjs";
 import {AuthService} from "../../../../core/services/auth/auth.service";
 import {AuthStateModel} from "../../../../core/model/auth-state.model";
+import {ButtonModule} from "primeng/button";
+import {PasswordModule} from "primeng/password";
 
 @Component({
   selector: 'app-signup-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, InputTextModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, InputTextModule, ButtonModule, RouterLink, PasswordModule],
   templateUrl: './signup-page.component.html',
-  styleUrls: ['./signup-page.component.scss'],
+  styleUrls: ['./signup-page.component.scss', '../auth.shared.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SignupPageComponent {

@@ -1,15 +1,18 @@
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
 
-
+@import './app/shared/styles/variables';
 
 :root {
   --border: #E0E0E0;
   --base: #FEFEFE;
+  --error: #dc2626;
   --base-text: #212121;
+  --text-gray: #737373;
   --md-min-width: 768px;
   --lg-min-width: 1024;
   --box-shadow: rgba(149, 157, 165, 0.1) 0px 0px 16px;
+  --radius: 15px;
 }
 html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -19,19 +22,91 @@ html {
 }
 body {
   margin: 0;
+  font-weight: 500;
   width: 100%;
   color: var(--base-text);
-
-
 }
+
+/* BUTTON STYLES */
 button {
-  height: 2rem;
   font-weight: 600;
   font-size: 1rem !important;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
 }
-
+button.nav {
+  height: 2rem;
+}
 button:focus {
   box-shadow: none !important;
 }
+
+/* CARD STYLES */
+.card {
+  background-color: var(--base);
+  padding: 2rem;
+  border: 1px solid var(--border);
+  width: 100%;
+}
+@media (min-width: $desktop-min-width) {
+  .card {
+    border-radius: var(--radius);
+    width: auto;
+  }
+}
+
+/* LINK STYLES */
+.link {
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-decoration: underline;
+  cursor: pointer;
+  transition-duration: 200ms;
+}
+.link:active {
+  transform: scale(0.96);
+}
+
+/* SEPARATOR */
+.separator {
+  height: 1px;
+  background-color: var(--border);
+  margin: 1rem 0.5rem 1rem 0.5rem;
+}
+
+/* FORM STYLES START */
+input {
+  font-weight: 500;
+}
+
+.submit {
+  margin-top: 1.7rem;
+}
+form .input {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 4px;
+  margin-bottom: 0.7rem;
+}
+.error {
+  min-height: 1.1rem;
+  font-size: 0.9rem;
+  color: var(--error);
+  font-weight: 400;
+}
+.top-error {
+  min-height: 1.8rem;
+  font-size: 1rem;
+  color: var(--error);
+  font-weight: 500;
+  margin: 0.8rem 0;
+  width: 100%;
+}
+label {
+  font-weight: 600;
+}
+/* FORM STYLES END */
+
+
+

@@ -1,4 +1,8 @@
-import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {
   FormControl,
@@ -8,21 +12,20 @@ import {
   Validators
 } from "@angular/forms";
 import {InputTextModule} from "primeng/inputtext";
-import {HttpService} from "../../../../core/services/http/http.service";
 import {Store} from "@ngrx/store";
 import {login} from "../../../../core/store/auth/auth.actions";
-import {SessionDataModel} from "../../../../core/model/session-data.model";
-import {Router} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {AuthService} from "../../../../core/services/auth/auth.service";
-import {Observable, Subject} from "rxjs";
-import {AuthStateModel} from "../../../../core/model/auth-state.model";
+import {Subject} from "rxjs";
+import {ButtonModule} from "primeng/button";
+import {PasswordModule} from "primeng/password";
 
 @Component({
   selector: 'app-login-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, InputTextModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, InputTextModule, ReactiveFormsModule, ButtonModule, RouterLink, PasswordModule],
   templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.scss'],
+  styleUrls: ['./login-page.component.scss', '../auth.shared.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginPageComponent {

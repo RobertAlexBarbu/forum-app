@@ -1,8 +1,37 @@
-<p>signup-page works!</p>
-<form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-    <input type="text" pInputText formControlName="username">
-    <input type="email" pInputText formControlName="email">
-    <input type="password" pInputText formControlName="password">
-    <button type="submit">Submit</button>
-  <div>{{error$ | async}}</div>
-</form>
+<div class="main" ontouchstart="">
+  <div class="card">
+    <div class="content">
+      <h2>Sign up for Forumly</h2>
+      <div class="top-error"></div>
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <div class="input">
+          <label for="username">Username</label>
+          <input placeholder="Username" id="username" type="text" pInputText formControlName="username">
+          <div class="error"></div>
+        </div>
+        <div class="input">
+          <label for="email">Email</label>
+          <input placeholder="Email" id="email" type="email" pInputText formControlName="email">
+          <div class="error"></div>
+        </div>
+        <div class="input">
+          <label for="password">Password</label>
+          <input placeholder="Password" id="password" type="password" pInputText formControlName="password">
+          <div class="error"></div>
+        </div>
+        <div class="input">
+          <label for="confirm">Confirm Password</label>
+          <input placeholder="Confirm Password" id="confirm" type="password" pInputText formControlName="password">
+          <div class="error"></div>
+        </div>
+        <div class="submit">
+          <button pButton type="submit"><span>Sign up</span></button>
+        </div>
+      </form>
+      <div class="help">
+          <div class="question">Already have an account? </div>
+          <div class="link" routerLink="/login">Log in here</div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -2,20 +2,20 @@
   <ng-container *ngIf="authState$ | async as authState">
 
     <button [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active-link" pButton
-            class="p-button-sm p-button-text " routerLink="/" (click)="closeMenu()"><ng-icon name="jamHomeF"></ng-icon>Home
+            class="nav p-button-sm p-button-text " routerLink="/" (click)="closeMenu()"><ng-icon name="jamHomeF"></ng-icon>Home
     </button>
     <button [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active-link" pButton
-            class="p-button-sm p-button-text " routerLink="/forums" (click)="closeMenu()"><ng-icon name="jamMessagesF"></ng-icon>Forums
+            class="nav p-button-sm p-button-text " routerLink="/forums" (click)="closeMenu()"><ng-icon name="jamMessagesF"></ng-icon>Forums
     </button>
     <ng-container *ngIf="authState | isAuth">
-      <button routerLinkActive="active-link" pButton class="p-button-sm p-button-text " routerLink="/user"
+      <button routerLinkActive="active-link" pButton class="nav p-button-sm p-button-text " routerLink="/user"
               (click)="closeMenu()">user
       </button>
-      <button routerLinkActive="active-link" pButton class="p-button-sm p-button-text " routerLink="/admin"
+      <button routerLinkActive="active-link" pButton class="nav p-button-sm p-button-text " routerLink="/admin"
               *ngIf="authState | isModerator"
               (click)="closeMenu()">moderator
       </button>
-      <button routerLinkActive="active-link" pButton class="p-button-sm p-button-text " routerLink="/admin"
+      <button routerLinkActive="active-link" pButton class="nav p-button-sm p-button-text " routerLink="/admin"
               *ngIf="authState | isAdmin"
               (click)="closeMenu()">admin
       </button>
@@ -26,16 +26,16 @@
 
     <ng-container *ngIf="authState | isAuth">
 
-      <button routerLinkActive="active-link" pButton class="p-button-sm p-button-text logout"
+      <button routerLinkActive="active-link" pButton class="nav p-button-sm p-button-text logout"
               (click)="logout(); closeMenu()"
       >Log Out
       </button>
     </ng-container>
     <ng-container *ngIf="!(authState | isAuth)">
-      <button routerLinkActive="active-link" pButton class="p-button-sm p-button-text login" routerLink="/login"
+      <button routerLinkActive="active-link" pButton class="nav p-button-sm p-button-text login" routerLink="/login"
               (click)="closeMenu()">Log In
       </button>
-      <button routerLinkActive="active-link" pButton class="p-button-sm p-button-text signup" routerLink="/signup"
+      <button routerLinkActive="active-link" pButton class="nav p-button-sm p-button-text signup" routerLink="/signup"
               (click)="closeMenu()">Sign Up
       </button>
     </ng-container>
