@@ -10,7 +10,7 @@ import {NavbarComponent} from "../navbar/navbar.component";
   standalone: true,
   imports: [CommonModule, ButtonModule, NgIcon, NavbarComponent],
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css'],
+  styleUrls: ['./menu.component.scss'],
   viewProviders: [provideIcons({jamClose})],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

@@ -23,7 +23,7 @@ import {jamHomeF, jamMessagesF} from "@ng-icons/jam-icons";
   standalone: true,
   imports: [CommonModule, RouterLink, isAuthPipe, isModeratorPipe, isAdminPipe, ButtonModule, NgIcon, RouterLinkActive],
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css'],
+  styleUrls: ['./navbar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   viewProviders: [provideIcons({jamHomeF, jamMessagesF})]
 })

@@ -14,7 +14,7 @@ import {Subject} from "rxjs";
   standalone: true,
   imports: [CommonModule],
   templateUrl: './user-page.component.html',
-  styleUrls: ['./user-page.component.css'],
+  styleUrls: ['./user-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserPageComponent implements  OnInit{

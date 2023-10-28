@@ -22,7 +22,7 @@ import {AuthStateModel} from "../../../../core/model/auth-state.model";
   standalone: true,
   imports: [CommonModule, FormsModule, InputTextModule, ReactiveFormsModule],
   templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.css'],
+  styleUrls: ['./login-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginPageComponent {

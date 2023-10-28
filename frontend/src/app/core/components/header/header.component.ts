@@ -19,7 +19,7 @@ import {NavbarComponent} from "../navbar/navbar.component";
   standalone: true,
   imports: [CommonModule, NgIcon, ButtonModule, MenuComponent, NavbarComponent],
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css'],
+  styleUrls: ['./header.component.scss'],
   viewProviders: [provideIcons({jamAlignJustify})],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

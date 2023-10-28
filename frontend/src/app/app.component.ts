@@ -18,7 +18,7 @@ import {FooterComponent} from "./core/components/footer/footer.component";
   standalone: true,
   imports: [CommonModule, RouterOutlet, NavbarComponent, HeaderComponent, FooterComponent],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {

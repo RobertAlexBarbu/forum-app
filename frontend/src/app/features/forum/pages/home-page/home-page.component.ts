@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './home-page.component.html',
-  styleUrls: ['./home-page.component.css'],
+  styleUrls: ['./home-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomePageComponent {
