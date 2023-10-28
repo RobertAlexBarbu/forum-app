@@ -21,10 +21,12 @@
       </button>
 
     </ng-container>
+
     <div class="separator"></div>
+
     <ng-container *ngIf="authState | isAuth">
 
-      <button routerLinkActive="active-link" pButton class="p-button-sm p-button-text"
+      <button routerLinkActive="active-link" pButton class="p-button-sm p-button-text logout"
               (click)="logout(); closeMenu()"
       >Log Out
       </button>
@@ -37,9 +39,6 @@
               (click)="closeMenu()">Sign Up
       </button>
     </ng-container>
-
-
-
   </ng-container>
 </div>
 

@@ -27,7 +27,6 @@ export class AppComponent implements OnInit {
   store = inject(Store);
 
   ngOnInit() {
-
     this.authService.checkAuth().subscribe({
       next: (data) => {
         if (data !== false) {

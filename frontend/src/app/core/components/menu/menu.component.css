@@ -21,20 +21,12 @@
   0% { opacity: 1 }
   100% { opacity: 0;}
 }
-
-.menu-content {
-  display: flex;
+.header button {
+  margin-left: auto;
+  float: right;
+  margin-top: 0.8rem;
+  margin-right: 1rem;
 }
 .first {
-  width: 85%;
-  padding-top: 3rem;
-}
-.second {
-  width: 15%;
-  display: flex;
-  padding-top: 0.8rem;
-  padding-right: 1rem;
-}
-.close-menu {
-  margin-left: auto;
+  margin-top: 3.6rem;
 }

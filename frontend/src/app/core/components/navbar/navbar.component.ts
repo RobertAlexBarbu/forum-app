@@ -1,7 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component, EventEmitter,
-  inject, Input,
+  inject,
   OnInit, Output
 } from '@angular/core';
 import {CommonModule} from '@angular/common';

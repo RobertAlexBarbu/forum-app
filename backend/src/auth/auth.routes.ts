@@ -32,7 +32,7 @@ authRoutes
     (req, res) => {
       res.send(req.user);
     }
-  )
+  )// needs to be post
   .get('/logout', (req, res, next) => {
     req.logout((err) => {
       if (err) return next(err);
