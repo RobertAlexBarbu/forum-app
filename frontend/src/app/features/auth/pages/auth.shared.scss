@@ -1,12 +1,17 @@
 @import '../../../shared/styles/variables.scss';
 h2 {
   margin:0 0  2rem 0;
-  text-align: center;
+  max-width: 20rem;
 }
-span, button {
+button{
   width: 100%;
+  display: flex;
+  justify-content: center;
 }
-
+.loading {
+  background-color: #3B82F670;
+  border-color: #3B82F670;
+}
 .question {
   color: var(--text-gray);
   margin-bottom: 1rem;

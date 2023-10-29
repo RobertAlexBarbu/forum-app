@@ -1,36 +1,40 @@
 <div class="main" ontouchstart="">
   <div class="card">
     <div class="content">
-      <h2>Sign up</h2>
-      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <h2>Sign up</h2>
         <div class="input">
           <label for="username">Username</label>
           <input placeholder="Username" id="username" type="text" pInputText formControlName="username">
-          <div class="error"></div>
+          <div class="error">
+              <app-input-error [control$]="usernameControl$"></app-input-error>
+          </div>
         </div>
         <div class="input">
           <label for="email">Email</label>
           <input placeholder="Email" id="email" type="email" pInputText formControlName="email">
-          <div class="error"></div>
-        </div>
-        <div class="input">
-          <label for="password">Password</label>
-          <input placeholder="Password" id="password" type="password" pInputText formControlName="password">
-          <div class="error"></div>
+          <div class="error">
+              <app-input-error [control$]="emailControl$"></app-input-error>
+          </div>
         </div>
         <div class="input-last">
-          <label for="confirm">Confirm Password</label>
-          <input placeholder="Confirm Password" id="confirm" type="password" pInputText formControlName="password">
-          <div class="error"></div>
+          <label for="password">Password</label>
+          <p-password [inputStyle]="{'width': '100%'}" [style]="{'width': '100%'}" placeholder="Password" id="password"
+                      formControlName="password" [toggleMask]="true"></p-password>
+          <div class="error">
+              <app-input-error [control$]="passwordControl$"></app-input-error>
+          </div>
+
         </div>
         <div class="submit">
-          <div class="top-error"></div>
-          <button pButton type="submit"><span>Sign up</span></button>
+          <div class="top-error">{{error$ | async}}</div>
+          <button pButton type="submit" [class.loading]="loading" class="p-button"><span>Sign up</span></button>
         </div>
       </form>
       <div class="help">
-          <div class="question">Already have an account? </div>
-          <div class="link" routerLink="/login">Log in here</div>
+        <div class="question">Already have an account?</div>
+        <div class="link" routerLink="/login">Log in here</div>
       </div>
     </div>
   </div>

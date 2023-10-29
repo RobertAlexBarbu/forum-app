@@ -19,6 +19,9 @@ import {AuthService} from "../../../../core/services/auth/auth.service";
 import {Subject} from "rxjs";
 import {ButtonModule} from "primeng/button";
 import {PasswordModule} from "primeng/password";
+import {
+  FormUtilsService
+} from "../../../../core/services/form-utils/form-utils.service";
 
 @Component({
   selector: 'app-login-page',
@@ -33,31 +36,41 @@ export class LoginPageComponent {
   router = inject(Router);
   store = inject(Store);
   error$ = new Subject<string>();
+  formUtils = inject(FormUtilsService);
   loginForm = new FormGroup({
     username: new FormControl('', {
       validators: [Validators.required],
       nonNullable: true,
-      updateOn: 'blur'
     }),
     password: new FormControl('', {
       validators: [Validators.required],
       nonNullable: true,
-      updateOn: 'blur'
     })
-  }, [Validators.required])
-
+  })
+  loading = false;
   submitForm() {
-    this.loginForm.markAllAsTouched();
-    this.loginForm.markAsDirty({onlySelf: false})
-    this.loginForm.get('username')?.markAsDirty();
-    this.authService.login(this.loginForm.getRawValue()).subscribe({
-      next: (data) => {
-        this.store.dispatch(login({sessionData: data}));
-        return this.router.navigate(['']);
-      },
-      error: (err) => {
-        this.error$.next(err.status);
-      }
-    });
+    this.error$.next('');
+    if(!this.loginForm.valid) {
+      this.formUtils.markGroupDirty(this.loginForm);
+    } else {
+      this.loading = true;
+      this.authService.login(this.loginForm.getRawValue()).subscribe({
+        next: (data) => {
+          this.store.dispatch(login({sessionData: data}));
+          this.loading = false;
+          return this.router.navigate(['']);
+        },
+        error: (err) => {
+          this.error$.next(err.message);
+          this.loading = false;
+          this.loginForm.patchValue({
+            username: '',
+            password: ''
+          })
+          this.loginForm.markAsUntouched()
+          this.loginForm.markAsPristine();
+        }
+      });
+    }
   }
 }
