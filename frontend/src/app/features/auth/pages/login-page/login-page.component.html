@@ -1,21 +1,22 @@
 <div class="main" ontouchstart="">
   <div class="card">
     <div class="content">
-      <h2>Log in to Forumly</h2>
-      <div class="top-error">❗️Main Error</div>
+      <h2>Log in</h2>
+
       <form [formGroup]="loginForm" (ngSubmit)="submitForm()">
         <div class="input">
-          <label for="username">Username</label>
-          <input placeholder="Username" id="username" type="text" pInputText formControlName="username">
+          <label for="username">Username or email</label>
+          <input placeholder="Username or email" id="username" type="text" pInputText formControlName="username">
           <div class="error">Secondary Error</div>
         </div>
-        <div class="input">
+        <div class="input-last">
           <label for="password">Password</label>
 
           <p-password [inputStyle]="{'width': '100%'}" [style]="{'width': '100%'}" placeholder="Password" id="password"
                       formControlName="password" [toggleMask]="true"></p-password>
           <div class="error"></div>
         </div>
+        <div class="top-error">{{error$ | async}}</div>
         <div class="submit">
           <button pButton type="submit"><span>Log in</span></button>
         </div>

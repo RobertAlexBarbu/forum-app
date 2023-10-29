@@ -9,7 +9,7 @@ export class AuthRepository extends DatabaseRepository {
         const result = await this.database(this.table).insert(CamelcaseService.decamelize(user));
     }
     async getUserAuthData(username: string) {
-        const result = await this.database(this.table).join('roles', 'users.role_id', 'roles.id').select('users.id', 'username', 'password_hash', 'password_salt', 'role').where('username', username);
+        const result = await this.database(this.table).join('roles', 'users.role_id', 'roles.id').select('users.id', 'username', 'password_hash', 'password_salt', 'role').where('username', username).orWhere( 'email', username);
         if(result.length === 0) {
             return null;
         }

@@ -1,32 +1,23 @@
 @import '../../../shared/styles/variables.scss';
 h2 {
-  margin: 0;
+  margin:0 0  2rem 0;
+  text-align: center;
 }
 span, button {
   width: 100%;
 }
-.card {
-  padding-bottom: 2rem;
-}
-.link {
-  font-weight: 600;
-  margin-bottom: 1rem;
-  text-decoration: underline;
-  cursor: pointer;
-}
+
 .question {
   color: var(--text-gray);
   margin-bottom: 1rem;
 }
 .main {
-  padding: 4rem 0;
+  padding: 2rem 0;
   display: flex;
   justify-content: center;
 }
-
 @media (min-width: $desktop-min-width ) {
   .content {
-    max-width: 500px;
-    width: 500px;
+    width: 30rem;
   }
 }

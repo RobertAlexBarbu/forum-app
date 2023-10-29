@@ -1,8 +1,7 @@
 <div class="main" ontouchstart="">
   <div class="card">
     <div class="content">
-      <h2>Sign up for Forumly</h2>
-      <div class="top-error"></div>
+      <h2>Sign up</h2>
       <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
         <div class="input">
           <label for="username">Username</label>
@@ -19,12 +18,13 @@
           <input placeholder="Password" id="password" type="password" pInputText formControlName="password">
           <div class="error"></div>
         </div>
-        <div class="input">
+        <div class="input-last">
           <label for="confirm">Confirm Password</label>
           <input placeholder="Confirm Password" id="confirm" type="password" pInputText formControlName="password">
           <div class="error"></div>
         </div>
         <div class="submit">
+          <div class="top-error"></div>
           <button pButton type="submit"><span>Sign up</span></button>
         </div>
       </form>

@@ -35,23 +35,28 @@ export class LoginPageComponent {
   error$ = new Subject<string>();
   loginForm = new FormGroup({
     username: new FormControl('', {
-      validators: [Validators.maxLength(32), Validators.minLength(1)],
-      nonNullable: true
+      validators: [Validators.required],
+      nonNullable: true,
+      updateOn: 'blur'
     }),
     password: new FormControl('', {
-      validators: [Validators.maxLength(1000), Validators.minLength(1)],
-      nonNullable: true
+      validators: [Validators.required],
+      nonNullable: true,
+      updateOn: 'blur'
     })
-  })
+  }, [Validators.required])
 
   submitForm() {
+    this.loginForm.markAllAsTouched();
+    this.loginForm.markAsDirty({onlySelf: false})
+    this.loginForm.get('username')?.markAsDirty();
     this.authService.login(this.loginForm.getRawValue()).subscribe({
       next: (data) => {
         this.store.dispatch(login({sessionData: data}));
         return this.router.navigate(['']);
       },
       error: (err) => {
-        this.error$.next(err.message);
+        this.error$.next(err.status);
       }
     });
   }
