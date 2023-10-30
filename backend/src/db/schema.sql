@@ -145,11 +145,27 @@ ALTER TABLE ONLY public.sessions
 
 
 --
+-- Name: users users_email_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_email_key UNIQUE (email);
+
+
+--
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users users_username_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_username_key UNIQUE (username);
 
 
 --
@@ -180,5 +196,4 @@ INSERT INTO public.schema_migrations (version) VALUES
     ('20231020212212'),
     ('20231020214317'),
     ('20231023155518'),
-    ('20231023155952'),
-    ('20231025194949');
+    ('20231023155952');

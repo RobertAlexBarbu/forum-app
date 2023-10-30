@@ -1,9 +1,9 @@
 import {JsonObject} from "type-fest";
 
 export const endpoints: JsonObject = {
-    signup: "auth/signup",
-    login: "auth/login",
-    logout: "auth/logout",
-    isAuth: "auth/is-auth",
+    signup: "api/auth/signup",
+    login: "api/auth/login",
+    logout: "api/auth/logout",
+    isAuth: "api/auth/is-auth",
     users: "api/users"
 }

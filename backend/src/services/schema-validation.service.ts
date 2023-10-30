@@ -1,4 +1,4 @@
-import {ajv} from "./ajv.config";
+import {ajv} from "../config/ajv.config";
 
 export class SchemaValidationService {
     static getValidator(validatorName: string) {

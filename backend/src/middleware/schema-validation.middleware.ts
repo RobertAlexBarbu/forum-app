@@ -1,7 +1,7 @@
 import express from "express";
 import {
     SchemaValidationService
-} from "../services/schema-validation/schema-validation.service";
+} from "../services/schema-validation.service";
 
 export class schemaValidationError extends Error {
 

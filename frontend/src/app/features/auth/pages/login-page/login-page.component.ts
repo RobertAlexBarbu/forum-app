@@ -63,10 +63,6 @@ export class LoginPageComponent {
         error: (err) => {
           this.error$.next(err.message);
           this.loading = false;
-          this.loginForm.patchValue({
-            username: '',
-            password: ''
-          })
           this.loginForm.markAsUntouched()
           this.loginForm.markAsPristine();
         }

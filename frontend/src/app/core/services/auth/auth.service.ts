@@ -30,7 +30,7 @@ export class AuthService {
   }
 
   logout() {
-    return this.httpService.get('logout');
+    return this.httpService.post('logout');
   }
 
   checkAuth() {

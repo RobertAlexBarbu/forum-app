@@ -30,4 +30,9 @@ export class HttpService {
         const endpointUrl = this.environmentService.getEndpoint(endpointName);
         return this.http.get<T>(`${endpointUrl}/${id}`, this.httpOptions);
     }
+
+    post<T>(endpointName: string, body: T | {} = {}) {
+        const endpointUrl = this.environmentService.getEndpoint(endpointName);
+        return this.http.post(endpointUrl, body, this.httpOptions);
+    }
 }

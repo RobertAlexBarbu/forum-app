@@ -13,6 +13,10 @@ import {Observable} from "rxjs";
   styleUrls: ['./input-error.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+
+// ! Triggers twice as many change detection cycles than the basic inline version
+// Tested with Angular Profiler dev tool
+
 export class InputErrorComponent implements OnInit{
   @Input() control$!: Observable<AbstractControl<any, any> | null>;
   ngOnInit() {
@@ -30,5 +34,9 @@ export class InputErrorComponent implements OnInit{
     } else {
       return !this.errors.slice(0, index).some((err) => control?.errors![err.errorName]) && control?.errors![error.errorName]
     }
+  }
+
+  trackByFn(index: number, item: InputErrorModel) {
+    return item.errorName;
   }
 }

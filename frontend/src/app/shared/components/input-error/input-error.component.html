@@ -2,7 +2,7 @@
   <ng-container *ngIf="control$ | async as control">
     <ng-container *ngIf="control.dirty">
       <ng-container *ngIf="control.errors">
-        <ng-container *ngFor="let error of errors;let i = index">
+        <ng-container *ngFor="let error of errors;let i = index; trackBy: trackByFn">
           <ng-container *ngIf="control.errors[error.errorName]">
             <ng-container *ngIf="getCondition(i, error, control)">
               {{error.errorMessage}}
