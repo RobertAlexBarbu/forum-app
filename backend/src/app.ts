@@ -19,6 +19,6 @@ app.use('/api', apiRoutes);
 app.use(errorMiddleware);
 
 app.listen(3000, 'localhost', () => {
-    console.log("Server is listening on port ");
+    console.log("Server is listening on port 3000");
 })
 

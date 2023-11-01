@@ -1,31 +1,26 @@
 @import "../../../shared/styles/variables";
 .header {
   font-size: 1.5rem;
-  background-color: var(--base);
+  background-color: rgba(254, 254, 254, 0.9);
+  backdrop-filter: blur(4px);
   display: flex;
   justify-content: space-between;
   padding: 0.8rem 1rem;
-  border-bottom: 1px solid var(--border);
   align-items: center;
   width: 100%;
+  border-bottom: 1px solid var(--border);
 }
-.desktop {
-  display: none;
-}
+
 .name {
   font-weight: 700;
   font-size: 1.2rem;
   margin-right: 1rem;
 }
 @media (min-width: $desktop-min-width) {
-  .hamburger {
-    display: none;
-  }
   .header {
     justify-content: start;
   }
   .desktop {
-    display: block;
     width: 100%;
   }
 }

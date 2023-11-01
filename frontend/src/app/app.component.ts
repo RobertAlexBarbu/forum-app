@@ -5,7 +5,10 @@ import {
   OnInit
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {NavigationEnd, Router, RouterOutlet} from '@angular/router';
+import {
+  Router,
+  RouterOutlet
+} from '@angular/router';
 import {NavbarComponent} from "./core/components/navbar/navbar.component";
 import {AuthService} from "./core/services/auth/auth.service";
 import {Store} from "@ngrx/store";
@@ -31,16 +34,6 @@ export class AppComponent implements OnInit {
       next: (data) => {
         if (data !== false) {
           this.store.dispatch(isAuth({sessionData: data}))
-        }
-      }
-    })
-    this.router.events.subscribe({
-      next: (event) => {
-        if(event instanceof NavigationEnd) {
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-          })
         }
       }
     })

@@ -1,11 +1,10 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  inject, OnInit,
+  inject
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {
-  AbstractControl,
   FormControl,
   FormGroup,
   FormsModule,
@@ -26,7 +25,7 @@ import {
 } from "../../../../shared/components/input-error/input-error.component";
 import {
   passwordValidator
-} from "../../../../shared/Validators/password.validator";
+} from "../../../../shared/validators/password.validator";
 import {
   FormUtilsService
 } from "../../../../core/services/form-utils/form-utils.service";
@@ -36,10 +35,10 @@ import {
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule, InputTextModule, ButtonModule, RouterLink, PasswordModule, InputErrorComponent],
   templateUrl: './signup-page.component.html',
-  styleUrls: ['./signup-page.component.scss', '../auth.shared.scss'],
+  styleUrls: ['./signup-page.component.scss', '../auth.styles.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SignupPageComponent implements OnInit{
+export class SignupPageComponent {
   authService = inject(AuthService);
   router = inject(Router);
   store = inject(Store<{ auth: AuthStateModel }>)
@@ -61,34 +60,11 @@ export class SignupPageComponent implements OnInit{
       })
     }
   )
-  usernameControl$ = new Subject<AbstractControl>()
-  emailControl$ = new Subject<AbstractControl>()
-  passwordControl$ =  new Subject<AbstractControl>()
-  refresh$ = new Subject<boolean>()
-  ngOnInit() {
-    this.form.get('username')!.statusChanges.subscribe({
-      next: () => this.usernameControl$.next(this.form.get('username')!)
-    })
-    this.form.get('email')!.statusChanges.subscribe({
-      next: () => this.emailControl$.next(this.form.get('email')!)
-    })
-    this.form.get('password')!.statusChanges.subscribe({
-      next: () => this.passwordControl$.next(this.form.get('password')!)
-    })
-    this.refresh$.subscribe({
-      next: () => {
-        this.usernameControl$.next(this.form.get('username')!)
-        this.emailControl$.next(this.form.get('email')!)
-        this.passwordControl$.next(this.form.get('password')!)
-      }
-    })
-  }
   loading = false;
   onSubmit() {
     this.error$.next('');
     if(!this.form.valid) {
       this.formUtils.markGroupDirty(this.form);
-      this.refresh$.next(true);
     } else {
       this.loading = true;
       this.authService.signup(this.form.getRawValue()).subscribe({
@@ -98,8 +74,9 @@ export class SignupPageComponent implements OnInit{
           return this.router.navigate(['']);
         },
         error: (err) => {
-          this.error$.next(err.statusText);
+          this.error$.next(err.message);
           this.loading = false;
+          this.form.markAsUntouched()
           this.form.markAsPristine();
         }
       });

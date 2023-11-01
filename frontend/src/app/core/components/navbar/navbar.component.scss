@@ -19,10 +19,8 @@ ng-icon {
     flex-direction: row;
     column-gap: 0.5rem;
   }
-  .login, .logout {
+  .signup, .logout {
     margin-left: auto;
   }
-  .signup {
-    display: none;
-  }
+
 }

@@ -1,6 +1,5 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {JsonObject} from "type-fest";
 import {EnvironmentService} from "../environment/environment.service";
 
 @Injectable({
@@ -12,27 +11,40 @@ export class HttpService {
     httpOptions = {
         withCredentials: true
     }
+    scheme = this.environmentService.getEnvironmentVar('scheme');
+    domain = this.environmentService.getEnvironmentVar('domain');
+    port = this.environmentService.getEnvironmentVar('port');
+    server = `${this.scheme}://${this.domain}:${this.port}`
 
     constructor() {
     }
 
-    save<R>(endpointName: string, body: JsonObject) {
-        const endpointUrl = this.environmentService.getEndpoint(endpointName);
-        return this.http.post<R>(endpointUrl, body, this.httpOptions);
+    post<T>(url: string, body: T | {} = {}) {
+        return this.http.post<T>(`${this.server}/${url}`, body, this.httpOptions);
     }
 
-    get<T>(endpointName: string) {
-        const endpointUrl = this.environmentService.getEndpoint(endpointName);
-        return this.http.get<T>(endpointUrl, this.httpOptions);
+    put<T>(url: string, body: T) {
+        return this.http.put<T>(`${this.server}/${url}`, body, this.httpOptions);
     }
 
-    getByID<T>(endpointName: string, id: string | number) {
-        const endpointUrl = this.environmentService.getEndpoint(endpointName);
-        return this.http.get<T>(`${endpointUrl}/${id}`, this.httpOptions);
+    putByID<T>(url: string, body: T, id: string | number) {
+        return this.http.put<T>(`${this.server}/${url}/${id}`, body, this.httpOptions);
     }
 
-    post<T>(endpointName: string, body: T | {} = {}) {
-        const endpointUrl = this.environmentService.getEndpoint(endpointName);
-        return this.http.post(endpointUrl, body, this.httpOptions);
+    delete<T>(url: string) {
+        return this.http.delete<T>(`${this.server}/${url}`, this.httpOptions);
     }
+
+    deleteByID<T>(url: string, id: string | number) {
+        return this.http.delete<T>(`${this.server}/${url}/${id}`, this.httpOptions);
+    }
+
+    get<T>(url: string) {
+        return this.http.get<T>(`${this.server}/${url}`, this.httpOptions);
+    }
+
+    getByID<T>(url: string, id: string | number) {
+        return this.http.get<T>(`${this.server}/${url}/${id}`, this.httpOptions);
+    }
+
 }

@@ -1,11 +1,15 @@
 import {CryptoService} from "../../services/crypto.service";
 import {HashedSignupModel} from "./model/hashed-signup.model";
 import {SignupModel} from "./model/signup.model";
-
 import {AuthRepository} from "./auth.repository";
+import express, {NextFunction} from "express";
 
 export class AuthService {
   private static readonly authRepository = new AuthRepository();
+
+  static getUser(usernameOrEmail: string) {
+    return this.authRepository.getUserAuthData(usernameOrEmail);
+  }
 
   static async isPasswordValid(password: string,
                                passwordHash: string,
@@ -21,13 +25,26 @@ export class AuthService {
     return newPasswordHash === passwordHash;
   }
 
+
+  static async signup(req: express.Request, res: express.Response, next: NextFunction) {
+    try {
+      const exists = await AuthService.userExists(req.body);
+      if (exists) {
+        res.statusCode = 400;
+        res.statusMessage = "Username or email already registered";
+        res.send();
+      } else {
+        await AuthService.saveSignup(req.body);
+        next();
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
   static async saveSignup(user: SignupModel) {
     const hashedUser = await this.hashSignup(user);
     return this.authRepository.saveUser(hashedUser);
-  }
-
-  static getUser(usernameOrEmail: string) {
-    return this.authRepository.getUserAuthData(usernameOrEmail);
   }
 
   static async userExists(user: SignupModel) {

@@ -10,7 +10,6 @@ passport.use('local', new Strategy(async (username, password, done) => {
         if (user === null) {
             return done(null, false);
         }
-
         const isPasswordValid = await AuthService.isPasswordValid(password, user.passwordHash as string, user.passwordSalt as string);
         if (isPasswordValid) {
             return done(null, {

@@ -18,7 +18,7 @@ export class EnvironmentService {
         return environment[environmentVarName];
     }
 
-    getEndpoint(endpointName: string): string {
+    getUrl(endpointName: string): string {
         if (endpoints === undefined) {
             throw new Error('Environment undefined');
         }

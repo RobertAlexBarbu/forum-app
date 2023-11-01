@@ -12,17 +12,10 @@ button{
   color: var(--text-gray);
   margin-bottom: 1rem;
 }
-.main {
-  padding: 2rem 0;
-  display: flex;
-  justify-content: center;
-}
 .help {
   text-align: center;
   margin-top: 2rem;
 }
-@media (min-width: $desktop-min-width ) {
-  .content {
-    width: 30rem;
-  }
+.card {
+  max-width: 30rem;
 }

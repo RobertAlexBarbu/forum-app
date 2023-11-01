@@ -26,17 +26,20 @@
 
     <ng-container *ngIf="authState | isAuth">
 
-      <button routerLinkActive="active-link" pButton class=" p-button-sm p-button-text logout"
+      <button pButton class="p-button-sm p-button-text logout"
               (click)="logout(); closeMenu()"
       >Log Out
       </button>
     </ng-container>
     <ng-container *ngIf="!(authState | isAuth)">
-      <button routerLinkActive="active-link" pButton class=" p-button-sm p-button-text login" routerLink="/login"
+      <button routerLinkActive="active-link" pButton class=" p-button-sm p-button-text login mobile" routerLink="/login"
               (click)="closeMenu()">Log In
       </button>
       <button routerLinkActive="active-link" pButton class=" p-button-sm p-button-text signup" routerLink="/signup"
               (click)="closeMenu()">Sign Up
+      </button>
+      <button pButton class=" p-button-sm login desktop" routerLink="/login"
+              (click)="closeMenu()">Log In
       </button>
     </ng-container>
   </ng-container>

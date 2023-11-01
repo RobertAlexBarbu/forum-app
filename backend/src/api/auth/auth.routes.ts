@@ -1,4 +1,4 @@
-import express from "express";
+import express, {NextFunction} from "express";
 import {passport} from "./passport";
 import {AuthService} from "./auth.service";
 import {
@@ -12,7 +12,7 @@ authRoutes.post(
   schemaValidationMiddleware('login'),
   passport.authenticate('local'),
   passport.session(),
-  (req, res) => {
+  (req: express.Request, res: express.Response) => {
     res.send(req.user);
   }
 )
@@ -20,35 +20,23 @@ authRoutes.post(
 authRoutes.post(
   '/signup',
   schemaValidationMiddleware('signup'),
-  async (req, res, next) => {
-    try {
-      const exists = await AuthService.userExists(req.body);
-      if (exists) {
-        res.statusCode = 400;
-        res.statusMessage = "Username or email already exits";
-        res.send();
-      } else {
-        await AuthService.saveSignup(req.body);
-        next();
-      }
-    } catch (err) {
-      next(err);
-    }
-  },
+  AuthService.signup,
   passport.authenticate('local'),
-  (req, res) => {
+  (req: express.Request, res: express.Response) => {
     res.send(req.user);
   }
 )
 
-authRoutes.post('/logout', (req, res, next) => {
+authRoutes.post('/logout',
+  (req: express.Request, res: express.Response, next: NextFunction) => {
   req.logout((err) => {
     if (err) return next(err);
     res.send()
   });
 })
 
-authRoutes.get('/is-auth', (req, res) => {
+authRoutes.get('/is-auth',
+  (req: express.Request, res: express.Response) => {
   if (req.isAuthenticated()) {
     res.send(req.user);
   } else {

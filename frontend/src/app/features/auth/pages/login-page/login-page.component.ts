@@ -1,7 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  inject,
+  inject
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {
@@ -22,13 +22,14 @@ import {PasswordModule} from "primeng/password";
 import {
   FormUtilsService
 } from "../../../../core/services/form-utils/form-utils.service";
+import {DropdownModule} from "primeng/dropdown";
 
 @Component({
   selector: 'app-login-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, InputTextModule, ReactiveFormsModule, ButtonModule, RouterLink, PasswordModule],
+  imports: [CommonModule, FormsModule, InputTextModule, ReactiveFormsModule, ButtonModule, RouterLink, PasswordModule, DropdownModule],
   templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.scss', '../auth.shared.scss'],
+  styleUrls: ['./login-page.component.scss', '../auth.styles.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginPageComponent {
@@ -37,7 +38,7 @@ export class LoginPageComponent {
   store = inject(Store);
   error$ = new Subject<string>();
   formUtils = inject(FormUtilsService);
-  loginForm = new FormGroup({
+  form = new FormGroup({
     username: new FormControl('', {
       validators: [Validators.required],
       nonNullable: true,
@@ -50,11 +51,11 @@ export class LoginPageComponent {
   loading = false;
   submitForm() {
     this.error$.next('');
-    if(!this.loginForm.valid) {
-      this.formUtils.markGroupDirty(this.loginForm);
+    if(!this.form.valid) {
+      this.formUtils.markGroupDirty(this.form);
     } else {
       this.loading = true;
-      this.authService.login(this.loginForm.getRawValue()).subscribe({
+      this.authService.login(this.form.getRawValue()).subscribe({
         next: (data) => {
           this.store.dispatch(login({sessionData: data}));
           this.loading = false;
@@ -63,10 +64,11 @@ export class LoginPageComponent {
         error: (err) => {
           this.error$.next(err.message);
           this.loading = false;
-          this.loginForm.markAsUntouched()
-          this.loginForm.markAsPristine();
+          this.form.markAsUntouched()
+          this.form.markAsPristine();
         }
       });
     }
   }
+
 }

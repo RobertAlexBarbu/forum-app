@@ -6,17 +6,13 @@ app-header {
   z-index: 2;
 }
 .main {
-  margin-top: 3.5rem;
+  margin-top: 4rem;
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
-  background-color: #3B82F610;
 }
 @media (min-width: $desktop-min-width) {
-  app-header {
-    position: static;
-  }
   .main {
-    margin-top: 0;
+    padding: 2rem 0;
   }
 }
