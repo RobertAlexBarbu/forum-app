@@ -1,0 +1,13 @@
+//h2 {
+//  margin: 0;
+//  font-weight: 500;
+//}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.card {
+  max-width: 50rem;
+  transition: height 2s;
+}

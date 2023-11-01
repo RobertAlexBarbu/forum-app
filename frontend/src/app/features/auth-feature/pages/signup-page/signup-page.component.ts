@@ -17,7 +17,7 @@ import {Store} from "@ngrx/store";
 import { signup} from "../../../../core/store/auth/auth.actions";
 import { Subject} from "rxjs";
 import {AuthService} from "../../../../core/services/auth/auth.service";
-import {AuthStateModel} from "../../../../core/model/auth-state.model";
+import {AuthStateModel} from "../../../../core/models/auth-state.model";
 import {ButtonModule} from "primeng/button";
 import {PasswordModule} from "primeng/password";
 import {

@@ -1,0 +1,54 @@
+<div>
+    <form (ngSubmit)="submit()">
+        <h2>Create new forum</h2>
+        <div class="input">
+            <label for="name">Forum name</label>
+            <input pInputText type="text" id="name" placeholder="Forum name">
+            <div class="error"></div>
+        </div>
+        <div class="separator"></div>
+        <div class="error"></div>
+        <div class="subtitle">Categories</div>
+        <div class="categories">
+            <div *ngFor="let cate of categories">
+                <div class="category">
+                    <div class="text">{{cate}}</div>
+                    <div class="btns">
+                            <button pButton class="nav p-button p-button-text">
+                                <ng-icon name="jamPencilF"></ng-icon>
+                            </button>
+
+                        <button pButton class="nav p-button p-button-text p-button-danger">
+                            <ng-icon name="jamTrashF"></ng-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="error"></div>
+        <div class="input-last">
+            <label for="category">Add category</label>
+            <div class="p-inputgroup">
+                <input [formControl]="category" id="category" type="text" pInputText placeholder="Category name" />
+                <button type="button" pButton (click)="addCategory()">Add
+                    <ng-icon name="jamPlus" size="1.3rem"></ng-icon>
+                </button>
+            </div>
+            <div class="error"></div>
+        </div>
+        <div class="top-error"></div>
+        <div class="double-submit">
+
+            <button pButton class="p-button p-button-outlined">
+                Cancel
+            </button>
+
+            <button pButton class=" p-button">
+                Create
+            </button>
+        </div>
+
+
+
+    </form>
+</div>

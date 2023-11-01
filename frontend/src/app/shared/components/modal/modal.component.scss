@@ -1,0 +1,67 @@
+@import "../../styles/variables.scss";
+.hamburger-menu1 {
+  display: none;
+  background-color: var(--base);
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  overflow-y: hidden;
+  z-index: 999999;
+
+}
+
+.hamburger-menu1.hamburger-menu-active {
+  animation: fadeIn 200ms ease-in-out;
+}
+.hamburger-menu-closed {
+  animation: fadeOut 200ms ease-in-out;
+}
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes fadeOut {
+  0% { opacity: 1 }
+  100% { opacity: 0;}
+}
+.header {
+  display: flex;
+  margin-top: 0.8rem;
+  margin-right: 1rem;
+}
+.header button {
+  margin-left: auto;
+}
+
+.modal {
+  flex-grow: 1;
+  background-color: var(--base);
+
+}
+.first {
+  padding: 1rem 1rem 4rem 1rem;
+}
+@media (min-width: $desktop-min-width) {
+ .modal {
+   padding: 1rem 1rem 2rem 1rem;
+   border-radius: var(--radius);
+   border: 1px solid var(--border);
+   height: auto;
+   max-width: 30rem;
+   margin: auto;
+ }
+  .hamburger-menu1 {
+    background-color: rgba(254, 254, 254, 0.3);
+    backdrop-filter: blur(4px);
+  }
+
+  .hamburger-menu1.hamburger-menu-active {
+    display: flex;
+    align-items: center;
+  }
+
+  .hamburger-menu1 {
+    padding-bottom: 5rem;
+  }
+}

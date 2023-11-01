@@ -1,0 +1,32 @@
+<div class="card">
+    <div class="header">
+        <h2>Forums</h2>
+        <button (click)="newForum()" pButton class="p-button-text p-button-sm smaller">
+            <ng-icon name="jamPlus"></ng-icon>
+            New
+        </button>
+    </div>
+</div>
+
+<app-modal [(isVisible)]="addNewForum" >
+    <form (ngSubmit)="submit()">
+        <h2>Create new forum</h2>
+        <div class="input-last">
+            <label for="name">Forum name</label>
+            <input pInputText type="text" id="name" placeholder="Forum name">
+            <div class="error"></div>
+        </div>
+        <div class="top-error"></div>
+        <div class="double-submit">
+
+            <button pButton class="p-button p-button-outlined">
+                Cancel
+            </button>
+
+            <button pButton class=" p-button">
+                Create
+            </button>
+        </div>
+    </form>
+</app-modal>
+

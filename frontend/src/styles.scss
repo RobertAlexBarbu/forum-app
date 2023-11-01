@@ -36,10 +36,15 @@ body {
 .desktop {
   display: none;
 }
-
+.desktop-btn {
+  display: none
+}
 @media (min-width: $desktop-min-width) {
   .desktop {
     display: block;
+  }
+  .desktop-btn {
+    display: flex;
   }
   .mobile {
     display: none;
@@ -60,11 +65,14 @@ button.nav {
 button:focus {
   box-shadow: none !important;
 }
+button.smaller {
+  height: 2.5rem;
+}
 
 /* CARD STYLES */
 .card {
   background-color: var(--base);
-  padding: 3rem 1rem;
+  padding: 1rem 1rem;
   margin: auto;
 }
 @media (min-width: $desktop-min-width) {
@@ -101,11 +109,11 @@ input {
 }
 form {
   width: 100%;
-  max-width: 20rem;
+  max-width: 23rem;
   margin: auto;
 }
 h2 {
-  margin:0 0  2rem 0;
+  margin:1rem 0  2rem 0;
   text-align: center;
 }
 .input {
@@ -139,6 +147,21 @@ label {
   font-size: 0.9rem;
   font-weight: 600;
   margin-bottom: 4px;
+}
+.double-submit {
+  display: flex;
+  justify-content: space-between;
+}
+.double-submit button{
+  width: 48%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+.submit button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 /* FORM STYLES END */
 

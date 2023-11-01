@@ -1,0 +1,20 @@
+.subtitle {
+  font-size: 1.3rem;
+  color: var(--text-gray);
+}
+.categories {
+  transition: height 200ms;
+  height: 0;
+}
+.category {
+  border-bottom: 1px solid var(--border);
+  margin: 0.5rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 2.3rem;
+}
+.btns {
+  display: flex;
+  align-items: center;
+}

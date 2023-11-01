@@ -1,9 +1,9 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpService} from "../http/http.service";
-import {SignupModel} from "../../../features/auth/model/signup.model";
-import {SessionDataModel} from "../../model/session-data.model";
-import {LoginModel} from "../../../features/auth/model/login.model";
-import {AuthStateModel} from "../../model/auth-state.model";
+import {SignupModel} from "../../../features/auth-feature/model/signup.model";
+import {SessionDataModel} from "../../models/session-data.model";
+import {LoginModel} from "../../../features/auth-feature/model/login.model";
+import {AuthStateModel} from "../../models/auth-state.model";
 import {catchError, throwError} from "rxjs";
 import {HttpErrorResponse} from "@angular/common/http";
 

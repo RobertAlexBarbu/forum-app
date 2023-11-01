@@ -1,6 +1,6 @@
 import * as AuthActions from "./auth.actions";
 import {createReducer, on} from "@ngrx/store";
-import {AuthStateModel} from "../../model/auth-state.model";
+import {AuthStateModel} from "../../models/auth-state.model";
 
 export const initialAuthState: AuthStateModel = {
   username: '',

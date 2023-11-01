@@ -33,14 +33,16 @@
     </ng-container>
     <ng-container *ngIf="!(authState | isAuth)">
       <button routerLinkActive="active-link" pButton class=" p-button-sm p-button-text login mobile" routerLink="/login"
-              (click)="closeMenu()">Log In
+              (click)="closeMenu()">Log in
       </button>
-      <button routerLinkActive="active-link" pButton class=" p-button-sm p-button-text signup" routerLink="/signup"
-              (click)="closeMenu()">Sign Up
+      <button routerLinkActive="active-link" pButton class="p-button-text p-button-sm signup" routerLink="/signup"
+              (click)="closeMenu()">Sign up
       </button>
-      <button pButton class=" p-button-sm login desktop" routerLink="/login"
-              (click)="closeMenu()">Log In
+
+      <button  pButton class="p-button-sm login desktop-btn login" routerLink="/login"
+              (click)="closeMenu()">Log in
       </button>
+
     </ng-container>
   </ng-container>
 </div>

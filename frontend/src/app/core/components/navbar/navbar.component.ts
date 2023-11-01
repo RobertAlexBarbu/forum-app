@@ -7,13 +7,13 @@ import {
 import {CommonModule} from '@angular/common';
 import {Router, RouterLink, RouterLinkActive} from "@angular/router";
 import {Store} from "@ngrx/store";
-import {Observable, skip} from "rxjs";
+import {Observable} from "rxjs";
 import {AuthService} from "../../services/auth/auth.service";
 import {logout} from "../../store/auth/auth.actions";
 import {isAuthPipe} from "../../../shared/pipes/is-auth.pipe";
 import {isModeratorPipe} from "../../../shared/pipes/is-moderator.pipe";
 import {isAdminPipe} from "../../../shared/pipes/is-admin.pipe";
-import {AuthStateModel} from "../../model/auth-state.model";
+import {AuthStateModel} from "../../models/auth-state.model";
 import {ButtonModule} from "primeng/button";
 import {NgIcon, provideIcons} from "@ng-icons/core";
 import {jamHomeF, jamMessagesF} from "@ng-icons/jam-icons";
