@@ -1,5 +1,5 @@
 import Ajv from "ajv";
-import {SignupSchema} from "../api/auth/schema/signup.schema";
+import {SignupSchema} from "../api/users/schema/signup.schema";
 import {LoginSchema} from "../api/auth/schema/login.schema";
 
 export const ajv = new Ajv();

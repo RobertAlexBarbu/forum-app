@@ -1,30 +1,45 @@
-<div class="card">
+<div class="card" ontouchstart="">
     <div class="header">
-        <h2>Forums</h2>
-        <button (click)="newForum()" pButton class="p-button-text p-button-sm smaller">
+        <div class="title">Forums</div>
+        <button (click)="openForumModal()" pButton class="smaller p-button-text p-button-sm smaller">
             <ng-icon name="jamPlus"></ng-icon>
             New
         </button>
     </div>
+    <ng-container *ngIf="forums$ | async as forums">
+        <ng-container *ngFor="let forum of forums">
+            <app-forum [forum]="forum"></app-forum>
+        </ng-container>
+    </ng-container>
+
 </div>
 
-<app-modal [(isVisible)]="addNewForum" >
-    <form (ngSubmit)="submit()">
+<app-modal [(isVisible)]="forumModal" >
+    <form (ngSubmit)="onSubmit()">
         <h2>Create new forum</h2>
         <div class="input-last">
             <label for="name">Forum name</label>
-            <input pInputText type="text" id="name" placeholder="Forum name">
-            <div class="error"></div>
+            <input [formControl]="form" pInputText type="text" id="name" placeholder="Forum name">
+            <div class="error">
+                <ng-container *ngIf="form.errors && form.dirty">
+                    <ng-container *ngIf="form.errors['required']">
+                        This field is required
+                    </ng-container>
+                    <ng-container *ngIf="!form.errors['required'] && form.errors['maxlength']">
+                        Maximum 32 characters
+                    </ng-container>
+                </ng-container>
+            </div>
         </div>
-        <div class="top-error"></div>
+        <div class="top-error">{{error$ | async}}</div>
         <div class="double-submit">
-
-            <button pButton class="p-button p-button-outlined">
+            <button type="button" (click)="closeForumModal()" pButton class="p-button p-button-outlined">
                 Cancel
             </button>
-
-            <button pButton class=" p-button">
-                Create
+            <button pButton class=" p-button" [class.loading]="loading" [loading]="loading">
+                <ng-container *ngIf="!loading">
+                    <div>Create</div>
+                </ng-container>
             </button>
         </div>
     </form>

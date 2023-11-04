@@ -2,6 +2,6 @@ import {JsonObject} from "type-fest";
 
 export const environment: JsonObject = {
     scheme: "http",
-    domain: "localhost",
+    domain: "192.168.0.200",
     port: 3000,
 };

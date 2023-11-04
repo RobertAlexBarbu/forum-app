@@ -26,7 +26,7 @@ export class AuthService {
   }
 
   signup(signupData: SignupModel) {
-    return this.httpService.post<SessionDataModel>('api/auth/signup', signupData).pipe(catchError((error: HttpErrorResponse) => {
+    return this.httpService.post<SessionDataModel>('api/users/', signupData).pipe(catchError((error: HttpErrorResponse) => {
         return throwError(() => new Error('⚠ ' + error.statusText));
     }));
   }

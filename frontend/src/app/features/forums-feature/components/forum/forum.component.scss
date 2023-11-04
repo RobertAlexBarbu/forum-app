@@ -1,0 +1,37 @@
+.forum {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 0.5rem;
+  display: flex;
+  margin-top: 1rem;
+  align-items: center;
+}
+.forum-icon {
+  color: #3B82F6;
+  margin-right: 1rem;
+}
+.name {
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+.info ng-icon {
+  color: var(--text-gray);
+  margin-right: 0.2rem;
+}
+.info {
+  color: var(--text-gray);
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.3rem;
+}
+
+.data {
+  display: flex;
+  column-gap: 2rem;
+}
+.btn {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+}

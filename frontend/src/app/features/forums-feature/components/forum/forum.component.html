@@ -1,0 +1,36 @@
+<div class="forum">
+
+    <ng-icon class="forum-icon" name="jamMessagesF" size="4rem"></ng-icon>
+    <div class="forum-info">
+        <div class="name">{{forum.name}}</div>
+        <div class="data">
+            <div class="data-group">
+                <div class="info">
+                    <ng-icon name="jamMessageF" size="0.8rem"></ng-icon>
+                    <div>{{forum.postsCount}} discussions</div>
+                </div>
+                <div class="info">
+                    <ng-icon name="jamMessage" size="0.8rem"></ng-icon>
+                    <div>{{forum.postsCount}} comments</div>
+                </div>
+            </div>
+            <div class="data-group desktop">
+                <div class="info">
+                    <div>Latest discussion: {{forum.postsCount}}</div>
+                </div>
+                <div class="info">
+                    <div>Latest comment: {{forum.postsCount}}</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="btn">
+        <button pButton class="p-button-text p-button  nav">
+            <ng-icon name="jamPencilF"></ng-icon>
+        </button>
+        <button pButton class="p-button-text p-button p-button-danger nav">
+            <ng-icon name="jamTrashF"></ng-icon>
+        </button>
+    </div>
+</div>

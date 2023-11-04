@@ -1,6 +1,5 @@
 import express, {NextFunction} from "express";
-import {passport} from "./passport";
-import {AuthService} from "./auth.service";
+import {passport} from "../../config/passport";
 import {
   schemaValidationMiddleware
 } from "../../middleware/schema-validation.middleware";
@@ -12,16 +11,6 @@ authRoutes.post(
   schemaValidationMiddleware('login'),
   passport.authenticate('local'),
   passport.session(),
-  (req: express.Request, res: express.Response) => {
-    res.send(req.user);
-  }
-)
-
-authRoutes.post(
-  '/signup',
-  schemaValidationMiddleware('signup'),
-  AuthService.signup,
-  passport.authenticate('local'),
   (req: express.Request, res: express.Response) => {
     res.send(req.user);
   }

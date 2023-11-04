@@ -5,10 +5,17 @@ import {CamelcaseService} from "../../services/camelcase.service";
 export class ForumsRepository extends DatabaseRepository {
   table = 'forums';
   async insertForum(forum: CreateForumModel) {
-    const result = await this.database(this.table).insert(forum).returning('*');
+    const result = await this.database('forums').insert(forum).returning('*');
     return CamelcaseService.camelize(result[0]) as CreateForumModel;
   }
   async getForums() {
-    return this.database(this.table).select('*');
+    const result = await this.database.raw(`
+        select forums.name, forums.id, max(posts.created_at) as latest_post, count(posts.id) as posts_count
+        from forums left join posts on forums.id = posts.forum_id
+        group by forums.name, forums.id`
+
+    );
+    console.log(result);
+    return CamelcaseService.camelizeArray(result.rows);
   }
 }
