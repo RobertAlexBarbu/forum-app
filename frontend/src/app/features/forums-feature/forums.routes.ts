@@ -26,7 +26,7 @@ export const forumsRoutes: Routes = [
         loadComponent: () => import("./pages/edit-forum-page/edit-forum-page.component").then(m => m.EditForumPageComponent)
       },
       {
-        path: 'edit',
+        path: 'edit/:name',
         // canMatch: [isAdminGuard],
         loadComponent: () => import("./pages/edit-forum-page/edit-forum-page.component").then(m => m.EditForumPageComponent)
       },

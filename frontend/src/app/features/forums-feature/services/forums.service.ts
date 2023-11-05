@@ -10,12 +10,17 @@ import {ForumModel} from "../models/forum.model";
 export class ForumsService {
   http = inject(HttpService);
   saveForum(forumName: string) {
-    return this.http.post('api/forums/new', {name: forumName}).pipe(catchError((error: HttpErrorResponse) => {
+    return this.http.post<ForumModel>('api/forums/new', {name: forumName}).pipe(catchError((error: HttpErrorResponse) => {
       return throwError(() => new Error('⚠ ' + error.statusText));
     }));
   }
   getForums() {
     return this.http.get<ForumModel[]>('api/forums');
+  }
+  deleteForum(id: number) {
+    return this.http.deleteByID('api/forums', id).pipe(catchError((error: HttpErrorResponse) => {
+      return throwError(() => new Error('⚠ ' + error.statusText));
+    }));
   }
   constructor() { }
 }

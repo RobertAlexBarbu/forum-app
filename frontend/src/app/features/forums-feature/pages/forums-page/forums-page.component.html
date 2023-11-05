@@ -8,15 +8,15 @@
     </div>
     <ng-container *ngIf="forums$ | async as forums">
         <ng-container *ngFor="let forum of forums">
-            <app-forum [forum]="forum"></app-forum>
+            <app-forum [forum]="forum" (deleteForum)="openDeleteModal($event)"></app-forum>
         </ng-container>
     </ng-container>
 
 </div>
 
 <app-modal [(isVisible)]="forumModal" >
-    <form (ngSubmit)="onSubmit()">
-        <h2>Create new forum</h2>
+    <form class="modal-form" (ngSubmit)="onSubmit()">
+        <h2>Create forum</h2>
         <div class="input-last">
             <label for="name">Forum name</label>
             <input [formControl]="form" pInputText type="text" id="name" placeholder="Forum name">
@@ -45,3 +45,26 @@
     </form>
 </app-modal>
 
+<app-modal [(isVisible)]="deleteModal">
+    <form class="modal-form">
+        <h2>Delete forum</h2>
+        <ng-container *ngIf="toBeDeletedForum">
+            <div class="details-text">
+                Are you sure you want to delete <span class="forum-name">{{toBeDeletedForum.name}}</span>?
+            </div>
+            <div class="warning-text input-last">⚠ All related posts and comments will also be deleted</div>
+        </ng-container>
+
+        <div class="top-error">{{error$ | async}}</div>
+        <div class="double-submit">
+            <button type="button" (click)="closeDeleteModal()" pButton class="p-button p-button-outlined">
+                Cancel
+            </button>
+            <button pButton class="p-button p-button-danger" [class.loading]="loading" [loading]="loading" (click)="deleteForum()">
+                <ng-container *ngIf="!loading">
+                    <div>Delete</div>
+                </ng-container>
+            </button>
+        </div>
+    </form>
+</app-modal>

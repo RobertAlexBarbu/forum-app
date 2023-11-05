@@ -10,9 +10,7 @@ export class ForumsService {
     res: Response,
     next: NextFunction) => {
     try {
-      console.log('test');
       const forum = await this.forumsRepository.insertForum(req.body);
-      console.log('test2');
       res.send(forum)
     } catch (err) {
       next(err);
@@ -27,5 +25,13 @@ export class ForumsService {
       next(err);
     }
 
+  }
+
+  static deleteForum = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      await this.forumsRepository.deleteForum(req.params.id);
+    } catch(err) {
+      next(err);
+    }
   }
 }

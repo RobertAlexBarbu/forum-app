@@ -8,7 +8,7 @@ import {errorMiddleware} from "./middleware/error.middleware";
 const app = express();
 
 app.use(cors( {
-    origin: ['http://localhost:4200', 'http://192.168.0.200:4200'],
+    origin: 'http://localhost:4200',
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
 } ));
@@ -18,7 +18,7 @@ app.use(passport.initialize(), passport.session())
 app.use('/api', apiRoutes);
 app.use(errorMiddleware);
 
-app.listen(3000, '192.168.0.200', () => {
+app.listen(3000, 'localhost', () => {
     console.log("Server is listening on port 3000");
 })
 

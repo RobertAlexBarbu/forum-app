@@ -8,7 +8,7 @@
   top: 0;
   //overflow: hidden !important;
   z-index: 999999;
-
+  overflow-y: hidden;
 
 }
 
@@ -41,11 +41,11 @@
 
 }
 .first {
-  padding: 1rem 1rem 4rem 1rem;
+  padding: 0rem 1rem 0rem 1rem;
 }
 @media (min-width: $desktop-min-width) {
  .modal {
-   padding: 1rem 1rem 2rem 1rem;
+   padding: 1rem 1rem 1rem 1rem;
    border-radius: var(--radius);
    border: 1px solid var(--border);
    height: auto;

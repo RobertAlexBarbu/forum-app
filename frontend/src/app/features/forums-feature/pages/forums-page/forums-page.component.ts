@@ -24,6 +24,7 @@ import {PaginatorModule} from "primeng/paginator";
 import {Subject} from "rxjs";
 import {ForumsService} from "../../services/forums.service";
 import {ForumComponent} from "../../components/forum/forum.component";
+import {ForumModel} from "../../models/forum.model";
 
 @Component({
   selector: 'app-forums-page',
@@ -34,23 +35,61 @@ import {ForumComponent} from "../../components/forum/forum.component";
   viewProviders: [provideIcons({jamPlus})],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ForumsPageComponent{
+export class ForumsPageComponent implements OnInit{
   _forumModal = false;
+  _deleteModal = false;
   error$ = new Subject<string>();
   forumsService = inject(ForumsService);
-  forums$ = this.forumsService.getForums();
+  forums$ = new Subject<ForumModel[]>();
+  forums: ForumModel[] = [];
+  toBeDeletedForum: ForumModel | null = null;
   set forumModal(value: boolean) {
-    console.log('modal set to ' + value);
     this._forumModal = value;
   }
   get forumModal() {
     return this._forumModal;
   }
 
+  set deleteModal(value: boolean) {
+    this._deleteModal = value;
+  }
+  get deleteModal() {
+    return this._deleteModal;
+  }
+
+  ngOnInit() {
+    this.forumsService.getForums().subscribe({
+      next: (data) => {
+        this.forums$.next(data);
+        this.forums = data;
+      }
+    })
+  }
+
   form = new FormControl('', {
     nonNullable: true,
     validators: [Validators.required, Validators.maxLength(32)]
   })
+
+  openDeleteModal(forum: ForumModel) {
+    this.toBeDeletedForum = forum;
+    this.deleteModal = true;
+  }
+  closeDeleteModal() {
+    this.deleteModal = false;
+    this.error$.next('');
+  }
+
+
+  deleteForum() {
+    this.error$.next('');
+    if(this.toBeDeletedForum) {
+      const deletedForum = this.toBeDeletedForum;
+      this.forumsService.deleteForum(this.toBeDeletedForum.id).subscribe();
+      this.forums.splice(this.forums.findIndex(forum => forum.id === deletedForum.id), 1);
+      this.deleteModal = false;
+    }
+  }
 
   openForumModal() {
     this.form.reset();
@@ -62,8 +101,6 @@ export class ForumsPageComponent{
   }
   loading = false;
 
-
-
   onSubmit() {
     this.error$.next('');
     if(!this.form.valid) {
@@ -72,8 +109,9 @@ export class ForumsPageComponent{
       this.loading = true;
       this.forumsService.saveForum(this.form.value).subscribe({
         next: (data) => {
-          console.log(data);
           this.error$.next('');
+          this.forums.push(data);
+          this.forums$.next(this.forums)
           this.loading=false;
           this.forumModal = false;
         },

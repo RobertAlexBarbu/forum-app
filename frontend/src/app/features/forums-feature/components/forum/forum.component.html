@@ -1,8 +1,10 @@
 <div class="forum">
+    <div class="forum-icon-container">
+        <ng-icon class="forum-icon" name="jamMessagesF" size="2.5rem"></ng-icon>
+    </div>
 
-    <ng-icon class="forum-icon" name="jamMessagesF" size="4rem"></ng-icon>
     <div class="forum-info">
-        <div class="name">{{forum.name}}</div>
+        <div class="name link" [routerLink]="['', 'forums', forum.name]">{{forum.name}}</div>
         <div class="data">
             <div class="data-group">
                 <div class="info">
@@ -26,10 +28,10 @@
 
     </div>
     <div class="btn">
-        <button pButton class="p-button-text p-button  nav">
+        <button [routerLink]="['', 'forums', 'edit', forum.name]" pButton class="p-button-text p-button  nav">
             <ng-icon name="jamPencilF"></ng-icon>
         </button>
-        <button pButton class="p-button-text p-button p-button-danger nav">
+        <button pButton (click)="delete()" class="p-button-text p-button p-button-danger nav">
             <ng-icon name="jamTrashF"></ng-icon>
         </button>
     </div>

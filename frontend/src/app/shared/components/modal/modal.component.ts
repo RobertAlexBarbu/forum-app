@@ -1,8 +1,8 @@
 import {
   ChangeDetectionStrategy,
-  Component, EventEmitter,
+  Component, ElementRef, EventEmitter,
   inject, Input, Output,
-  Renderer2
+  Renderer2, ViewContainerRef
 } from '@angular/core';
 import {CommonModule, DOCUMENT} from '@angular/common';
 import {ButtonModule} from "primeng/button";
@@ -25,23 +25,25 @@ export class ModalComponent {
   private _visible: boolean = false;
   renderer2 = inject(Renderer2);
   document = inject(DOCUMENT);
+  elementRef = inject(ElementRef);
   @Output() isVisibleChange = new EventEmitter();
   @Input()
   set isVisible(value: boolean) {
-    console.log('openend');
-    const menu = document.querySelector('.hamburger-menu1');
+    // const menu = document.querySelector('.hamburger-menu1');
+    const menu = this.elementRef.nativeElement.querySelector('.hamburger-menu1');
     if(value) {
-      this.document.body.style.overflow = 'hidden';
-
+      // this.document.body.style.overflow = 'hidden';
+      this.document.body.style.position = 'fixed';
       if(menu !== null) {
         (menu as HTMLElement).style.display = 'flex';
       }
-      this.renderer2.addClass(document.querySelector('.hamburger-menu1'), 'hamburger-menu-active')
-      this.renderer2.removeClass(document.querySelector('.hamburger-menu1'), 'hamburger-menu-closed');
+      this.renderer2.addClass(menu, 'hamburger-menu-active')
+      this.renderer2.removeClass(menu, 'hamburger-menu-closed');
     } else {
-      this.document.body.style.overflow = '';
-      this.renderer2.addClass(document.querySelector('.hamburger-menu1'), 'hamburger-menu-closed')
-      this.renderer2.removeClass(document.querySelector('.hamburger-menu1'), 'hamburger-menu-active');
+      // this.document.body.style.overflow = '';
+      this.document.body.style.position = 'static';
+      this.renderer2.addClass(menu, 'hamburger-menu-closed')
+      this.renderer2.removeClass(menu, 'hamburger-menu-active');
       setTimeout(() => {
 
         if(menu !== null) {

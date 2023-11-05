@@ -1,19 +1,20 @@
 import {
   ChangeDetectionStrategy,
-  Component,
+  Component, EventEmitter,
   Injectable,
-  Input
+  Input, Output
 } from '@angular/core';
 import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {ForumModel} from "../../models/forum.model";
 import {NgIcon, provideIcons} from "@ng-icons/core";
 import {jamMessagesF, jamMessageF, jamMessage, jamPencilF, jamTrashF} from "@ng-icons/jam-icons";
 import {ButtonModule} from "primeng/button";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-forum',
   standalone: true,
-  imports: [CommonModule, NgOptimizedImage, NgIcon, ButtonModule],
+  imports: [CommonModule, NgOptimizedImage, NgIcon, ButtonModule, RouterLink],
   templateUrl: './forum.component.html',
   styleUrls: ['./forum.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -21,4 +22,9 @@ import {ButtonModule} from "primeng/button";
 })
 export class ForumComponent {
   @Input() forum!: ForumModel;
+  @Output() deleteForum = new EventEmitter<ForumModel>();
+
+  delete() {
+    this.deleteForum.emit(this.forum);
+  }
 }
