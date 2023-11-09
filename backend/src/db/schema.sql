@@ -238,14 +238,6 @@ ALTER TABLE ONLY public.categories
 
 
 --
--- Name: forums forums_name_key; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.forums
-    ADD CONSTRAINT forums_name_key UNIQUE (name);
-
-
---
 -- Name: forums forums_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 

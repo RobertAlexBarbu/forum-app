@@ -4,7 +4,7 @@
     <button [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active-link" pButton
             class=" p-button-sm p-button-text " routerLink="/" (click)="closeMenu()"><ng-icon name="jamHomeF"></ng-icon>Home
     </button>
-    <button [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active-link" pButton
+    <button routerLinkActive="active-link" pButton
             class=" p-button-sm p-button-text " routerLink="/forums" (click)="closeMenu()"><ng-icon name="jamMessagesF"></ng-icon>Forums
     </button>
     <ng-container *ngIf="authState | isAuth">

@@ -1,29 +1,33 @@
-<div>
-    <form (ngSubmit)="submit()">
-        <h2>Create new forum</h2>
+<div class="card" ontouchstart="">
+    <form (ngSubmit)="onSubmit()">
+        <h2>Edit forum</h2>
         <div class="input">
             <label for="name">Forum name</label>
-            <input pInputText type="text" id="name" placeholder="Forum name">
-            <div class="error"></div>
+            <input [formControl]="forumName" pInputText type="text" id="name">
+            <div class="error">
+                <ng-container *ngIf="forumName.errors">
+                    <ng-container *ngIf="forumName.errors['required']">
+                        This field is required
+                    </ng-container>
+                </ng-container>
+            </div>
         </div>
         <div class="separator"></div>
         <div class="error"></div>
-        <div class="subtitle">Categories</div>
         <div class="categories">
-            <div *ngFor="let cate of categories">
-                <div class="category">
-                    <div class="text">{{cate}}</div>
-                    <div class="btns">
-                            <button pButton class="nav p-button p-button-text">
-                                <ng-icon name="jamPencilF"></ng-icon>
+        <div class="subtitle">Categories</div>
+        <ng-container *ngIf="categories$ | async as categories">
+                <div *ngFor="let cate of categories; let i = index">
+                    <div class="category">
+                        <div class="text" >{{cate.name}}</div>
+                        <div class="btns">
+                            <button pButton (click)="deleteCategory(cate, i)" type="button" class="nav p-button p-button-text p-button-danger">
+                                <ng-icon name="jamTrashF"></ng-icon>
                             </button>
-
-                        <button pButton class="nav p-button p-button-text p-button-danger">
-                            <ng-icon name="jamTrashF"></ng-icon>
-                        </button>
+                        </div>
                     </div>
                 </div>
-            </div>
+        </ng-container>
         </div>
         <div class="error"></div>
         <div class="input-last">
@@ -34,21 +38,23 @@
                     <ng-icon name="jamPlus" size="1.3rem"></ng-icon>
                 </button>
             </div>
-            <div class="error"></div>
+            <div class="error">
+                <ng-container *ngIf="category.errors && category.dirty">
+                    <ng-container *ngIf="category.errors['required']">
+                        This field is required
+                    </ng-container>
+                </ng-container>
+            </div>
         </div>
-        <div class="top-error"></div>
+        <div class="top-error">{{errors$ | async}}</div>
         <div class="double-submit">
 
-            <button pButton class="p-button p-button-outlined">
+            <button pButton class="p-button p-button-outlined" type="button" routerLink="../..">
                 Cancel
             </button>
-
             <button pButton class=" p-button">
-                Create
+                Save
             </button>
         </div>
-
-
-
     </form>
 </div>

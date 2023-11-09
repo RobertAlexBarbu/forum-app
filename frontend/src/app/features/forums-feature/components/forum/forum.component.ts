@@ -1,7 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component, EventEmitter,
-  Injectable,
   Input, Output
 } from '@angular/core';
 import {CommonModule, NgOptimizedImage} from '@angular/common';
@@ -10,11 +9,12 @@ import {NgIcon, provideIcons} from "@ng-icons/core";
 import {jamMessagesF, jamMessageF, jamMessage, jamPencilF, jamTrashF} from "@ng-icons/jam-icons";
 import {ButtonModule} from "primeng/button";
 import {RouterLink} from "@angular/router";
+import {DockModule} from "primeng/dock";
 
 @Component({
   selector: 'app-forum',
   standalone: true,
-  imports: [CommonModule, NgOptimizedImage, NgIcon, ButtonModule, RouterLink],
+  imports: [CommonModule, NgOptimizedImage, NgIcon, ButtonModule, RouterLink, DockModule],
   templateUrl: './forum.component.html',
   styleUrls: ['./forum.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

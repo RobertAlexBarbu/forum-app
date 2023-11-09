@@ -4,7 +4,7 @@ import {
   inject,
   OnInit
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {ButtonModule} from "primeng/button";
 import {NgIcon, provideIcons} from "@ng-icons/core";
 import {jamPlus} from "@ng-icons/jam-icons";
@@ -35,7 +35,7 @@ import {ForumModel} from "../../models/forum.model";
   viewProviders: [provideIcons({jamPlus})],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ForumsPageComponent implements OnInit{
+export class ForumsPageComponent implements OnInit {
   _forumModal = false;
   _deleteModal = false;
   error$ = new Subject<string>();
@@ -43,9 +43,11 @@ export class ForumsPageComponent implements OnInit{
   forums$ = new Subject<ForumModel[]>();
   forums: ForumModel[] = [];
   toBeDeletedForum: ForumModel | null = null;
+
   set forumModal(value: boolean) {
     this._forumModal = value;
   }
+
   get forumModal() {
     return this._forumModal;
   }
@@ -53,6 +55,7 @@ export class ForumsPageComponent implements OnInit{
   set deleteModal(value: boolean) {
     this._deleteModal = value;
   }
+
   get deleteModal() {
     return this._deleteModal;
   }
@@ -74,45 +77,62 @@ export class ForumsPageComponent implements OnInit{
   openDeleteModal(forum: ForumModel) {
     this.toBeDeletedForum = forum;
     this.deleteModal = true;
-  }
-  closeDeleteModal() {
-    this.deleteModal = false;
     this.error$.next('');
   }
 
+  closeDeleteModal() {
+    this.deleteModal = false;
+  }
 
   deleteForum() {
     this.error$.next('');
-    if(this.toBeDeletedForum) {
+    if (this.toBeDeletedForum) {
       const deletedForum = this.toBeDeletedForum;
-      this.forumsService.deleteForum(this.toBeDeletedForum.id).subscribe();
-      this.forums.splice(this.forums.findIndex(forum => forum.id === deletedForum.id), 1);
-      this.deleteModal = false;
+      this.forumsService.deleteForum(this.toBeDeletedForum.id).subscribe({
+        next: () => {
+          this.forums.splice(this.forums.findIndex(forum => forum.id === deletedForum.id),
+            1);
+          this.forums$.next(this.forums);
+          this.deleteModal = false;
+        },
+        error: (err) => {
+          err.next(err.message);
+        }
+      });
+
     }
   }
 
   openForumModal() {
     this.form.reset();
     this.forumModal = true;
-  }
-  closeForumModal() {
-    this.forumModal = false;
     this.error$.next('');
   }
+
+  closeForumModal() {
+    this.forumModal = false;
+  }
+
   loading = false;
 
   onSubmit() {
     this.error$.next('');
-    if(!this.form.valid) {
+    if (!this.form.valid) {
       this.form.markAsDirty();
     } else {
       this.loading = true;
       this.forumsService.saveForum(this.form.value).subscribe({
         next: (data) => {
           this.error$.next('');
-          this.forums.push(data);
+          let newForum: ForumModel = {
+            id: data.id,
+            name: data.name,
+            latestPost: null,
+            postsCount: 0
+          }
+          this.forums.push(newForum);
           this.forums$.next(this.forums)
-          this.loading=false;
+          this.loading = false;
           this.forumModal = false;
         },
         error: (err) => {

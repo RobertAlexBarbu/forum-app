@@ -13,7 +13,6 @@
 }
 .details-text {
   color: var(--text-gray);
-  font-size: 1.1rem;
   margin-bottom: 1rem;
 }
 .forum-name {
@@ -24,8 +23,8 @@
 .warning-text {
   color: var(--error);
   background-color: #dc262610;
-  padding: 0.7rem;
   border-radius: 10px;
+  padding: 0.5rem;
 }
 form.modal-form h2{
   margin-top: 0;

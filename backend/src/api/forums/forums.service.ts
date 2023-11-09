@@ -26,12 +26,30 @@ export class ForumsService {
     }
 
   }
-
+  static getForumWithCategories = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      console.log('hey');
+      const forums = await this.forumsRepository.getForumWithCategories(req.params.id)
+      res.send(forums)
+    } catch(err) {
+      next(err)
+    }
+  }
   static deleteForum = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      await this.forumsRepository.deleteForum(req.params.id);
+      const result = await this.forumsRepository.deleteForum(req.params.id);
+      res.send(result);
     } catch(err) {
       next(err);
+    }
+  }
+  static editForum = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      console.log(req.body);
+      await this.forumsRepository.editForum(req.params.id, req.body);
+      res.send();
+    } catch(err) {
+      next(err)
     }
   }
 }

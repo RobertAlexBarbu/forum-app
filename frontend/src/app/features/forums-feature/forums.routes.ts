@@ -26,12 +26,12 @@ export const forumsRoutes: Routes = [
         loadComponent: () => import("./pages/edit-forum-page/edit-forum-page.component").then(m => m.EditForumPageComponent)
       },
       {
-        path: 'edit/:name',
+        path: 'edit/:id',
         // canMatch: [isAdminGuard],
         loadComponent: () => import("./pages/edit-forum-page/edit-forum-page.component").then(m => m.EditForumPageComponent)
       },
       {
-        path: ':name',
+        path: ':id',
         component: OneForumPageComponent
       },
 
