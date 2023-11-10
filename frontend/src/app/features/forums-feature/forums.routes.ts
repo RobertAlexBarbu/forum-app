@@ -6,6 +6,9 @@ import {
 } from "./pages/one-forum-page/one-forum-page.component";
 import {isAdminGuard} from "../../core/guards/is-admin.guard";
 import {ForumsFeatureComponent} from "./forums-feature.component";
+import {
+  NewPostPageComponent
+} from "./pages/new-post-page/new-post-page.component";
 
 export const forumsRoutes: Routes = [
   {
@@ -34,6 +37,10 @@ export const forumsRoutes: Routes = [
         path: ':id',
         component: OneForumPageComponent
       },
+      {
+        path: ':id/new-post',
+        component: NewPostPageComponent
+      }
 
     ]
   }

@@ -16,9 +16,8 @@ import {
   Validators
 } from "@angular/forms";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
-import {ForumsService} from "../../services/forums.service";
+import {ForumsService} from "../../services/forums/forums.service";
 import {CategoryModel} from "../../models/forum-with-categories.model";
-import {ForumModel} from "../../models/forum.model";
 import { Subject} from "rxjs";
 
 @Component({
@@ -52,6 +51,7 @@ export class EditForumPageComponent implements OnInit{
 
   addCategory() {
     if(this.category.valid) {
+
       this.categoriesAdded.push({
         name: this.category.getRawValue(),
         forum_id: this.forum.id
@@ -65,6 +65,7 @@ export class EditForumPageComponent implements OnInit{
       if(this.element) {
         this.element.style.height = this.elementHeight + 'rem';
       }
+      this.category.reset();
     } else {
       this.category.markAsDirty();
     }

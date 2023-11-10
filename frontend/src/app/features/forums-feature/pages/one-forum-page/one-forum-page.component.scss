@@ -1,0 +1,13 @@
+.title {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.card {
+  max-width: 50rem;
+  transition: height 2s;
+}

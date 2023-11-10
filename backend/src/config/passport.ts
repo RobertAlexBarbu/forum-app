@@ -1,8 +1,6 @@
 import pp from "passport";
 import {Strategy} from "passport-local";
 import {CryptoService} from "../services/crypto.service";
-import {CamelcaseService} from "../services/camelcase.service";
-import {AuthDataModel} from "../model/auth-data.model";
 import {db} from "../db/db";
 
 export const passport = pp;
@@ -39,7 +37,7 @@ const getAuthData = async (usernameOrEmail: string) => {
   if (result.length === 0) {
     return null;
   }
-  return CamelcaseService.camelize(result[0]) as AuthDataModel;
+  return result[0];
 }
 passport.serializeUser(function (user: any, cb) {
   process.nextTick(function () {

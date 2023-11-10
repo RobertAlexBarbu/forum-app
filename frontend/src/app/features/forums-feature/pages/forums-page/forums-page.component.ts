@@ -22,7 +22,7 @@ import {
 import {InputTextModule} from "primeng/inputtext";
 import {PaginatorModule} from "primeng/paginator";
 import {Subject} from "rxjs";
-import {ForumsService} from "../../services/forums.service";
+import {ForumsService} from "../../services/forums/forums.service";
 import {ForumComponent} from "../../components/forum/forum.component";
 import {ForumModel} from "../../models/forum.model";
 
@@ -127,8 +127,8 @@ export class ForumsPageComponent implements OnInit {
           let newForum: ForumModel = {
             id: data.id,
             name: data.name,
-            latestPost: null,
-            postsCount: 0
+            latest_post: null,
+            posts_count: 0
           }
           this.forums.push(newForum);
           this.forums$.next(this.forums)

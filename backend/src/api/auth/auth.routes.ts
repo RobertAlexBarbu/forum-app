@@ -12,7 +12,6 @@ authRoutes.post(
   passport.authenticate('local'),
   passport.session(),
   (req: express.Request, res: express.Response) => {
-    console.log(req.user);
     res.send(req.user);
   }
 )

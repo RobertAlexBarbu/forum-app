@@ -20,7 +20,6 @@ SET default_table_access_method = heap;
 CREATE TABLE public.categories (
     id integer NOT NULL,
     name character varying(16) NOT NULL,
-    color character varying(7),
     forum_id integer
 );
 
@@ -82,6 +81,7 @@ ALTER SEQUENCE public.forums_id_seq OWNED BY public.forums.id;
 CREATE TABLE public.posts (
     id integer NOT NULL,
     title character varying(32) NOT NULL,
+    content character varying NOT NULL,
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     category_id integer,
     user_id integer,

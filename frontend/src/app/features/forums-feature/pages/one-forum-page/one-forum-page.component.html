@@ -1,1 +1,11 @@
-<p>one-forum-page works!</p>
+<div class="card" ontouchstart="">
+    <div class="header">
+        <ng-container *ngIf="route.queryParams | async as routeQueryParams">
+            <div class="title">{{routeQueryParams['name']}}</div>
+        </ng-container>
+        <button routerLink="./new-post" pButton class="smaller p-button-text p-button-sm smaller">
+            <ng-icon name="jamPlus"></ng-icon>
+            New Post
+        </button>
+    </div>
+</div>

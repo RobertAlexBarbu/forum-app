@@ -4,24 +4,26 @@
     </div>
 
     <div class="forum-info">
-        <div class="name link" [routerLink]="['', 'forums', forum.id]">{{forum.name}}</div>
+        <div class="name link" [routerLink]="['', 'forums', forum.id]" [queryParams]="{
+        name: forum.name
+        }">{{forum.name}}</div>
         <div class="data">
             <div class="data-group">
                 <div class="info">
                     <ng-icon name="jamMessageF" size="0.8rem"></ng-icon>
-                    <div>{{forum.postsCount}} discussions</div>
+                    <div>{{forum.posts_count}} discussions</div>
                 </div>
                 <div class="info">
                     <ng-icon name="jamMessage" size="0.8rem"></ng-icon>
-                    <div>{{forum.postsCount}} comments</div>
+                    <div>{{forum.posts_count}} comments</div>
                 </div>
             </div>
             <div class="data-group desktop">
                 <div class="info">
-                    <div>Latest discussion: {{forum.postsCount}}</div>
+                    <div>Latest discussion: {{forum.posts_count}}</div>
                 </div>
                 <div class="info">
-                    <div>Latest comment: {{forum.postsCount}}</div>
+                    <div>Latest comment: {{forum.posts_count}}</div>
                 </div>
             </div>
         </div>

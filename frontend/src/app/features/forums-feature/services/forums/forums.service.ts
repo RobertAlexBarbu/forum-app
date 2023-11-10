@@ -1,10 +1,10 @@
 import {inject, Injectable} from '@angular/core';
-import {HttpService} from "../../../core/services/http/http.service";
+import {HttpService} from "../../../../core/services/http/http.service";
 import {catchError, throwError} from "rxjs";
 import {HttpErrorResponse} from "@angular/common/http";
-import {ForumModel} from "../models/forum.model";
-import {ForumWithCategoriesModel} from "../models/forum-with-categories.model";
-import {EditForumModel} from "../models/edit-forum.model";
+import {ForumModel} from "../../models/forum.model";
+import {ForumWithCategoriesModel} from "../../models/forum-with-categories.model";
+import {EditForumModel} from "../../models/edit-forum.model";
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +31,10 @@ export class ForumsService {
     return this.http.putByID('api/forums/edit', body, id).pipe(catchError((error: HttpErrorResponse) => {
       return throwError(() => new Error('⚠ ' + error.statusText));
     }));
+  }
+
+  getForum(id: number) {
+    return this.http.getByID('api/forums', id);
   }
   constructor() { }
 }

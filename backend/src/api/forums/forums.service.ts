@@ -45,9 +45,17 @@ export class ForumsService {
   }
   static editForum = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      console.log(req.body);
       await this.forumsRepository.editForum(req.params.id, req.body);
       res.send();
+    } catch(err) {
+      next(err)
+    }
+  }
+
+  static getForum = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const forum = await this.forumsRepository.getForum(req.params.id);
+      res.send(forum);
     } catch(err) {
       next(err)
     }
