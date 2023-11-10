@@ -63,12 +63,18 @@ export class ForumsRepository extends DatabaseRepository {
                forums.id,
                (select coalesce(json_agg(categories), '[]') from categories) as categories,
                (select coalesce(json_agg(posts), '[]') from (
-               select posts.*, to_json(categories) as category, users.username as created_by
+               select 
+                   posts.*, 
+                   to_json(categories) as category, 
+                   users.username as created_by, 
+                    (select count(*) from comments where comments.post_id = posts.id) as comments,
+                   (select coalesce(json_agg(post_likes), '[]') from post_likes where post_likes.post_id = posts.id) as likes
                from posts left join categories on categories.id = posts.category_id
                join users on users.id = posts.user_id
+               where posts.forum_id = ?
                ) as posts)           as posts
         from forums
-        where forums.id = ?`, [id])
+        where forums.id = ?`, [id, id])
     return result.rows[0];
   }
 

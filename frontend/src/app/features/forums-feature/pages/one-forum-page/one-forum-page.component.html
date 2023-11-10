@@ -1,11 +1,15 @@
 <div class="card" ontouchstart="">
-    <div class="header">
-        <ng-container *ngIf="route.queryParams | async as routeQueryParams">
-            <div class="title">{{routeQueryParams['name']}}</div>
+    <ng-container *ngIf="forum$ | async as forum">
+        <div class="header">
+            <div class="title">{{forum.name}}</div>
+            <button routerLink="./new-post" pButton class="smaller p-button-text p-button-sm smaller">
+                <ng-icon name="jamPlus"></ng-icon>
+                New Post
+            </button>
+        </div>
+        <ng-container *ngFor="let post of forum.posts">
+          <app-post [post]="post"></app-post>
         </ng-container>
-        <button routerLink="./new-post" pButton class="smaller p-button-text p-button-sm smaller">
-            <ng-icon name="jamPlus"></ng-icon>
-            New Post
-        </button>
-    </div>
+    </ng-container>
+
 </div>

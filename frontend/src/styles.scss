@@ -101,6 +101,16 @@ button.test {
 .link:active {
   transform: scale(0.96);
 }
+.clickable {
+  transition-duration: 200ms;
+  cursor: pointer;
+}
+.clickable:active {
+  transform: scale(0.96);
+}
+.clickable::selection {
+  background-color: transparent;
+}
 
 /* SEPARATOR */
 .separator {
@@ -181,4 +191,10 @@ label {
 }
 .p-dropdown {
   width: 100% !important;
+}
+.sphere {
+  height: 0.3rem;
+  width: 0.3rem;
+  background-color: var(--border);
+  border-radius: 100px;
 }

@@ -8,7 +8,7 @@ import {CommonModule} from '@angular/common';
 import {DropdownModule} from "primeng/dropdown";
 import {ForumsService} from "../../services/forums/forums.service";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
-import {Observable, switchMap} from "rxjs";
+import {Observable} from "rxjs";
 import {
   CategoryModel,
   ForumWithCategoriesModel
@@ -23,8 +23,6 @@ import {ChipsModule} from "primeng/chips";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {ButtonModule} from "primeng/button";
 import {PostsService} from "../../services/posts/posts.service";
-import {Store} from "@ngrx/store";
-import {AuthStateModel} from "../../../../core/models/auth-state.model";
 import {
   FormUtilsService
 } from "../../../../core/services/form-utils/form-utils.service";
@@ -40,7 +38,6 @@ import {
 export class NewPostPageComponent implements OnInit {
   forumsService = inject(ForumsService);
   postsService = inject(PostsService);
-  store = inject(Store);
   forumWithCategories$ = new Observable<ForumWithCategoriesModel>()
   route = inject(ActivatedRoute);
   router = inject(Router);
@@ -59,24 +56,27 @@ export class NewPostPageComponent implements OnInit {
 
   ngOnInit() {
     this.forumWithCategories$ = this.forumsService.getForumWithCategories(this.route.snapshot.params['id'])
+    this.forumsService.getForumWithCategories(this.route.snapshot.params['id']).subscribe({
+      next: (data) => {
+        console.log(data)
+      }
+    })
   }
 
   onSubmit() {
     if(this.form.valid) {
-      let formValue = this.form.getRawValue()
+
       let category_id: number | null = null;
       if (this.form.controls['category'].getRawValue()) {
         category_id = this.form.controls['category'].getRawValue()!.id;
       }
-      this.store.select('auth').pipe(switchMap((authState: AuthStateModel) => {
-        return this.postsService.createPost({
+      this.postsService.createPost({
           title: this.form.controls['title'].getRawValue(),
           content: this.form.controls['content'].getRawValue(),
           forum_id: this.route.snapshot.params['id'],
           category_id: category_id,
-          user_id: authState.id
         })
-      })).subscribe({
+      .subscribe({
         next: () => {
           return this.router.navigate(['../'], {
             relativeTo: this.route

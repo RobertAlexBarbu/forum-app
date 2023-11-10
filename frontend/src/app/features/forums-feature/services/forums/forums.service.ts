@@ -5,6 +5,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {ForumModel} from "../../models/forum.model";
 import {ForumWithCategoriesModel} from "../../models/forum-with-categories.model";
 import {EditForumModel} from "../../models/edit-forum.model";
+import {ForumWithPostsModel} from "../../models/forum-with-posts.model";
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +35,8 @@ export class ForumsService {
   }
 
   getForum(id: number) {
-    return this.http.getByID('api/forums', id);
+    console.log(id);
+    return this.http.getByID<ForumWithPostsModel>('api/forums', id);
   }
   constructor() { }
 }

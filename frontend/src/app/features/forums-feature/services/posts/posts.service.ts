@@ -11,4 +11,11 @@ export class PostsService {
   createPost(body: CreatePostModel) {
     return this.http.post('api/posts', body);
   }
+  likePost(postId: number) {
+    console.log(`liking post ${postId}`)
+    return this.http.post(`api/posts/${postId}/like`);
+  }
+  dislikePost(postId: number) {
+    return this.http.delete(`api/posts/${postId}/dislike`);
+  }
 }

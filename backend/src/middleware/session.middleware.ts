@@ -19,7 +19,7 @@ export const sessionMiddleware = expressSession({
     store: sessionStore,
     rolling: true,
     cookie: {
-        maxAge: 1000 * 60 * 60,
+        maxAge: 1000 * 60 * 60 * 4,
         httpOnly: true,
         // sameSite: "none",
         secure: false // can be true only when using https

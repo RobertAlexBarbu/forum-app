@@ -6,7 +6,8 @@ create table posts (
     created_at timestamp default current_timestamp,
     category_id integer references categories(id) on delete set null,
     user_id integer references users(id) on delete set null,
-    forum_id integer references forums(id) on delete cascade
+    forum_id integer references forums(id) on delete cascade,
+    likes integer default 0
 );
 
 -- migrate:down
