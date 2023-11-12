@@ -1,0 +1,6 @@
+<ng-container *ngIf="forum$ | async as forum">
+  <ng-container *ngFor="let post of forum.posts">
+    <app-post [post]="post"></app-post>
+  </ng-container>
+</ng-container>
+

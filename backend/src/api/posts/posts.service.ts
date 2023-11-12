@@ -17,6 +17,7 @@ export class PostsService {
     try {
       const user = req.user as UserModel;
       await this.postsRepository.likePost(req.params.id, user.id);
+      res.send();
     } catch(err) {
       next(err);
     }
@@ -25,6 +26,15 @@ export class PostsService {
     try {
       const user = req.user as UserModel;
       await this.postsRepository.dislikePost(req.params.id, user.id);
+      res.send();
+    } catch(err) {
+      next(err);
+    }
+  }
+  static getPost = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const post = await this.postsRepository.getPost(req.params.id);
+      res.send(post);
     } catch(err) {
       next(err);
     }

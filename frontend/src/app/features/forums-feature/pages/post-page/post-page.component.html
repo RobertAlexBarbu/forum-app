@@ -1,1 +1,48 @@
-<p>post-page works!</p>
+<div class="separator"></div>
+<div class="card2">
+
+    <ng-container *ngIf="post$ | async as post">
+      <div class="post">
+      <div class="header">
+        <span class="category" *ngIf="post.category">{{post.category.name}}</span><span class="title">{{post.title}}</span>
+      </div>
+      <div class="top">
+        <div>{{post.created_by}}</div><div class="sphere"></div><div>{{post.created_at | timeAgoPipe2}}</div>
+      </div>
+      <div class="content">
+        {{post.content}}
+      </div>
+        <div *ngIf="!liked" class="likes clickable" (click)="likePost(post.id)">
+          <ng-container >
+            <ng-icon name="jamArrowSquareUp" size="1.2rem"></ng-icon> {{likes$ | async}}
+          </ng-container>
+        </div>
+        <div *ngIf="liked" class="likes liked clickable" (click)="dislikePost(post.id)">
+          <ng-container >
+            <ng-icon  name="jamArrowSquareUpF" size="1.2rem"></ng-icon> {{likes$ | async}}
+          </ng-container>
+        </div>
+      </div>
+      <div class="separator"></div>
+      <div class="comments">
+        <ng-container *ngFor="let comment of post.comments">
+          <app-comment [comment]="comment"></app-comment>
+        </ng-container>
+      </div>
+    </ng-container>
+
+
+
+  <div class="create-comment">
+    <div class="mini-title">Comment</div>
+    <form (ngSubmit)="onSubmit()">
+      <div class="input">
+        <textarea rows="3" id="comment" [formControl]="comment" cols="30" pInputTextarea [autoResize]="true"></textarea>
+      </div>
+      <div class="btn-container">
+        <button pButton class=" smaller p-button p-button-text">Post</button>
+      </div>
+    </form>
+  </div>
+</div>
+

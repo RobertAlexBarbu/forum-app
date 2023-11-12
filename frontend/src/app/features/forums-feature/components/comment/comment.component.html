@@ -1,0 +1,11 @@
+
+<div class="comment">
+  <div class="top">
+  <ng-container *ngIf="comment.created_at">
+    <div>{{comment.username}}</div><div class="sphere"></div><div>{{comment.created_at | timeAgoPipe2}}</div>
+  </ng-container>
+</div>
+  <div class="content">
+    {{comment.content}}
+  </div>
+</div>

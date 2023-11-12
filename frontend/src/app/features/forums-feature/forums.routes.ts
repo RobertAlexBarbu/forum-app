@@ -10,6 +10,7 @@ import {
   NewPostPageComponent
 } from "./pages/new-post-page/new-post-page.component";
 import {PostPageComponent} from "./pages/post-page/post-page.component";
+import {PostsComponent} from "./components/posts/posts.component";
 
 export const forumsRoutes: Routes = [
   {
@@ -36,16 +37,24 @@ export const forumsRoutes: Routes = [
       },
       {
         path: ':id',
-        component: OneForumPageComponent
+        component: OneForumPageComponent,
+        children: [
+          {
+            path: '',
+            component: PostsComponent
+          },
+          {
+            path: 'posts/:post',
+            component: PostPageComponent
+          }
+
+        ]
       },
       {
         path: ':id/new-post',
         component: NewPostPageComponent
       },
-      {
-        path: ':id/posts/:post',
-        component: PostPageComponent
-      }
+
 
     ]
   }

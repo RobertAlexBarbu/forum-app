@@ -2,7 +2,7 @@
   <div class="top">
     <div>{{post.created_by}}</div><div class="sphere"></div><div>{{post.created_at | timeAgoPipe2}}</div>
   </div>
-  <div class="body ">
+  <div class="body">
 
     <div class="category" *ngIf="post.category">{{post.category.name}}</div><div class="title clickable" routerLink="./posts/{{post.id}}">{{post.title}}</div>
   </div>

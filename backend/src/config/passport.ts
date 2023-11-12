@@ -10,8 +10,8 @@ passport.use('local', new Strategy(async (username, password, done) => {
     if (user === null) {
       return done(null, false);
     }
-    const passwordHash = await CryptoService.hash(password, user.passwordSalt);
-    if (passwordHash === user.passwordHash) {
+    const password_hash = await CryptoService.hash(password, user.password_salt);
+    if (password_hash === user.password_hash) {
       return done(null, {
         username: user.username,
         id: user.id,

@@ -1,11 +1,12 @@
 import {CategoryModel} from "./forum-with-categories.model";
+import {CreateCommentModel} from "./create-comment.model";
 
-export interface PostModel {
+export interface Post2Model {
   id: number,
   title: string,
   likes: {post_id:number, user_id:number, id:number}[],
   category: CategoryModel | null
-  comments: number | any[],
+  comments: CreateCommentModel[],
   user_id: number,
   category_id: number,
   created_at: string,
