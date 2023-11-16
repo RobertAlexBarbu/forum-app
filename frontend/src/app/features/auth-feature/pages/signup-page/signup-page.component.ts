@@ -17,7 +17,7 @@ import {Store} from "@ngrx/store";
 import { signup} from "../../../../core/store/auth/auth.actions";
 import { Subject} from "rxjs";
 import {AuthService} from "../../../../core/services/auth/auth.service";
-import {AuthStateModel} from "../../../../core/models/auth-state.model";
+import {AuthStateModel} from "../../../../core/store/auth/auth-state.model";
 import {ButtonModule} from "primeng/button";
 import {PasswordModule} from "primeng/password";
 import {
@@ -69,7 +69,9 @@ export class SignupPageComponent {
       this.loading = true;
       this.authService.signup(this.form.getRawValue()).subscribe({
         next: (data) => {
-          this.store.dispatch(signup({sessionData: data}));
+          localStorage.setItem('access_token', data.access_token);
+          let authState = JSON.parse(atob(data.access_token.split('.')[1]))
+          this.store.dispatch(signup({authState: authState}));
           this.loading = false;
           return this.router.navigate(['']);
         },

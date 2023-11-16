@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {Store} from "@ngrx/store";
-import {AuthStateModel} from "../../models/auth-state.model";
+import {AuthStateModel} from "../../store/auth/auth-state.model";
 import {Observable} from "rxjs";
 import {NgIcon, provideIcons} from "@ng-icons/core";
 import {jamAlignJustify} from "@ng-icons/jam-icons";

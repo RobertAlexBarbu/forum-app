@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OneForumPageComponent } from './one-forum-page.component';
+import { ForumPageComponent } from './forum-page.component';
 
 describe('OneForumPageComponent', () => {
-  let component: OneForumPageComponent;
-  let fixture: ComponentFixture<OneForumPageComponent>;
+  let component: ForumPageComponent;
+  let fixture: ComponentFixture<ForumPageComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [OneForumPageComponent]
+      imports: [ForumPageComponent]
     });
-    fixture = TestBed.createComponent(OneForumPageComponent);
+    fixture = TestBed.createComponent(ForumPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

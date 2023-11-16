@@ -1,9 +1,9 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpService} from "../../../../core/services/http/http.service";
-import {CreatePostModel} from "../../models/create-post.model";
 import {PostModel} from "../../models/post.model";
-import {CreateCommentModel} from "../../models/create-comment.model";
-import {Post2Model} from "../../models/post2.model";
+import {CreateCommentDto} from "../../dto/create-comment.dto";
+import {CreatePostDto} from "../../dto/create-post.dto";
+import {CommentModel} from "../../models/comment.model";
 
 @Injectable({
   providedIn: 'root'
@@ -11,11 +11,10 @@ import {Post2Model} from "../../models/post2.model";
 export class PostsService {
   http = inject(HttpService);
   constructor() { }
-  createPost(body: CreatePostModel) {
-    return this.http.post('api/posts', body);
+  createPost(body: CreatePostDto) {
+    return this.http.post('posts', body);
   }
   likePost(postId: number) {
-    console.log(`liking post ${postId}`)
     return this.http.post(`api/posts/${postId}/like`);
   }
   dislikePost(postId: number) {
@@ -23,10 +22,10 @@ export class PostsService {
   }
 
   getPost(id: number) {
-    return this.http.getByID<Post2Model>('api/posts', id);
+    return this.http.getByID<PostModel>('posts', id);
   }
 
-  commentPost(comment: CreateCommentModel) {
-    return this.http.post('api/comments', comment);
+  commentPost(comment: CreateCommentDto) {
+    return this.http.post<CommentModel>('comments', comment);
   }
 }

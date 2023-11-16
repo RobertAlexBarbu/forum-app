@@ -11,17 +11,17 @@ import {Observable} from "rxjs";
 import {AuthService} from "../../services/auth/auth.service";
 import {logout} from "../../store/auth/auth.actions";
 import {isAuthPipe} from "../../../shared/pipes/is-auth.pipe";
-import {isModeratorPipe} from "../../../shared/pipes/is-moderator.pipe";
 import {isAdminPipe} from "../../../shared/pipes/is-admin.pipe";
-import {AuthStateModel} from "../../models/auth-state.model";
+import {AuthStateModel} from "../../store/auth/auth-state.model";
 import {ButtonModule} from "primeng/button";
 import {NgIcon, provideIcons} from "@ng-icons/core";
 import {jamHomeF, jamMessagesF} from "@ng-icons/jam-icons";
+import {IsAuthDirective} from "../../../shared/directives/is-auth.directive";
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterLink, isAuthPipe, isModeratorPipe, isAdminPipe, ButtonModule, NgIcon, RouterLinkActive],
+  imports: [CommonModule, RouterLink, isAuthPipe, isAdminPipe, ButtonModule, NgIcon, RouterLinkActive, IsAuthDirective],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -41,13 +41,8 @@ export class NavbarComponent implements OnInit {
     this.navigate.emit();
   }
   logout() {
-    this.authService.logout().subscribe({
-      next: () => {
-        this.navigate.emit();
-        this.store.dispatch(logout());
-        return this.router.navigate(['']);
-      }
-    })
+    this.authService.logout();
+    this.store.dispatch(logout());
   }
 
 }

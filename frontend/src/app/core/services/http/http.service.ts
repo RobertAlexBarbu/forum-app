@@ -20,15 +20,16 @@ export class HttpService {
     }
 
     post<T>(url: string, body: T | {} = {}) {
+      console.log(new Date());
         return this.http.post<T>(`${this.server}/${url}`, body, this.httpOptions);
     }
 
-    put<T>(url: string, body: T) {
-        return this.http.put<T>(`${this.server}/${url}`, body, this.httpOptions);
+    patch<T>(url: string, body: T) {
+        return this.http.patch<T>(`${this.server}/${url}`, body, this.httpOptions);
     }
 
-    putByID<T>(url: string, body: T, id: string | number) {
-        return this.http.put<T>(`${this.server}/${url}/${id}`, body, this.httpOptions);
+    patchByID<T>(url: string, body: T, id: string | number) {
+        return this.http.patch<T>(`${this.server}/${url}/${id}`, body, this.httpOptions);
     }
 
     delete<T>(url: string) {

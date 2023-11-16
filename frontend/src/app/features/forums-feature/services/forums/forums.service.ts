@@ -3,40 +3,44 @@ import {HttpService} from "../../../../core/services/http/http.service";
 import {catchError, throwError} from "rxjs";
 import {HttpErrorResponse} from "@angular/common/http";
 import {ForumModel} from "../../models/forum.model";
-import {ForumWithCategoriesModel} from "../../models/forum-with-categories.model";
-import {EditForumModel} from "../../models/edit-forum.model";
-import {ForumWithPostsModel} from "../../models/forum-with-posts.model";
+import {CreateForumDto} from "../../dto/create-forum.dto";
+import {UpdateForumDto} from "../../dto/update-forum.dto";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ForumsService {
   http = inject(HttpService);
-  saveForum(forumName: string) {
-    return this.http.post<ForumModel>('api/forums/new', {name: forumName}).pipe(catchError((error: HttpErrorResponse) => {
-      return throwError(() => new Error('⚠ ' + error.statusText));
-    }));
-  }
-  getForums() {
-    return this.http.get<ForumModel[]>('api/forums');
-  }
-  deleteForum(id: number) {
-    return this.http.deleteByID('api/forums', id).pipe(catchError((error: HttpErrorResponse) => {
-      return throwError(() => new Error('⚠ ' + error.statusText));
-    }));
-  }
-  getForumWithCategories(id: number) {
-    return this.http.getByID<ForumWithCategoriesModel>('api/forums/edit', id);
-  }
-  editForum(id: number, body: EditForumModel) {
-    return this.http.putByID('api/forums/edit', body, id).pipe(catchError((error: HttpErrorResponse) => {
+
+  createForum(forum: CreateForumDto) {
+    return this.http.post<ForumModel>('forums', forum).pipe(catchError((error: HttpErrorResponse) => {
       return throwError(() => new Error('⚠ ' + error.statusText));
     }));
   }
 
-  getForum(id: number) {
-    console.log(id);
-    return this.http.getByID<ForumWithPostsModel>('api/forums', id);
+  getForums() {
+    return this.http.get<ForumModel[]>('forums');
   }
-  constructor() { }
+
+  getForum(id: number) {
+    return this.http.getByID<ForumModel>('forums', id);
+  }
+  getForumForEdit(id: number) {
+    return this.http.getByID<ForumModel>('forums/edit', id);
+  }
+
+  updateForum(id: number, body: UpdateForumDto) {
+    return this.http.patchByID('forums', body, id).pipe(catchError((error: HttpErrorResponse) => {
+      return throwError(() => new Error('⚠ ' + error.statusText));
+    }));
+  }
+
+  deleteForum(id: number) {
+    return this.http.deleteByID('forums', id).pipe(catchError((error: HttpErrorResponse) => {
+      return throwError(() => new Error('⚠ ' + error.statusText));
+    }));
+  }
+
+  constructor() {
+  }
 }

@@ -36,32 +36,9 @@ import {ForumModel} from "../../models/forum.model";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ForumsPageComponent implements OnInit {
-  _forumModal = false;
-  _deleteModal = false;
-  error$ = new Subject<string>();
-  forumsService = inject(ForumsService);
-  forums$ = new Subject<ForumModel[]>();
-  forums: ForumModel[] = [];
-  toBeDeletedForum: ForumModel | null = null;
-
-  set forumModal(value: boolean) {
-    this._forumModal = value;
-  }
-
-  get forumModal() {
-    return this._forumModal;
-  }
-
-  set deleteModal(value: boolean) {
-    this._deleteModal = value;
-  }
-
-  get deleteModal() {
-    return this._deleteModal;
-  }
 
   ngOnInit() {
-    this.forumsService.getForums().subscribe({
+    this.forumsService.getForums().pipe().subscribe({
       next: (data) => {
         this.forums$.next(data);
         this.forums = data;
@@ -69,78 +46,78 @@ export class ForumsPageComponent implements OnInit {
     })
   }
 
-  form = new FormControl('', {
+  forumsService = inject(ForumsService);
+
+  addForumModal = false;
+  deleteForumModal = false;
+  forums: ForumModel[] = [];
+  toBeDeletedForum: ForumModel | null = null;
+
+  error$ = new Subject<string>();
+  forums$ = new Subject<ForumModel[]>();
+
+  addForumForm = new FormControl('', {
     nonNullable: true,
     validators: [Validators.required, Validators.maxLength(32)]
   })
 
   openDeleteModal(forum: ForumModel) {
     this.toBeDeletedForum = forum;
-    this.deleteModal = true;
+    this.deleteForumModal = true;
     this.error$.next('');
   }
 
   closeDeleteModal() {
-    this.deleteModal = false;
+    this.deleteForumModal = false;
+  }
+
+  openForumModal() {
+    this.addForumForm.reset();
+    this.addForumModal = true;
+    this.error$.next('');
+  }
+
+  closeForumModal() {
+    this.addForumModal = false;
   }
 
   deleteForum() {
-    this.error$.next('');
     if (this.toBeDeletedForum) {
-      const deletedForum = this.toBeDeletedForum;
-      this.forumsService.deleteForum(this.toBeDeletedForum.id).subscribe({
+      this.forumsService.deleteForum(this.toBeDeletedForum.id).pipe().subscribe({
         next: () => {
-          this.forums.splice(this.forums.findIndex(forum => forum.id === deletedForum.id),
+          this.forums.splice(this.forums.findIndex(forum => forum.id === this.toBeDeletedForum!.id),
             1);
           this.forums$.next(this.forums);
-          this.deleteModal = false;
+          this.deleteForumModal = false;
         },
         error: (err) => {
           err.next(err.message);
         }
       });
-
     }
-  }
-
-  openForumModal() {
-    this.form.reset();
-    this.forumModal = true;
-    this.error$.next('');
-  }
-
-  closeForumModal() {
-    this.forumModal = false;
   }
 
   loading = false;
 
-  onSubmit() {
+  addForum() {
     this.error$.next('');
-    if (!this.form.valid) {
-      this.form.markAsDirty();
+    if (!this.addForumForm.valid) {
+      this.addForumForm.markAsDirty();
     } else {
       this.loading = true;
-      this.forumsService.saveForum(this.form.value).subscribe({
+      this.forumsService.createForum({name: this.addForumForm.value}).pipe().subscribe({
         next: (data) => {
           this.error$.next('');
-          let newForum: ForumModel = {
-            id: data.id,
-            name: data.name,
-            latest_post: null,
-            posts_count: 0
-          }
-          this.forums.push(newForum);
+          this.forums.push(data);
           this.forums$.next(this.forums)
           this.loading = false;
-          this.forumModal = false;
+          this.addForumModal = false;
         },
         error: (err) => {
-
           this.error$.next(err.message);
           this.loading = false;
-          this.form.markAsUntouched()
-          this.form.markAsPristine();
+          this.addForumForm.markAsUntouched()
+          this.addForumForm.markAsPristine();
         }
       })
     }

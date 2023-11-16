@@ -32,9 +32,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.authService.checkAuth().subscribe({
       next: (data) => {
-        if (data !== false) {
-          this.store.dispatch(isAuth({sessionData: data}))
-        }
+          this.store.dispatch(isAuth({authState: data}))
       }
     })
   }

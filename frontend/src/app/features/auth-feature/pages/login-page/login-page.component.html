@@ -3,9 +3,9 @@
         <h2>Log in</h2>
         <div class="input">
             <label for="username">Username or email</label>
-            <input placeholder="Username or email" id="username" type="text" pInputText formControlName="username">
+            <input placeholder="Username or email" id="username" type="text" pInputText formControlName="usernameOrEmail">
             <div class="error">
-                <ng-container *ngIf="form.get('username') as username">
+                <ng-container *ngIf="form.get('usernameOrEmail') as username">
                     <ng-container *ngIf="username.dirty && username.errors">
                         <ng-container *ngIf="username.errors['required']">
                             This field is required

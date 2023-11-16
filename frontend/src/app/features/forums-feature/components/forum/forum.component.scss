@@ -5,6 +5,7 @@
   display: flex;
   margin-top: 1rem;
   align-items: center;
+  word-break: break-all !important;
 }
 .forum-icon {
   color: var(--base);
@@ -25,6 +26,8 @@
   font-weight: 700;
   font-size: 1.2rem;
   margin-bottom: 0.8rem;
+  word-break: break-all !important;
+  cursor: pointer;
 }
 .info ng-icon {
   color: var(--text-gray);
@@ -41,6 +44,7 @@
 .data {
   display: flex;
   column-gap: 2rem;
+  flex-wrap: wrap;
 }
 .btn {
   margin-left: auto;

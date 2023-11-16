@@ -2,8 +2,8 @@ import {Routes} from "@angular/router";
 import {HomePageComponent} from "./pages/home-page/home-page.component";
 import {ForumsPageComponent} from "./pages/forums-page/forums-page.component";
 import {
-  OneForumPageComponent
-} from "./pages/one-forum-page/one-forum-page.component";
+  ForumPageComponent
+} from "./pages/forum-page/forum-page.component";
 import {isAdminGuard} from "../../core/guards/is-admin.guard";
 import {ForumsFeatureComponent} from "./forums-feature.component";
 import {
@@ -37,7 +37,7 @@ export const forumsRoutes: Routes = [
       },
       {
         path: ':id',
-        component: OneForumPageComponent,
+        component: ForumPageComponent,
         children: [
           {
             path: '',

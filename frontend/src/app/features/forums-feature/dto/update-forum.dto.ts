@@ -1,7 +1,5 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateForumDto } from './create-forum.dto';
 
-export class UpdateForumDto extends PartialType(CreateForumDto) {
+export interface UpdateForumDto  {
   name: string;
   deletedCategories: {id: number, name: string}[];
   addedCategories: {name: string}[];

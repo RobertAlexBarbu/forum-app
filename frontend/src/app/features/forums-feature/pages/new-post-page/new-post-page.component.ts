@@ -10,10 +10,6 @@ import {ForumsService} from "../../services/forums/forums.service";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {Observable} from "rxjs";
 import {
-  CategoryModel,
-  ForumWithCategoriesModel
-} from "../../models/forum-with-categories.model";
-import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
@@ -26,6 +22,8 @@ import {PostsService} from "../../services/posts/posts.service";
 import {
   FormUtilsService
 } from "../../../../core/services/form-utils/form-utils.service";
+import {ForumModel} from "../../models/forum.model";
+import {CategoryModel} from "../../models/category.model";
 
 @Component({
   selector: 'app-new-post-page',
@@ -36,12 +34,24 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewPostPageComponent implements OnInit {
+
   forumsService = inject(ForumsService);
   postsService = inject(PostsService);
-  forumWithCategories$ = new Observable<ForumWithCategoriesModel>()
   route = inject(ActivatedRoute);
   router = inject(Router);
   formUtils = inject(FormUtilsService);
+
+  ngOnInit() {
+    this.forum$ = this.forumsService.getForum(this.route.snapshot.params['id'])
+    this.forumsService.getForum(this.route.snapshot.params['id']).subscribe({
+      next: (data) => {
+        console.log(data)
+      }
+    })
+  }
+
+  forum$ = new Observable<ForumModel>()
+
   form = new FormGroup({
     category: new FormControl<CategoryModel | null>(null, {}),
     title: new FormControl('', {
@@ -54,15 +64,6 @@ export class NewPostPageComponent implements OnInit {
     }),
   })
 
-  ngOnInit() {
-    this.forumWithCategories$ = this.forumsService.getForumWithCategories(this.route.snapshot.params['id'])
-    this.forumsService.getForumWithCategories(this.route.snapshot.params['id']).subscribe({
-      next: (data) => {
-        console.log(data)
-      }
-    })
-  }
-
   onSubmit() {
     if(this.form.valid) {
 
@@ -70,11 +71,13 @@ export class NewPostPageComponent implements OnInit {
       if (this.form.controls['category'].getRawValue()) {
         category_id = this.form.controls['category'].getRawValue()!.id;
       }
+      console.log('hey');
       this.postsService.createPost({
           title: this.form.controls['title'].getRawValue(),
           content: this.form.controls['content'].getRawValue(),
-          forum_id: this.route.snapshot.params['id'],
-          category_id: category_id,
+          userId: 6,
+          forumId: +this.route.snapshot.params['id'],
+          categoryId: category_id,
         })
       .subscribe({
         next: () => {

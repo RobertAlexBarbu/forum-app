@@ -1,3 +1,3 @@
-export class CreateForumDto {
+export interface CreateForumDto {
   name: string;
 }

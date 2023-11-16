@@ -23,6 +23,7 @@ import {
   FormUtilsService
 } from "../../../../core/services/form-utils/form-utils.service";
 import {DropdownModule} from "primeng/dropdown";
+import {AuthStateModel} from "../../../../core/store/auth/auth-state.model";
 
 @Component({
   selector: 'app-login-page',
@@ -34,12 +35,14 @@ import {DropdownModule} from "primeng/dropdown";
 })
 export class LoginPageComponent {
   authService = inject(AuthService);
+  formUtils = inject(FormUtilsService);
   router = inject(Router);
   store = inject(Store);
+
   error$ = new Subject<string>();
-  formUtils = inject(FormUtilsService);
+
   form = new FormGroup({
-    username: new FormControl('', {
+    usernameOrEmail: new FormControl('', {
       validators: [Validators.required],
       nonNullable: true,
     }),
@@ -48,6 +51,7 @@ export class LoginPageComponent {
       nonNullable: true,
     })
   })
+
   loading = false;
   submitForm() {
     this.error$.next('');
@@ -57,7 +61,9 @@ export class LoginPageComponent {
       this.loading = true;
       this.authService.login(this.form.getRawValue()).subscribe({
         next: (data) => {
-          this.store.dispatch(login({sessionData: data}));
+          localStorage.setItem('access_token', data.access_token);
+          let authState = JSON.parse(atob(data.access_token.split('.')[1]))
+          this.store.dispatch(login({authState: authState}));
           this.loading = false;
           return this.router.navigate(['']);
         },

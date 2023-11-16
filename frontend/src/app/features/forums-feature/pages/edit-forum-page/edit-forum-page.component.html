@@ -33,14 +33,14 @@
         <div class="input-last">
             <label for="category">Add category</label>
             <div class="p-inputgroup">
-                <input [formControl]="category" id="category" type="text" pInputText placeholder="Category name" />
+                <input [formControl]="categoryName" id="category" type="text" pInputText placeholder="Category name" />
                 <button type="button" pButton (click)="addCategory()">Add
                     <ng-icon name="jamPlus" size="1.3rem"></ng-icon>
                 </button>
             </div>
             <div class="error">
-                <ng-container *ngIf="category.errors && category.dirty">
-                    <ng-container *ngIf="category.errors['required']">
+                <ng-container *ngIf="categoryName.errors && categoryName.dirty">
+                    <ng-container *ngIf="categoryName.errors['required']">
                         This field is required
                     </ng-container>
                 </ng-container>

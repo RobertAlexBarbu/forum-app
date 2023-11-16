@@ -4,7 +4,7 @@ import {
   inject,
   OnInit
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {ChipsModule} from "primeng/chips";
 import {ButtonModule} from "primeng/button";
 import {NgIcon, provideIcons} from "@ng-icons/core";
@@ -17,8 +17,9 @@ import {
 } from "@angular/forms";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {ForumsService} from "../../services/forums/forums.service";
-import {CategoryModel} from "../../models/forum-with-categories.model";
-import { Subject} from "rxjs";
+import {Subject} from "rxjs";
+import {CategoryModel} from "../../models/category.model";
+import {ForumModel} from "../../models/forum.model";
 
 @Component({
   selector: 'app-new-forum-page',
@@ -29,17 +30,31 @@ import { Subject} from "rxjs";
   viewProviders: [provideIcons({jamPlus, jamTrashF, jamPencilF})],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EditForumPageComponent implements OnInit{
-  forum!: {name: string, id:number};
-  categories: CategoryModel[] = [];
-  categories$: Subject<CategoryModel[]> = new Subject<CategoryModel[]>();
-  errors$ : Subject<string> = new Subject<string>();
-  categoriesDeleted: number[] = [];
-  categoriesAdded: {name: string, forum_id: number}[] = [];
+export class EditForumPageComponent implements OnInit {
   route = inject(ActivatedRoute);
   router = inject(Router);
   forumsService = inject(ForumsService)
-  category = new FormControl('', {
+
+  ngOnInit() {
+    this.forumsService.getForumForEdit(this.route.snapshot.params['id']).subscribe({
+      next: (data) => {
+        this.forum = data;
+        this.categories = data.categories;
+        this.categories$.next(this.categories);
+        this.forumName.patchValue(data.name)
+      }
+    })
+  }
+
+  forum!: ForumModel;
+  categories: CategoryModel[] = [];
+  categoriesDeleted: { id: number, name: string }[] = [];
+  categoriesAdded: { name: string }[] = [];
+
+  categories$: Subject<CategoryModel[]> = new Subject<CategoryModel[]>();
+  errors$: Subject<string> = new Subject<string>();
+
+  categoryName = new FormControl('', {
     nonNullable: true,
     updateOn: 'blur',
     validators: [Validators.required]
@@ -50,47 +65,37 @@ export class EditForumPageComponent implements OnInit{
   })
 
   addCategory() {
-    if(this.category.valid) {
-
+    if (this.categoryName.valid) {
       this.categoriesAdded.push({
-        name: this.category.getRawValue(),
-        forum_id: this.forum.id
+        name: this.categoryName.getRawValue(),
       })
       this.categories!.push({
-        name: this.category.getRawValue(),
-        id: -1
+        name: this.categoryName.getRawValue(),
+        id: -1,
       });
       this.categories$.next(this.categories);
-      this.elementHeight += 2.7;
-      if(this.element) {
-        this.element.style.height = this.elementHeight + 'rem';
-      }
-      this.category.reset();
+      this.categoryName.reset();
     } else {
-      this.category.markAsDirty();
+      this.categoryName.markAsDirty();
     }
-
   }
+
   deleteCategory(category: CategoryModel, index: number) {
     this.categories!.splice(index, 1);
     this.categories$.next(this.categories);
-    this.categoriesAdded.splice(this.categoriesAdded.findIndex( c => {
+    this.categoriesAdded.splice(this.categoriesAdded.findIndex(c => {
       return c.name == category.name
     }), 1)
-    if(category.id > 0) {
-      this.categoriesDeleted.push(category.id);
-    }
-    this.elementHeight -= 2.7;
-    if(this.element) {
-      this.element.style.height = this.elementHeight + 'rem';
+    if (category.id > 0) {
+      this.categoriesDeleted.push(category);
     }
   }
+
   onSubmit() {
-    if(this.forum && this.forumName.valid) {
-      this.forumsService.editForum(this.route.snapshot.params['id'], {
-        id: this.forum.id,
+    if (this.forum && this.forumName.valid) {
+      this.forumsService.updateForum(this.route.snapshot.params['id'], {
         name: this.forumName.getRawValue(),
-        deletedCategoriesIds: this.categoriesDeleted,
+        deletedCategories: this.categoriesDeleted,
         addedCategories: this.categoriesAdded
       }).subscribe(
         {
@@ -104,27 +109,8 @@ export class EditForumPageComponent implements OnInit{
       )
     } else {
       this.forumName.markAsDirty();
-      this.category.markAsPristine();
+      this.categoryName.markAsPristine();
     }
   }
-  element:HTMLElement | null = null;
-  elementHeight = 0;
-  ngOnInit() {
-    this.element = document.querySelector('.categories');
-    this.forumsService.getForumWithCategories(this.route.snapshot.params['id']).subscribe({
-      next: (data) => {
-        this.forum = {
-          id: data.id,
-          name: data.name
-        }
-        this.categories = data.categories;
-        this.categories$.next(this.categories);
-        if(this.element) {
-          this.elementHeight = 1.5 + 2.7 * this.categories.length
-          this.element.style.height = this.elementHeight +  'rem';
-        }
-        this.forumName.patchValue(data.name)
-      }
-    })
-  }
+
 }

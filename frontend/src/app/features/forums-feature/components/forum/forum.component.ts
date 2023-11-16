@@ -10,11 +10,12 @@ import {jamMessagesF, jamMessageF, jamMessage, jamPencilF, jamTrashF} from "@ng-
 import {ButtonModule} from "primeng/button";
 import {RouterLink} from "@angular/router";
 import {DockModule} from "primeng/dock";
+import {TimeAgoPipe} from "../../../../shared/pipes/time-ago.pipe";
 
 @Component({
   selector: 'app-forum',
   standalone: true,
-  imports: [CommonModule, NgOptimizedImage, NgIcon, ButtonModule, RouterLink, DockModule],
+  imports: [CommonModule, NgOptimizedImage, NgIcon, ButtonModule, RouterLink, DockModule, TimeAgoPipe],
   templateUrl: './forum.component.html',
   styleUrls: ['./forum.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

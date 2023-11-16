@@ -1,14 +1,17 @@
-import {CategoryModel} from "./forum-with-categories.model";
+import {UserModel} from "../../../core/models/user.model";
+import {ForumModel} from "./forum.model";
+import {PostLike} from "./post-like.model";
+import {CommentModel} from "./comment.model";
+import {CategoryModel} from "./category.model";
 
 export interface PostModel {
-  id: number,
-  title: string,
-  likes: {post_id:number, user_id:number, id:number}[],
-  category: CategoryModel | null
-  comments: number | any[],
-  user_id: number,
-  category_id: number,
-  created_at: string,
-  created_by: string,
-  content: string
+  id: number;
+  title: string;
+  content: string;
+  createdAt: string;
+  category: CategoryModel;
+  user: UserModel;
+  forum: ForumModel;
+  postLikes: PostLike[];
+  comments: CommentModel[];
 }

@@ -10,7 +10,7 @@ export const isAuthGuard: CanMatchFn = (route) => {
   let router = inject(Router);
   let store = inject(Store);
   return authService.checkAuth().pipe(map((data) => {
-    if(data === false) {
+    if(authService.isAuth(data)) {
       store.dispatch(logout());
       return router.parseUrl('login')
     } else {

@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {CreateCommentModel} from "../../models/create-comment.model";
 import {TimeAgoPipe} from "../../../../shared/pipes/time-ago.pipe";
+import {CommentModel} from "../../models/comment.model";
 
 @Component({
   selector: 'app-comment',
@@ -12,5 +12,5 @@ import {TimeAgoPipe} from "../../../../shared/pipes/time-ago.pipe";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CommentComponent {
- @Input() comment !:CreateCommentModel;
+ @Input() comment !:CommentModel;
 }

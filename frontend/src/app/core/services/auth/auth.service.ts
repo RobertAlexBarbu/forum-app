@@ -1,9 +1,8 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpService} from "../http/http.service";
-import {SignupModel} from "../../../features/auth-feature/model/signup.model";
-import {SessionDataModel} from "../../models/session-data.model";
-import {LoginModel} from "../../../features/auth-feature/model/login.model";
-import {AuthStateModel} from "../../models/auth-state.model";
+import {CreateUserDto} from "../../../features/auth-feature/dto/create-user.dto";
+import {LoginDto} from "../../../features/auth-feature/dto/login.dto";
+import {AuthStateModel} from "../../store/auth/auth-state.model";
 import {catchError, throwError} from "rxjs";
 import {HttpErrorResponse} from "@angular/common/http";
 
@@ -14,8 +13,8 @@ export class AuthService {
   httpService = inject(HttpService);
 
 
-  login(loginData: LoginModel) {
-    return this.httpService.post<SessionDataModel>('api/auth/login', loginData).pipe(catchError((error: HttpErrorResponse) => {
+  login(loginData: LoginDto) {
+    return this.httpService.post<{access_token: string}>('auth/login', loginData).pipe(catchError((error: HttpErrorResponse) => {
       if (error.status === 401) {
         return throwError(() => new Error('⚠ Invalid credentials'))
       } else {
@@ -25,30 +24,31 @@ export class AuthService {
     }));
   }
 
-  signup(signupData: SignupModel) {
-    return this.httpService.post<SessionDataModel>('api/users/', signupData).pipe(catchError((error: HttpErrorResponse) => {
+  signup(signupData: CreateUserDto) {
+    return this.httpService.post<{access_token: string}>('users', signupData).pipe(catchError((error: HttpErrorResponse) => {
         return throwError(() => new Error('⚠ ' + error.statusText));
     }));
   }
 
   logout() {
-    return this.httpService.post('api/auth/logout');
+    localStorage.removeItem('access_token');
   }
 
   checkAuth() {
-    return this.httpService.get<SessionDataModel | false>('api/auth/is-auth');
+    return this.httpService.post<AuthStateModel>('auth/check');
   }
 
   isAuth(state: AuthStateModel) {
-    return state.loggedIn;
+    return state.loggedIn
   }
 
-  isModerator(state: AuthStateModel | SessionDataModel) {
-    return state.role === 'admin' || state.role === 'moderator';
-  }
-
-  isAdmin(state: AuthStateModel | SessionDataModel) {
-    return state.role === 'admin';
+  isAdmin(state: AuthStateModel) {
+    console.log(state);
+    if(state.role) {
+      return state.role.role === 'admin';
+    } else {
+      return false;
+    }
   }
 
   constructor() {

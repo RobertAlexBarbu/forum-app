@@ -1,7 +1,7 @@
-export class CreatePostDto {
-  userId!: number;
-  categoryId: number;
-  forumId: number;
-  title: string;
-  content: string;
+export interface CreatePostDto {
+  userId: number
+  categoryId: number | null
+  forumId: number
+  title: string
+  content: string
 }

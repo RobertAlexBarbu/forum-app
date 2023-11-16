@@ -3,5 +3,6 @@ import {RoleModel} from "../../models/role.model";
 export interface AuthStateModel {
   id: number
   username: string
-  role: RoleModel | null
+  role: RoleModel
+  loggedIn: boolean
 }
