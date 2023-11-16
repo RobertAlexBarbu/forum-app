@@ -26,6 +26,11 @@ export class ForumsController {
     return this.forumsService.findAll();
   }
 
+  @Get('trending')
+  findTrending() {
+    return this.forumsService.findTrending();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.forumsService.findOne(+id);

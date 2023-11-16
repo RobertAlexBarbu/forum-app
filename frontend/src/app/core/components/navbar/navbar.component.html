@@ -10,6 +10,14 @@
     <ng-icon name="jamMessagesF"></ng-icon>
     Forums
   </button>
+  <ng-container *ngIf="authState$ | async as authState">
+    <button *ngIf="authState | isAdmin" routerLinkActive="active-link" pButton
+            class="p-button p-button-sm p-button-text " routerLink="/admin" (click)="closeMenu()">
+      <ng-icon name="jamPieChartF"></ng-icon>
+      Dashboard
+    </button>
+  </ng-container>
+
 
   <div class="separator"></div>
 

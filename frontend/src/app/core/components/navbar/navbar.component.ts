@@ -15,17 +15,18 @@ import {isAdminPipe} from "../../../shared/pipes/is-admin.pipe";
 import {AuthStateModel} from "../../store/auth/auth-state.model";
 import {ButtonModule} from "primeng/button";
 import {NgIcon, provideIcons} from "@ng-icons/core";
-import {jamHomeF, jamMessagesF} from "@ng-icons/jam-icons";
+import {jamHomeF, jamMessagesF, jamPieChartF} from "@ng-icons/jam-icons";
 import {IsAuthDirective} from "../../../shared/directives/is-auth.directive";
+import {IsAdminDirective} from "../../../shared/directives/is-admin.directive";
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterLink, isAuthPipe, isAdminPipe, ButtonModule, NgIcon, RouterLinkActive, IsAuthDirective],
+  imports: [CommonModule, RouterLink, isAuthPipe, isAdminPipe, ButtonModule, NgIcon, RouterLinkActive, IsAuthDirective, IsAdminDirective],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  viewProviders: [provideIcons({jamHomeF, jamMessagesF})]
+  viewProviders: [provideIcons({jamHomeF, jamMessagesF, jamPieChartF})]
 })
 export class NavbarComponent implements OnInit {
   store = inject(Store<AuthStateModel>)

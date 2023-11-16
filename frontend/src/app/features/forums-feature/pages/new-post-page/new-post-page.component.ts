@@ -66,16 +66,13 @@ export class NewPostPageComponent implements OnInit {
 
   onSubmit() {
     if(this.form.valid) {
-
       let category_id: number | null = null;
       if (this.form.controls['category'].getRawValue()) {
         category_id = this.form.controls['category'].getRawValue()!.id;
       }
-      console.log('hey');
       this.postsService.createPost({
           title: this.form.controls['title'].getRawValue(),
           content: this.form.controls['content'].getRawValue(),
-          userId: 6,
           forumId: +this.route.snapshot.params['id'],
           categoryId: category_id,
         })

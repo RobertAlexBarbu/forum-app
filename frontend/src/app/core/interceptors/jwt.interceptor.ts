@@ -11,7 +11,6 @@ import { Observable } from 'rxjs';
 
   export const jwtInterceptor: HttpInterceptorFn = (request, next): Observable<HttpEvent<unknown>> => {
     const access_token = localStorage.getItem('access_token')
-    console.log(access_token);
     if (access_token) {
       request = request.clone({
         setHeaders: { Authorization: `Bearer ${access_token}` }

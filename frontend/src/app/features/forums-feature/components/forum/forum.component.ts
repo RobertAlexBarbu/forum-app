@@ -11,11 +11,14 @@ import {ButtonModule} from "primeng/button";
 import {RouterLink} from "@angular/router";
 import {DockModule} from "primeng/dock";
 import {TimeAgoPipe} from "../../../../shared/pipes/time-ago.pipe";
+import {
+  IsAdminDirective
+} from "../../../../shared/directives/is-admin.directive";
 
 @Component({
   selector: 'app-forum',
   standalone: true,
-  imports: [CommonModule, NgOptimizedImage, NgIcon, ButtonModule, RouterLink, DockModule, TimeAgoPipe],
+  imports: [CommonModule, NgOptimizedImage, NgIcon, ButtonModule, RouterLink, DockModule, TimeAgoPipe, IsAdminDirective],
   templateUrl: './forum.component.html',
   styleUrls: ['./forum.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -5,6 +5,8 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {ForumModel} from "../../models/forum.model";
 import {CreateForumDto} from "../../dto/create-forum.dto";
 import {UpdateForumDto} from "../../dto/update-forum.dto";
+import {PostModel} from "../../models/post.model";
+import {CommentModel} from "../../models/comment.model";
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +22,9 @@ export class ForumsService {
 
   getForums() {
     return this.http.get<ForumModel[]>('forums');
+  }
+  getTrending() {
+    return this.http.get<{latestPosts: PostModel[], latestComments: CommentModel[]}>('forums/trending');
   }
 
   getForum(id: number) {

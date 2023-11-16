@@ -7,9 +7,10 @@ import { Comments } from './entities/Comments';
 @Injectable()
 export class CommentsService {
   constructor(private readonly em: EntityManager) {}
-  async create(createCommentDto: CreateCommentDto) {
+
+  async create(createCommentDto: CreateCommentDto, userId: number) {
     const post = this.em.create(Comments, {
-      user: createCommentDto.userId,
+      user: userId,
       post: createCommentDto.postId,
       content: createCommentDto.content,
     });

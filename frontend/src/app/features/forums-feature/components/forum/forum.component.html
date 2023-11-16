@@ -6,7 +6,7 @@
     <div class="forum-info">
 
 <!--        <div class="name link" >{{forum.name}}</div>-->
-      <div class="name" [routerLink]="['', 'forums', forum.id]">{{forum.name}}</div>
+      <div class="name clickable" [routerLink]="['', 'forums', forum.id]">{{forum.name}}</div>
         <div class="data">
             <div class="data-group">
                 <div class="info">
@@ -27,10 +27,10 @@
 
     </div>
     <div class="btn">
-        <button [routerLink]="['', 'forums', 'edit', forum.id]" pButton class="p-button-text p-button  nav" pTooltip="Edit" tooltipPosition="right">
+        <button *isAdmin [routerLink]="['', 'forums', 'edit', forum.id]" pButton class="p-button-text p-button  nav" pTooltip="Edit" tooltipPosition="right">
             <ng-icon name="jamPencilF"></ng-icon>
         </button>
-        <button pButton (click)="delete()" class="p-button-text p-button p-button-danger nav" pTooltip="Delete" tooltipPosition="right">
+        <button *isAdmin pButton (click)="delete()" class="p-button-text p-button p-button-danger nav" pTooltip="Delete" tooltipPosition="right">
             <ng-icon name="jamTrashF"></ng-icon>
         </button>
     </div>

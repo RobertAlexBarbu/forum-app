@@ -38,10 +38,15 @@ import {PostModel} from "../../models/post.model";
 })
 export class PostPageComponent implements OnInit {
 
+  postsService = inject(PostsService);
+  route = inject(ActivatedRoute);
+  store = inject(Store);
+
   ngOnInit() {
     this.postsService.getPost(this.route.snapshot.params['post']).subscribe({
       next: (data) => {
         this.post = data;
+        console.log(this.post)
         this.post$.next(data);
         this.store.select('auth').subscribe({
           next: (data) => {
@@ -62,16 +67,15 @@ export class PostPageComponent implements OnInit {
     })
   }
 
-  postsService = inject(PostsService);
-  route = inject(ActivatedRoute);
-  post$ = new Subject<PostModel>()
   post!: PostModel;
   userId!: number;
   username!: string;
-  store = inject(Store);
   liked = false;
   likes = 0;
+
+  post$ = new Subject<PostModel>()
   likes$ = new BehaviorSubject<number>(0);
+
   comment = new FormControl('', {
     nonNullable: true,
     validators: [Validators.required]
@@ -94,13 +98,12 @@ export class PostPageComponent implements OnInit {
   onSubmit() {
     if (this.comment.valid && this.post) {
       this.postsService.commentPost({
-        userId: 77,
         postId: this.post.id,
         content: this.comment.getRawValue()
       }).subscribe({
         next: (data) => {
-
-          data.user.username = this.username;
+          data.user = {username: this.username};
+          console.log(data);
           if (Array.isArray(this.post?.comments) && this.post) {
             this.post?.comments.push(data);
             this.post$.next(this.post);
@@ -109,6 +112,4 @@ export class PostPageComponent implements OnInit {
       })
     }
   }
-
-
 }

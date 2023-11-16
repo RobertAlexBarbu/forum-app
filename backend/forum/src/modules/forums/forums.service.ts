@@ -4,6 +4,8 @@ import { UpdateForumDto } from './dto/update-forum.dto';
 import { EntityManager } from '@mikro-orm/core';
 import { Forums } from './entities/Forums';
 import { Categories } from './entities/Categories';
+import {Posts} from "../posts/entities/Posts";
+import {Comments} from "../comments/entities/Comments";
 
 @Injectable()
 export class ForumsService {
@@ -26,15 +28,21 @@ export class ForumsService {
     });
     return forums;
   }
+  async findTrending() {
+    const latestPosts = await this.em.find(Posts, {}, {populate: ['postLikes','category', 'comments', 'user', 'forum'], orderBy: {createdAt: 'desc'}, limit: 3 })
+    const latestComments = await this.em.find(Comments, {}, {populate: ['user', 'post.forum'], orderBy: {createdAt: 'desc'}, limit: 3, })
+    return {latestPosts, latestComments}
+
+  }
 
   async findOne(id: number) {
     const forum = await this.em.findOne(
       Forums,
       { id: id },
-      { populate: ['categories', 'posts.postLikes'] },
+      { populate: ['categories', 'posts.postLikes', 'posts.category', 'posts.forum'] },
     );
-    await this.em.populate(forum, ['posts.user'], {
-      fields: ['posts.user.username'],
+    await this.em.populate(forum, ['posts.user', 'posts.comments'], {
+      fields: ['posts.user.username', 'posts.comments.id'],
     });
     console.log(forum.posts);
     return forum;

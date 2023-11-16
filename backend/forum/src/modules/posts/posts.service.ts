@@ -9,8 +9,8 @@ import { Users } from '../users/entities/Users';
 export class PostsService {
   constructor(private readonly em: EntityManager) {}
 
-  async create(createPostDto: CreatePostDto) {
-    const user = this.em.getReference(Users, createPostDto.userId);
+  async create(createPostDto: CreatePostDto, userId: number) {
+    const user = this.em.getReference(Users, userId);
     const post = this.em.create(Posts, {
       user: user,
       content: createPostDto.content,
@@ -38,8 +38,8 @@ export class PostsService {
   }
 
   async findOne(id: number) {
-    return await this.em.find(Posts, id, {
-      populate: ['postLikes', 'comments'],
+    return await this.em.findOne(Posts, id, {
+      populate: ['postLikes', 'comments.user', 'category', 'user'], fields: ['user.username', 'comments', 'category', 'title', 'createdAt', 'content', 'postLikes'],
     });
   }
 

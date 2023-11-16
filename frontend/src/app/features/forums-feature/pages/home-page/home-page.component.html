@@ -1,1 +1,22 @@
-<div>home-page works!</div>
+<div class="card">
+  <div class="home">
+
+    <ng-container *ngIf="trending$ | async as trending">
+      <div class="posts">
+        <h3>Latest posts</h3>
+        <ng-container *ngFor="let post of trending.latestPosts">
+          <app-post [post]="post"></app-post>
+        </ng-container>
+      </div>
+      <div class="comments">
+        <h3>Latest comments</h3>
+        <div class="comments-helper">
+          <ng-container *ngFor="let comment of trending.latestComments">
+            <app-comment [comment]="comment"></app-comment>
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+

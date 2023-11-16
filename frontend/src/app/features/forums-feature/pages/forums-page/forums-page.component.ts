@@ -25,11 +25,14 @@ import {Subject} from "rxjs";
 import {ForumsService} from "../../services/forums/forums.service";
 import {ForumComponent} from "../../components/forum/forum.component";
 import {ForumModel} from "../../models/forum.model";
+import {
+  IsAdminDirective
+} from "../../../../shared/directives/is-admin.directive";
 
 @Component({
   selector: 'app-forums-page',
   standalone: true,
-  imports: [CommonModule, ButtonModule, NgIcon, RouterLink, ModalComponent, MenuComponent, FormsModule, InputTextModule, PaginatorModule, ReactiveFormsModule, ForumComponent],
+  imports: [CommonModule, ButtonModule, NgIcon, RouterLink, ModalComponent, MenuComponent, FormsModule, InputTextModule, PaginatorModule, ReactiveFormsModule, ForumComponent, IsAdminDirective],
   templateUrl: './forums-page.component.html',
   styleUrls: ['./forums-page.component.scss'],
   viewProviders: [provideIcons({jamPlus})],

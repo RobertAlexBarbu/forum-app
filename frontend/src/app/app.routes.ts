@@ -8,6 +8,10 @@ export const routes: Routes = [
   ...authRoutes,
   ...forumsRoutes,
   {
+    path: 'admin',
+    loadChildren: () => import('./features/admin-feature/admin.routes').then((m) => m.adminRoutes)
+  },
+  {
     path: '**',
     pathMatch: 'full',
     redirectTo: ''
