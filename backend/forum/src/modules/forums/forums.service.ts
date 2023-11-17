@@ -29,7 +29,7 @@ export class ForumsService {
     return forums;
   }
   async findTrending() {
-    const latestPosts = await this.em.find(Posts, {}, {populate: ['postLikes','category', 'comments', 'user', 'forum'], orderBy: {createdAt: 'desc'}, limit: 3 })
+    const latestPosts = await this.em.find(Posts, {}, {populate: ['postLikes.user','category', 'comments', 'user', 'forum'], orderBy: {createdAt: 'desc'}, limit: 3 })
     const latestComments = await this.em.find(Comments, {}, {populate: ['user', 'post.forum'], orderBy: {createdAt: 'desc'}, limit: 3, })
     return {latestPosts, latestComments}
 
@@ -41,10 +41,9 @@ export class ForumsService {
       { id: id },
       { populate: ['categories', 'posts.postLikes', 'posts.category', 'posts.forum'] },
     );
-    await this.em.populate(forum, ['posts.user', 'posts.comments'], {
-      fields: ['posts.user.username', 'posts.comments.id'],
+    await this.em.populate(forum, ['posts.user', 'posts.comments', 'posts.postLikes'], {
+      fields: ['posts.user.username', 'posts.comments.id', 'posts.postLikes'],
     });
-    console.log(forum.posts);
     return forum;
   }
   async findOneForEdit(id: number) {

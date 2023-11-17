@@ -5,7 +5,7 @@ import {
   Body,
   Patch,
   Param,
-  Delete, UseGuards, Req,
+  Delete, UseGuards, Req, Put,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -33,9 +33,22 @@ export class PostsController {
     return this.postsService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
     return this.postsService.update(+id, updatePostDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('likes/:id')
+  likePost(@Param('id') id: string, @Req() req) {
+    console.log('HEEEY');
+    return this.postsService.likePost(+id, req.user.id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('likes/:id')
+  dislikePost(@Param('id') id: string, @Req() req) {
+    return this.postsService.dislikePost(+id, req.user.id);
   }
 
   @Delete(':id')

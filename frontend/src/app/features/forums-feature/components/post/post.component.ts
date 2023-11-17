@@ -42,16 +42,16 @@ export class PostComponent implements OnInit{
   liked = false;
   likes = 0;
   likes$ = new BehaviorSubject<number>(0);
-  likePost(id: number) {
-    this.postsService.likePost(id).subscribe();
+  likePost() {
+    this.postsService.likePost(this.post.id).subscribe();
     this.likes += 1;
     this.likes$.next(this.likes);
     this.liked = true
   }
-  dislikePost(id: number) {
+  dislikePost() {
     this.likes -= 1;
     this.likes$.next(this.likes);
-    this.postsService.dislikePost(id).subscribe();
+    this.postsService.dislikePost(this.post.id).subscribe();
     this.liked = false;
   }
   ngOnInit() {

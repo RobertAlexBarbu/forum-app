@@ -4,6 +4,7 @@ import {PostModel} from "../../models/post.model";
 import {CreateCommentDto} from "../../dto/create-comment.dto";
 import {CreatePostDto} from "../../dto/create-post.dto";
 import {CommentModel} from "../../models/comment.model";
+import {PostLike} from "../../models/post-like.model";
 
 @Injectable({
   providedIn: 'root'
@@ -15,10 +16,10 @@ export class PostsService {
     return this.http.post('posts', body);
   }
   likePost(postId: number) {
-    return this.http.post(`api/posts/${postId}/like`);
+    return this.http.post<PostLike>(`posts/likes/${postId}`);
   }
   dislikePost(postId: number) {
-    return this.http.delete(`api/posts/${postId}/dislike`);
+    return this.http.delete<PostLike>(`posts/likes/${postId}`);
   }
 
   getPost(id: number) {

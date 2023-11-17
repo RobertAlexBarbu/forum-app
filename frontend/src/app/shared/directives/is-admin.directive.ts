@@ -29,6 +29,7 @@ export class IsAdminDirective {
     this.displayTemplate();
     this.store.select('auth').subscribe({
       next: (data) => {
+        console.log(data);
         this.show = this.authService.isAdmin(data);
         this.displayTemplate();
       }

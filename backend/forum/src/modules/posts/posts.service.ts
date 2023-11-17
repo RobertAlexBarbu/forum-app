@@ -4,6 +4,7 @@ import { UpdatePostDto } from './dto/update-post.dto';
 import { EntityManager } from '@mikro-orm/core';
 import { Posts } from './entities/Posts';
 import { Users } from '../users/entities/Users';
+import {PostLikes} from "./entities/PostLikes";
 
 @Injectable()
 export class PostsService {
@@ -28,7 +29,7 @@ export class PostsService {
     const posts = await this.em.find(
       Posts,
       { forum: id },
-      { populate: ['postLikes', 'category'], orderBy: { createdAt: 'desc' } },
+      { populate: ['postLikes.user', 'category'], orderBy: { createdAt: 'desc' } },
     );
     await this.em.populate(posts, ['comments'], {
       fields: ['comments.createdAt'],
@@ -38,8 +39,21 @@ export class PostsService {
 
   async findOne(id: number) {
     return await this.em.findOne(Posts, id, {
-      populate: ['postLikes', 'comments.user', 'category', 'user'], fields: ['user.username', 'comments', 'category', 'title', 'createdAt', 'content', 'postLikes'],
+      populate: ['postLikes.user', 'comments.user', 'category', 'user'], fields: ['user.username', 'comments', 'category', 'title', 'createdAt', 'content', 'postLikes', 'postLikes.user.id'],
     });
+  }
+  async likePost(id: number, userId: number) {
+    const like = this.em.create(PostLikes, {post: id, user: userId});
+    this.em.persist(like);
+    await this.em.flush();
+    return like;
+  }
+
+  async dislikePost(id: number, userId: number) {
+    const like = await this.em.find(PostLikes, {post:id, user: userId});
+    this.em.remove(like);
+    await this.em.flush();
+    return like
   }
 
   update(id: number, updatePostDto: UpdatePostDto) {
