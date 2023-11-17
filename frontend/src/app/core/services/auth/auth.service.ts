@@ -43,7 +43,6 @@ export class AuthService {
   }
 
   isAdmin(state: AuthStateModel) {
-    console.log(state);
     if(state.role) {
       return state.role.role === 'admin';
     } else {

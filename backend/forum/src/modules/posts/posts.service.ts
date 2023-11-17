@@ -33,7 +33,6 @@ export class PostsService {
     await this.em.populate(posts, ['comments'], {
       fields: ['comments.createdAt'],
     });
-    console.log(posts);
     return posts;
   }
 

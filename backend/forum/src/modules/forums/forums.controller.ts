@@ -41,7 +41,7 @@ export class ForumsController {
     return this.forumsService.findOneForEdit(+id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(@Param('id') id: string, @Body() updateForumDto: UpdateForumDto) {
     return this.forumsService.update(+id, updateForumDto);
   }

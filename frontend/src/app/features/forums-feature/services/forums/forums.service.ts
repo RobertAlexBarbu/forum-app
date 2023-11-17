@@ -35,7 +35,7 @@ export class ForumsService {
   }
 
   updateForum(id: number, body: UpdateForumDto) {
-    return this.http.patchByID('forums', body, id).pipe(catchError((error: HttpErrorResponse) => {
+    return this.http.putByID('forums', body, id).pipe(catchError((error: HttpErrorResponse) => {
       return throwError(() => new Error('⚠ ' + error.statusText));
     }));
   }

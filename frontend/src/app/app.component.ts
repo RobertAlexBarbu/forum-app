@@ -32,6 +32,8 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.authService.checkAuth().subscribe({
       next: (data) => {
+        console.log('hey');
+        console.log(data);
           this.store.dispatch(isAuth({authState: data}))
       }
     })
