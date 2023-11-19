@@ -1,6 +1,5 @@
 export interface UpdatePostDto {
-  id: number;
-  categoryId: number;
+  categoryId: number | null;
   content: string;
   title: string;
 }

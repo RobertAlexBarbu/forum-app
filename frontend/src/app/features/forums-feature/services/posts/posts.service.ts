@@ -5,6 +5,7 @@ import {CreateCommentDto} from "../../dto/create-comment.dto";
 import {CreatePostDto} from "../../dto/create-post.dto";
 import {CommentModel} from "../../models/comment.model";
 import {PostLike} from "../../models/post-like.model";
+import {UpdatePostDto} from "../../dto/update-post.dto";
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,9 @@ export class PostsService {
 
   commentPost(comment: CreateCommentDto) {
     return this.http.post<CommentModel>('comments', comment);
+  }
+  updatePost(post: UpdatePostDto, id: number) {
+    return this.http.putByID('posts', post, id)
   }
   deleteComment(id: number) {
     return this.http.deleteByID<CommentModel>('comments', id);

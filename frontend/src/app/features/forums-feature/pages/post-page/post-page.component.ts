@@ -53,7 +53,6 @@ export class PostPageComponent implements OnInit {
     this.postsService.getPost(this.route.snapshot.params['post']).subscribe({
       next: (data) => {
         this.post = data;
-        console.log(this.post)
         this.post$.next(data);
         this.store.select('auth').subscribe({
           next: (data) => {
@@ -80,6 +79,7 @@ export class PostPageComponent implements OnInit {
   liked = false;
   likes = 0;
 
+  store$ = this.store.select('auth');
   post$ = new Subject<PostModel>()
   likes$ = new BehaviorSubject<number>(0);
 

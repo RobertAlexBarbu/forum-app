@@ -34,19 +34,22 @@ export class PostsController {
   }
 
   @Put(':id')
+  @UseGuards(JwtAuthGuard)
   update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
     return this.postsService.update(+id, updatePostDto);
   }
 
-  @UseGuards(JwtAuthGuard)
+
   @Post('likes/:id')
+  @UseGuards(JwtAuthGuard)
   likePost(@Param('id') id: string, @Req() req) {
     console.log('HEEEY');
     return this.postsService.likePost(+id, req.user.id);
   }
 
-  @UseGuards(JwtAuthGuard)
+
   @Delete('likes/:id')
+  @UseGuards(JwtAuthGuard)
   dislikePost(@Param('id') id: string, @Req() req) {
     return this.postsService.dislikePost(+id, req.user.id);
   }

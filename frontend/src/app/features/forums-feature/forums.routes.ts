@@ -11,6 +11,9 @@ import {
 } from "./pages/new-post-page/new-post-page.component";
 import {PostPageComponent} from "./pages/post-page/post-page.component";
 import {PostsComponent} from "./components/posts/posts.component";
+import {
+  EditPostPageComponent
+} from "./pages/edit-post-page/edit-post-page.component";
 
 export const forumsRoutes: Routes = [
   {
@@ -36,6 +39,10 @@ export const forumsRoutes: Routes = [
         loadComponent: () => import("./pages/edit-forum-page/edit-forum-page.component").then(m => m.EditForumPageComponent)
       },
       {
+        path: ':id/posts/edit/:post',
+        component: EditPostPageComponent
+      },
+      {
         path: ':id',
         component: ForumPageComponent,
         children: [
@@ -43,6 +50,7 @@ export const forumsRoutes: Routes = [
             path: '',
             component: PostsComponent
           },
+
           {
             path: 'posts/:post',
             component: PostPageComponent
@@ -54,8 +62,6 @@ export const forumsRoutes: Routes = [
         path: ':id/new-post',
         component: NewPostPageComponent
       },
-
-
     ]
   }
 

@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {ActivatedRoute} from "@angular/router";
 import {ForumsService} from "../../services/forums/forums.service";
 import {PostComponent} from "../post/post.component";
@@ -7,7 +7,7 @@ import {PostComponent} from "../post/post.component";
 @Component({
   selector: 'app-posts',
   standalone: true,
-  imports: [CommonModule, PostComponent],
+  imports: [CommonModule, PostComponent, NgOptimizedImage],
   templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

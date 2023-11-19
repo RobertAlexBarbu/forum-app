@@ -5,6 +5,7 @@ import { EntityManager } from '@mikro-orm/core';
 import { Posts } from './entities/Posts';
 import { Users } from '../users/entities/Users';
 import {PostLikes} from "./entities/PostLikes";
+import {Categories} from "../forums/entities/Categories";
 
 @Injectable()
 export class PostsService {
@@ -40,8 +41,9 @@ export class PostsService {
 
   async findOne(id: number) {
     return await this.em.findOne(Posts, id, {
-      populate: ['postLikes.user', 'comments.user', 'category', 'user', 'forum'], fields: ['user.username', 'comments', 'category', 'title', 'createdAt', 'content', 'postLikes', 'postLikes.user.id', 'postLikes.user.username', 'forum.id'],
+      populate: ['postLikes.user', 'comments.user', 'category', 'user', 'forum.categories'], fields: ['user.username', 'comments', 'category', 'title', 'createdAt', 'content', 'postLikes', 'postLikes.user.id', 'postLikes.user.username', 'forum'],
     });
+
   }
   async likePost(id: number, userId: number) {
     const like = this.em.create(PostLikes, {post: id, user: userId});
@@ -57,8 +59,14 @@ export class PostsService {
     return like
   }
 
-  update(id: number, updatePostDto: UpdatePostDto) {
-    return `This action updates a #${id} post`;
+  async update(id: number, updatePostDto: UpdatePostDto) {
+    const post = this.em.getReference(Posts, id);
+    post.category = this.em.getReference(Categories, updatePostDto.categoryId);
+    post.content = updatePostDto.content;
+    post.title = updatePostDto.title;
+    this.em.persist(post);
+    await this.em.flush();
+    return post;
   }
 
 
