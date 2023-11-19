@@ -3,11 +3,16 @@
 
     <ng-container *ngIf="post$ | async as post1">
       <div class="post">
+        <div class="buttons">
+          <button pButton  class="p-button-sm nav
+           p-button p-button-text" pTooltip="Edit Post" tooltipPosition="top"><ng-icon name="jamPencilF" ></ng-icon></button>
+          <button *isAdmin (click)="deletePost(post1.id)" pButton class="p-button-sm nav p-button p-button-danger p-button-text" tooltipPosition="top" pTooltip="Delete Post"><ng-icon name="jamTrashF" ></ng-icon></button>
+        </div>
       <div class="header">
         <span class="category" *ngIf="post1.category">{{post.category.name}}</span><span class="title">{{post.title}}</span>
       </div>
       <div class="top">
-        <div>{{post.user.username}}</div><div class="sphere"></div><div>{{post1.createdAt | timeAgoPipe2}}</div>
+        <div>{{post.user.username}}</div><div class="sphere"></div><div>{{post.createdAt | timeAgoPipe2}}</div>
       </div>
       <div class="content">
         {{post.content}}
@@ -26,7 +31,7 @@
       <div class="separator"></div>
       <div class="comments">
         <ng-container *ngFor="let comment of post.comments">
-          <app-comment [comment]="comment"></app-comment>
+          <app-comment (delete)="deleteComment($event)" [comment]="comment"></app-comment>
         </ng-container>
       </div>
     </ng-container>

@@ -28,8 +28,8 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('admins')
+  @UseGuards(JwtAuthGuard)
   findAllAdmins() {
     return this.usersService.findAllAdmins()
   }

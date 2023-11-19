@@ -6,13 +6,13 @@ import {
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {PostsService} from "../../services/posts/posts.service";
-import {ActivatedRoute, RouterLink} from "@angular/router";
+import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {TimeAgoPipe} from "../../../../shared/pipes/time-ago.pipe";
 import {NgIcon, provideIcons} from "@ng-icons/core";
 import {
   jamArrowSquareUp,
   jamArrowSquareUpF,
-  jamMessageWritingF
+  jamMessageWritingF, jamPencilF, jamTrashF
 } from "@ng-icons/jam-icons";
 import {Store} from "@ngrx/store";
 import {BehaviorSubject, Subject} from "rxjs";
@@ -22,18 +22,24 @@ import {FormControl, ReactiveFormsModule, Validators} from "@angular/forms";
 import {ButtonModule} from "primeng/button";
 import {CommentComponent} from "../../components/comment/comment.component";
 import {PostModel} from "../../models/post.model";
+import {TooltipModule} from "primeng/tooltip";
+import {
+  IsAdminDirective
+} from "../../../../shared/directives/is-admin.directive";
 
 @Component({
   selector: 'app-post-page',
   standalone: true,
-  imports: [CommonModule, RouterLink, TimeAgoPipe, NgIcon, InputTextareaModule, PaginatorModule, ReactiveFormsModule, ButtonModule, CommentComponent],
+  imports: [CommonModule, RouterLink, TimeAgoPipe, NgIcon, InputTextareaModule, PaginatorModule, ReactiveFormsModule, ButtonModule, CommentComponent, TooltipModule, IsAdminDirective],
   templateUrl: './post-page.component.html',
   styleUrls: ['./post-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   viewProviders: [provideIcons({
     jamArrowSquareUp,
     jamArrowSquareUpF,
-    jamMessageWritingF
+    jamMessageWritingF,
+    jamTrashF,
+    jamPencilF,
   })]
 })
 export class PostPageComponent implements OnInit {
@@ -41,6 +47,7 @@ export class PostPageComponent implements OnInit {
   postsService = inject(PostsService);
   route = inject(ActivatedRoute);
   store = inject(Store);
+  router = inject(Router);
 
   ngOnInit() {
     this.postsService.getPost(this.route.snapshot.params['post']).subscribe({
@@ -93,6 +100,24 @@ export class PostPageComponent implements OnInit {
     this.likes$.next(this.likes);
     this.postsService.dislikePost(id).subscribe();
     this.liked = false;
+  }
+
+  deletePost(id: number) {
+    console.log(id);
+    this.postsService.deletePost(id).subscribe({
+      next: () => {
+        return this.router.navigate(['forums', this.post.forum.id])
+      }
+    })
+
+  }
+
+  deleteComment(id: number) {
+    this.postsService.deleteComment(id).subscribe({
+      next: () => {
+        window.location.reload()
+      }
+    })
   }
 
   onSubmit() {

@@ -17,7 +17,6 @@
   flex-direction: column;
   row-gap: 1rem;
   white-space: pre-line;
-  margin-top: 1rem;
 }
 .title {
   font-size: 1.5rem;
@@ -26,7 +25,7 @@
 }
 @media (min-width: 768px) {
   .card2 {
-    padding: 1rem 7rem;
+    padding: 0rem 7rem;
   }
 }
 .top {
@@ -60,4 +59,7 @@ form {
 .btn-container {
   display: flex;
   justify-content: end;
+}
+.buttons {
+  display: flex;
 }

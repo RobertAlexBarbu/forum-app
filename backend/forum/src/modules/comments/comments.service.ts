@@ -31,7 +31,10 @@ export class CommentsService {
     return `This action updates a #${id} comment`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} comment`;
+  async remove(id: number) {
+    const comment = this.em.getReference(Comments, id);
+    this.em.remove(comment);
+    await this.em.flush();
+    return comment;
   }
 }

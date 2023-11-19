@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import {Inject, Injectable} from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { EntityManager } from '@mikro-orm/core';
@@ -8,7 +8,8 @@ import {PostLikes} from "./entities/PostLikes";
 
 @Injectable()
 export class PostsService {
-  constructor(private readonly em: EntityManager) {}
+  // constructor(private readonly em: EntityManager) {}
+  @Inject(EntityManager) private readonly em: EntityManager;
 
   async create(createPostDto: CreatePostDto, userId: number) {
     const user = this.em.getReference(Users, userId);
@@ -39,7 +40,7 @@ export class PostsService {
 
   async findOne(id: number) {
     return await this.em.findOne(Posts, id, {
-      populate: ['postLikes.user', 'comments.user', 'category', 'user'], fields: ['user.username', 'comments', 'category', 'title', 'createdAt', 'content', 'postLikes', 'postLikes.user.id'],
+      populate: ['postLikes.user', 'comments.user', 'category', 'user', 'forum'], fields: ['user.username', 'comments', 'category', 'title', 'createdAt', 'content', 'postLikes', 'postLikes.user.id', 'postLikes.user.username', 'forum.id'],
     });
   }
   async likePost(id: number, userId: number) {
@@ -60,7 +61,11 @@ export class PostsService {
     return `This action updates a #${id} post`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} post`;
+
+  async remove(id: number) {
+    const post = this.em.getReference(Posts, id);
+    this.em.remove(post);
+    await this.em.flush();
+    return post;
   }
 }
