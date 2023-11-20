@@ -16,7 +16,7 @@
         </div>
         <div class="input-last">
             <label for="password">Password</label>
-            <p-password [feedback]="false" [inputStyle]="{'width': '100%'}" [style]="{'width': '100%'}"
+            <p-password  [feedback]="false" [inputStyle]="{'width': '100%'}" [style]="{'width': '100%'}"
                         placeholder="Password" id="password"
                         formControlName="password" [toggleMask]="true"></p-password>
             <div class="error">
@@ -33,14 +33,14 @@
         <div class="top-error">{{error$ | async}}</div>
         <div class="submit">
 
-            <button pButton type="submit" class="p-button" [class.loading]="loading" [loading]="loading">
+            <button pButton type="submit" class="p-button p-button-sm" [class.loading]="loading" [loading]="loading">
                 <ng-container *ngIf="!loading">
                     <div>Log in</div>
                 </ng-container>
             </button>
         </div>
         <div class="help">
-            <div class="link">Forgot your password?</div>
+<!--            <div class="link">Forgot your password?</div>-->
             <div class="question">Don't have an account?</div>
             <div class="link" routerLink="/signup">Sign up for Forumly</div>
         </div>
