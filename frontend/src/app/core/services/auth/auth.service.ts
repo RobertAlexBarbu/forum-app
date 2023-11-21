@@ -15,6 +15,7 @@ export class AuthService {
 
   login(loginData: LoginDto) {
     return this.httpService.post<{access_token: string}>('auth/login', loginData).pipe(catchError((error: HttpErrorResponse) => {
+      console.log(error.status);
       if (error.status === 401) {
         return throwError(() => new Error('⚠ Invalid credentials'))
       } else {

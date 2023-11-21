@@ -1,23 +1,30 @@
 <div class="post">
   <div class="top">
-    <div>{{post.user.username}}</div><div class="sphere"></div><div>{{post.createdAt | timeAgoPipe2}}</div>
+    <div>{{post.user.username}}</div>
+    <div class="sphere"></div>
+    <div>{{post.createdAt | timeAgoPipe2}}</div>
   </div>
   <div class="body">
-
-    <div class="category" *ngIf="post.category">{{post.category.name}}</div><div class="title clickable" routerLink="/forums/{{post.forum.id}}/posts/{{post.id}}">{{post.title}}</div>
+    <div class="category" *ngIf="post.category">{{post.category.name}}</div>
+    <div class="title clickable" routerLink="/forums/{{post.forum.id}}/posts/{{post.id}}">{{post.title}}</div>
   </div>
   <div class="bottom">
-      <div *ngIf="!liked" class="likes clickable" (click)="likePost()">
-        <ng-container >
-          <ng-icon name="jamArrowSquareUp" size="1.2rem"></ng-icon> {{likes$ | async}}
-        </ng-container>
-      </div>
-      <div *ngIf="liked" class="likes clickable liked" (click)="dislikePost()">
-        <ng-container >
-          <ng-icon  name="jamArrowSquareUpF" size="1.2rem"></ng-icon> {{likes$ | async}}
-        </ng-container>
-      </div>
-
-    <div class="comments"><ng-icon name="jamMessageWritingF" size="1.2rem"></ng-icon>{{post.comments.length }}<div class="desktop">comments</div></div>
+    <div *ngIf="!liked" class="likes clickable" (click)="likePost()">
+      <ng-container>
+        <ng-icon name="jamArrowSquareUp" size="1.2rem"></ng-icon>
+        {{likes$ | async}}
+      </ng-container>
+    </div>
+    <div *ngIf="liked" class="likes clickable liked" (click)="dislikePost()">
+      <ng-container>
+        <ng-icon name="jamArrowSquareUpF" size="1.2rem"></ng-icon>
+        {{likes$ | async}}
+      </ng-container>
+    </div>
+    <div class="comments">
+      <ng-icon name="jamMessageWritingF" size="1.2rem"></ng-icon>
+      {{post.comments.length }}
+      <div class="desktop">comments</div>
+    </div>
   </div>
 </div>

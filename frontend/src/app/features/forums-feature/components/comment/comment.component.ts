@@ -5,7 +5,7 @@ import {
   Input,
   Output
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {TimeAgoPipe} from "../../../../shared/pipes/time-ago.pipe";
 import {CommentModel} from "../../models/comment.model";
 import {ButtonModule} from "primeng/button";
@@ -26,9 +26,10 @@ import {
   viewProviders: [provideIcons({jamTrashF})]
 })
 export class CommentComponent {
- @Input() comment !:CommentModel;
- @Output() delete = new EventEmitter<number>();
- onDelete() {
-   this.delete.emit(this.comment.id);
- }
+  @Input() comment !: CommentModel;
+  @Output() delete = new EventEmitter<number>();
+
+  onDelete() {
+    this.delete.emit(this.comment.id);
+  }
 }

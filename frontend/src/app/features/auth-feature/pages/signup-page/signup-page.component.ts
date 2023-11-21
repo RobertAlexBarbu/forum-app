@@ -14,8 +14,8 @@ import {
 import {InputTextModule} from "primeng/inputtext";
 import {Router, RouterLink} from "@angular/router";
 import {Store} from "@ngrx/store";
-import { signup} from "../../../../core/store/auth/auth.actions";
-import { Subject} from "rxjs";
+import {signup} from "../../../../core/store/auth/auth.actions";
+import {Subject} from "rxjs";
 import {AuthService} from "../../../../core/services/auth/auth.service";
 import {AuthStateModel} from "../../../../core/store/auth/auth-state.model";
 import {ButtonModule} from "primeng/button";
@@ -39,11 +39,13 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SignupPageComponent {
+  loading = false;
   authService = inject(AuthService);
   router = inject(Router);
   store = inject(Store<{ auth: AuthStateModel }>)
   error$ = new Subject<string>();
   formUtils = inject(FormUtilsService);
+
   form = new FormGroup(
     {
       username: new FormControl("", {
@@ -60,10 +62,10 @@ export class SignupPageComponent {
       })
     }
   )
-  loading = false;
+
   onSubmit() {
     this.error$.next('');
-    if(!this.form.valid) {
+    if (!this.form.valid) {
       this.formUtils.markGroupDirty(this.form);
     } else {
       this.loading = true;
@@ -84,5 +86,4 @@ export class SignupPageComponent {
       });
     }
   }
-
 }

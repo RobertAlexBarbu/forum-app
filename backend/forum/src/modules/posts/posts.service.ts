@@ -60,8 +60,14 @@ export class PostsService {
   }
 
   async update(id: number, updatePostDto: UpdatePostDto) {
-    const post = this.em.getReference(Posts, id);
-    post.category = this.em.getReference(Categories, updatePostDto.categoryId);
+    console.log(updatePostDto.categoryId + ' - ' + id);
+    const post = await this.em.findOne(Posts, id);
+    if(updatePostDto.categoryId === null) {
+      post.category = null;
+    } else {
+      post.category = this.em.getReference(Categories, updatePostDto.categoryId)
+    }
+
     post.content = updatePostDto.content;
     post.title = updatePostDto.title;
     this.em.persist(post);

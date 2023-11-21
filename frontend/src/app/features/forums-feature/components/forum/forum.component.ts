@@ -6,7 +6,13 @@ import {
 import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {ForumModel} from "../../models/forum.model";
 import {NgIcon, provideIcons} from "@ng-icons/core";
-import {jamMessagesF, jamMessageF, jamMessage, jamPencilF, jamTrashF} from "@ng-icons/jam-icons";
+import {
+  jamMessagesF,
+  jamMessageF,
+  jamMessage,
+  jamPencilF,
+  jamTrashF
+} from "@ng-icons/jam-icons";
 import {ButtonModule} from "primeng/button";
 import {RouterLink} from "@angular/router";
 import {DockModule} from "primeng/dock";
@@ -22,7 +28,13 @@ import {
   templateUrl: './forum.component.html',
   styleUrls: ['./forum.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  viewProviders: [provideIcons({jamMessagesF, jamMessageF, jamMessage, jamPencilF, jamTrashF})]
+  viewProviders: [provideIcons({
+    jamMessagesF,
+    jamMessageF,
+    jamMessage,
+    jamPencilF,
+    jamTrashF
+  })]
 })
 export class ForumComponent {
   @Input() forum!: ForumModel;

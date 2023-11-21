@@ -34,12 +34,12 @@ import {AuthStateModel} from "../../../../core/store/auth/auth-state.model";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginPageComponent {
+  loading = false;
+  error$ = new Subject<string>();
   authService = inject(AuthService);
   formUtils = inject(FormUtilsService);
   router = inject(Router);
   store = inject(Store);
-
-  error$ = new Subject<string>();
 
   form = new FormGroup({
     usernameOrEmail: new FormControl('', {
@@ -52,7 +52,6 @@ export class LoginPageComponent {
     })
   })
 
-  loading = false;
   submitForm() {
     this.error$.next('');
     if(!this.form.valid) {
@@ -68,6 +67,7 @@ export class LoginPageComponent {
           return this.router.navigate(['']);
         },
         error: (err) => {
+          console.log(err.message)
           this.error$.next(err.message);
           this.loading = false;
           this.form.markAsUntouched()

@@ -39,6 +39,19 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ForumsPageComponent implements OnInit {
+  addForumModal = false;
+  deleteForumModal = false;
+  forums: ForumModel[] = [];
+  toBeDeletedForum: ForumModel | null = null;
+  loading = false;
+  error$ = new Subject<string>();
+  forums$ = new Subject<ForumModel[]>();
+  forumsService = inject(ForumsService);
+
+  addForumForm = new FormControl('', {
+    nonNullable: true,
+    validators: [Validators.required, Validators.maxLength(32)]
+  })
 
   ngOnInit() {
     this.forumsService.getForums().pipe().subscribe({
@@ -48,21 +61,6 @@ export class ForumsPageComponent implements OnInit {
       }
     })
   }
-
-  forumsService = inject(ForumsService);
-
-  addForumModal = false;
-  deleteForumModal = false;
-  forums: ForumModel[] = [];
-  toBeDeletedForum: ForumModel | null = null;
-
-  error$ = new Subject<string>();
-  forums$ = new Subject<ForumModel[]>();
-
-  addForumForm = new FormControl('', {
-    nonNullable: true,
-    validators: [Validators.required, Validators.maxLength(32)]
-  })
 
   openDeleteModal(forum: ForumModel) {
     this.toBeDeletedForum = forum;
@@ -100,8 +98,6 @@ export class ForumsPageComponent implements OnInit {
     }
   }
 
-  loading = false;
-
   addForum() {
     this.error$.next('');
     if (!this.addForumForm.valid) {
@@ -115,6 +111,7 @@ export class ForumsPageComponent implements OnInit {
           this.forums$.next(this.forums)
           this.loading = false;
           this.addForumModal = false;
+          window.location.reload()
         },
         error: (err) => {
           this.error$.next(err.message);
@@ -125,5 +122,4 @@ export class ForumsPageComponent implements OnInit {
       })
     }
   }
-
 }

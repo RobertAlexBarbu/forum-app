@@ -1,48 +1,45 @@
 <div class="card" ontouchstart="">
-    <form [formGroup]="form" (ngSubmit)="submitForm()">
-        <h2>Log in</h2>
-        <div class="input">
-            <label for="username">Username or email</label>
-            <input placeholder="Username or email" id="username" type="text" pInputText formControlName="usernameOrEmail">
-            <div class="error">
-                <ng-container *ngIf="form.get('usernameOrEmail') as username">
-                    <ng-container *ngIf="username.dirty && username.errors">
-                        <ng-container *ngIf="username.errors['required']">
-                            This field is required
-                        </ng-container>
-                    </ng-container>
-                </ng-container>
-            </div>
-        </div>
-        <div class="input-last">
-            <label for="password">Password</label>
-            <p-password  [feedback]="false" [inputStyle]="{'width': '100%'}" [style]="{'width': '100%'}"
-                        placeholder="Password" id="password"
-                        formControlName="password" [toggleMask]="true"></p-password>
-            <div class="error">
-                <ng-container *ngIf="form.get('password') as password">
-                    <ng-container *ngIf="password.dirty && password.errors">
-                        <ng-container *ngIf="password.errors['required']">
-                            This field is required
-                        </ng-container>
-                    </ng-container>
-                </ng-container>
-            </div>
-        </div>
-
-        <div class="top-error">{{error$ | async}}</div>
-        <div class="submit">
-
-            <button pButton type="submit" class="p-button p-button-sm" [class.loading]="loading" [loading]="loading">
-                <ng-container *ngIf="!loading">
-                    <div>Log in</div>
-                </ng-container>
-            </button>
-        </div>
-        <div class="help">
-<!--            <div class="link">Forgot your password?</div>-->
-            <div class="question">Don't have an account?</div>
-            <div class="link" routerLink="/signup">Sign up for Forumly</div>
-        </div>
-    </form>
+  <form [formGroup]="form" (ngSubmit)="submitForm()">
+    <h2>Log in</h2>
+    <div class="input">
+      <label for="username">Username or email</label>
+      <input placeholder="Username or email" id="username" type="text" pInputText formControlName="usernameOrEmail">
+      <div class="error">
+        <ng-container *ngIf="form.get('usernameOrEmail') as username">
+          <ng-container *ngIf="username.dirty && username.errors">
+            <ng-container *ngIf="username.errors['required']">
+              This field is required
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+    <div class="input-last">
+      <label for="password">Password</label>
+      <p-password [feedback]="false" [inputStyle]="{'width': '100%'}" [style]="{'width': '100%'}"
+                  placeholder="Password" id="password"
+                  formControlName="password" [toggleMask]="true"></p-password>
+      <div class="error">
+        <ng-container *ngIf="form.get('password') as password">
+          <ng-container *ngIf="password.dirty && password.errors">
+            <ng-container *ngIf="password.errors['required']">
+              This field is required
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+    <div class="top-error">{{error$ | async}}</div>
+    <div class="submit">
+      <button pButton type="submit" class="p-button p-button-sm" [class.loading]="loading" [loading]="loading">
+        <ng-container *ngIf="!loading">
+          <div>Log in</div>
+        </ng-container>
+      </button>
+    </div>
+    <div class="help">
+      <div class="question">Don't have an account?</div>
+      <div class="link" routerLink="/signup">Sign up for Forumly</div>
+    </div>
+  </form>
 </div>

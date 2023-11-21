@@ -38,7 +38,11 @@ export class EditPostPageComponent {
     this.forum$ = this.forumsService.getForum(this.route.snapshot.params['id'])
     this.postsService.getPost(this.route.snapshot.params['post']).subscribe({
       next: (data) => {
-        this.form.get('category')?.setValue(data.category.id);
+        console.log(data)
+        if(data.category) {
+          this.form.get('category')?.setValue(data.category.id);
+        }
+
         this.ph = 'Category'
         this.id = data.id;
         this.form.get('title')?.setValue(data.title);

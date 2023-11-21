@@ -9,7 +9,7 @@ export interface PostModel {
   title: string;
   content: string;
   createdAt: string;
-  category: CategoryModel;
+  category: CategoryModel | null;
   user: UserModel;
   forum: ForumModel;
   postLikes: PostLike[];
