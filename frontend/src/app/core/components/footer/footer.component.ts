@@ -9,6 +9,4 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./footer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FooterComponent {
-
-}
+export class FooterComponent {}

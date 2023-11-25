@@ -1,8 +1,8 @@
-import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {ForumsService} from "../../services/forums/forums.service";
-import {PostComponent} from "../../components/post/post.component";
-import {CommentComponent} from "../../components/comment/comment.component";
+import { ForumsService } from '../../services/forums/forums.service';
+import { PostComponent } from '../../components/post/post.component';
+import { CommentComponent } from '../../components/comment/comment.component';
 
 @Component({
   selector: 'app-home-page',

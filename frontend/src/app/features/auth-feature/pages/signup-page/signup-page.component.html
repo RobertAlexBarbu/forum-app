@@ -3,14 +3,20 @@
     <h2>Sign up</h2>
     <div class="input">
       <label for="username">Username</label>
-      <input placeholder="Username" id="username" type="text" pInputText formControlName="username">
+      <input
+        placeholder="Username"
+        id="username"
+        type="text"
+        pInputText
+        formControlName="username" />
       <div class="error">
         <ng-container *ngIf="form.get('username') as username">
           <ng-container *ngIf="username.dirty && username.errors">
             <ng-container *ngIf="username.errors['required']">
               This field is required
             </ng-container>
-            <ng-container *ngIf="!username.errors['required'] && username.errors['maxlength']">
+            <ng-container
+              *ngIf="!username.errors['required'] && username.errors['maxlength']">
               Maximum length is 32
             </ng-container>
           </ng-container>
@@ -19,14 +25,20 @@
     </div>
     <div class="input">
       <label for="email">Email</label>
-      <input placeholder="Email" id="email" type="email" pInputText formControlName="email">
+      <input
+        placeholder="Email"
+        id="email"
+        type="email"
+        pInputText
+        formControlName="email" />
       <div class="error">
         <ng-container *ngIf="form.get('email') as email">
           <ng-container *ngIf="email.dirty && email.errors">
             <ng-container *ngIf="email.errors['required']">
               This field is required
             </ng-container>
-            <ng-container *ngIf="!email.errors['required'] && email.errors['email']">
+            <ng-container
+              *ngIf="!email.errors['required'] && email.errors['email']">
               Invalid email address
             </ng-container>
             <ng-container
@@ -39,16 +51,22 @@
     </div>
     <div class="input-last">
       <label for="password">Password</label>
-      <p-password [feedback]="false" [inputStyle]="{'width': '100%'}" [style]="{'width': '100%'}"
-                  placeholder="Password" id="password"
-                  formControlName="password" [toggleMask]="true"></p-password>
+      <p-password
+        [feedback]="false"
+        [inputStyle]="{'width': '100%'}"
+        [style]="{'width': '100%'}"
+        placeholder="Password"
+        id="password"
+        formControlName="password"
+        [toggleMask]="true"></p-password>
       <div class="error">
         <ng-container *ngIf="form.get('password') as password">
           <ng-container *ngIf="password.dirty && password.errors">
             <ng-container *ngIf="password.errors['required']">
               This field is required
             </ng-container>
-            <ng-container *ngIf="!password.errors['required'] && password.errors['minlength']">
+            <ng-container
+              *ngIf="!password.errors['required'] && password.errors['minlength']">
               Minimum length is 8
             </ng-container>
             <ng-container
@@ -61,7 +79,12 @@
     </div>
     <div class="submit">
       <div class="top-error">{{error$ | async}}</div>
-      <button pButton type="submit" [class.loading]="loading" [loading]="loading" class="p-button">
+      <button
+        pButton
+        type="submit"
+        [class.loading]="loading"
+        [loading]="loading"
+        class="p-button">
         <ng-container *ngIf="!loading">
           <div>Sign up</div>
         </ng-container>

@@ -5,13 +5,11 @@ import {
   OnInit
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {ChartModule} from "primeng/chart";
-import {ColorService} from "../../../../core/services/color/color.service";
-import {
-  ForumsService
-} from "../../../forums-feature/services/forums/forums.service";
-import {forkJoin, Observable, of, Subject, switchMap} from "rxjs";
-import {ForumModel} from "../../../forums-feature/models/forum.model";
+import { ChartModule } from 'primeng/chart';
+import { ColorService } from '../../../../core/services/color/color.service';
+import { ForumsService } from '../../../forums-feature/services/forums/forums.service';
+import { forkJoin, Observable, Subject, switchMap } from 'rxjs';
+import { ForumModel } from '../../../forums-feature/models/forum.model';
 
 @Component({
   selector: 'app-statistics-page',
@@ -21,11 +19,11 @@ import {ForumModel} from "../../../forums-feature/models/forum.model";
   styleUrls: ['./statistics-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class StatisticsPageComponent implements OnInit{
+export class StatisticsPageComponent implements OnInit {
   colorService = inject(ColorService);
   forumsService = inject(ForumsService);
 
-  data: any =  {
+  data: any = {
     labels: [],
     datasets: [
       {
@@ -34,8 +32,8 @@ export class StatisticsPageComponent implements OnInit{
         hoverBackgroundColor: []
       }
     ]
-  }
-  data2: any =  {
+  };
+  data2: any = {
     labels: [],
     datasets: [
       {
@@ -44,8 +42,8 @@ export class StatisticsPageComponent implements OnInit{
         hoverBackgroundColor: []
       }
     ]
-  }
-  data3: any =  {
+  };
+  data3: any = {
     labels: [],
     datasets: [
       {
@@ -54,7 +52,7 @@ export class StatisticsPageComponent implements OnInit{
         hoverBackgroundColor: []
       }
     ]
-  }
+  };
   data$ = new Subject();
   data2$ = new Subject();
   data3$ = new Subject();
@@ -63,41 +61,48 @@ export class StatisticsPageComponent implements OnInit{
   options3: any;
 
   ngOnInit() {
-    this.forumsService.getForums().pipe(switchMap(forums => {
-      let forumObservables: Observable<any>[] = []
-      forums.forEach(forum => {
-        forumObservables.push(this.forumsService.getForum(forum.id))
-      })
-      return forkJoin(forumObservables)
-    })).subscribe({next: (data) => {
-      console.log(data);
-      data.forEach((forum: ForumModel) => {
-        this.data.labels.push(forum.name);
-        this.data2.labels.push(forum.name);
-        this.data3.labels.push(forum.name);
-        this.data.datasets[0].data.push(forum.posts.length);
-        let totalLikes = 0;
-        forum.posts.forEach((post) => {
-          totalLikes += post.postLikes.length;
+    this.forumsService
+      .getForums()
+      .pipe(
+        switchMap((forums) => {
+          const forumObservables: Observable<any>[] = [];
+          forums.forEach((forum) => {
+            forumObservables.push(this.forumsService.getForum(forum.id));
+          });
+          return forkJoin(forumObservables);
         })
-        this.data2.datasets[0].data.push(totalLikes);
-        let totalComments = 0;
-        forum.posts.forEach((post) => {
-          totalComments += post.comments.length;
-        })
-        this.data3.datasets[0].data.push(totalComments);
-        let color = this.colorService.generateRandomColor();
-        this.data.datasets[0].backgroundColor.push(color);
-        this.data.datasets[0].hoverBackgroundColor.push(color + '90');
-        this.data2.datasets[0].backgroundColor.push(color);
-        this.data2.datasets[0].hoverBackgroundColor.push(color + '90');
-        this.data3.datasets[0].backgroundColor.push(color);
-        this.data3.datasets[0].hoverBackgroundColor.push(color + '90');
-      })
-        this.data$.next(this.data);
-        this.data2$.next(this.data2);
-        this.data3$.next(this.data3);
-      }})
+      )
+      .subscribe({
+        next: (data) => {
+          console.log(data);
+          data.forEach((forum: ForumModel) => {
+            this.data.labels.push(forum.name);
+            this.data2.labels.push(forum.name);
+            this.data3.labels.push(forum.name);
+            this.data.datasets[0].data.push(forum.posts.length);
+            let totalLikes = 0;
+            forum.posts.forEach((post) => {
+              totalLikes += post.postLikes.length;
+            });
+            this.data2.datasets[0].data.push(totalLikes);
+            let totalComments = 0;
+            forum.posts.forEach((post) => {
+              totalComments += post.comments.length;
+            });
+            this.data3.datasets[0].data.push(totalComments);
+            const color = this.colorService.generateRandomColor();
+            this.data.datasets[0].backgroundColor.push(color);
+            this.data.datasets[0].hoverBackgroundColor.push(color + '90');
+            this.data2.datasets[0].backgroundColor.push(color);
+            this.data2.datasets[0].hoverBackgroundColor.push(color + '90');
+            this.data3.datasets[0].backgroundColor.push(color);
+            this.data3.datasets[0].hoverBackgroundColor.push(color + '90');
+          });
+          this.data$.next(this.data);
+          this.data2$.next(this.data2);
+          this.data3$.next(this.data3);
+        }
+      });
 
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
@@ -150,6 +155,5 @@ export class StatisticsPageComponent implements OnInit{
         }
       }
     };
-
   }
 }

@@ -1,8 +1,8 @@
-import {LoginPageComponent} from "./pages/login-page/login-page.component";
-import {Routes} from "@angular/router";
-import {SignupPageComponent} from "./pages/signup-page/signup-page.component";
+import { LoginPageComponent } from './pages/login-page/login-page.component';
+import { Routes } from '@angular/router';
+import { SignupPageComponent } from './pages/signup-page/signup-page.component';
 
-export const authRoutes : Routes = [
+export const authRoutes: Routes = [
   {
     path: 'login',
     component: LoginPageComponent
@@ -11,4 +11,4 @@ export const authRoutes : Routes = [
     path: 'signup',
     component: SignupPageComponent
   }
-]
+];

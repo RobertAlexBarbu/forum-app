@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {RouterOutlet} from "@angular/router";
-import {TabMenuModule} from "primeng/tabmenu";
-import {ButtonModule} from "primeng/button";
+import { RouterOutlet } from '@angular/router';
+import { TabMenuModule } from 'primeng/tabmenu';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -12,6 +12,4 @@ import {ButtonModule} from "primeng/button";
   styleUrls: ['./dashboard-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DashboardPageComponent {
-
-}
+export class DashboardPageComponent {}

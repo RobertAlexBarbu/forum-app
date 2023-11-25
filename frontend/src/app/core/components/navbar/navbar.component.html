@@ -1,43 +1,71 @@
 <div class="navbar" ontouchstart="">
-
-  <button [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active-link" pButton
-          class=" p-button-sm p-button-text " routerLink="/" (click)="closeMenu()">
+  <button
+    [routerLinkActiveOptions]="{exact: true}"
+    routerLinkActive="active-link"
+    pButton
+    class="p-button-sm p-button-text"
+    routerLink="/"
+    (click)="closeMenu()">
     <ng-icon name="jamHomeF"></ng-icon>
     Home
   </button>
-  <button routerLinkActive="active-link" pButton
-          class=" p-button-sm p-button-text " routerLink="/forums" (click)="closeMenu()">
+  <button
+    routerLinkActive="active-link"
+    pButton
+    class="p-button-sm p-button-text"
+    routerLink="/forums"
+    (click)="closeMenu()">
     <ng-icon name="jamMessagesF"></ng-icon>
     Forums
   </button>
   <ng-container *ngIf="authState$ | async as authState">
-    <button *ngIf="authState | isAdmin" routerLinkActive="active-link" pButton
-            class="p-button p-button-sm p-button-text " routerLink="/admin" (click)="closeMenu()">
+    <button
+      *ngIf="authState | isAdmin"
+      routerLinkActive="active-link"
+      pButton
+      class="p-button p-button-sm p-button-text"
+      routerLink="/admin"
+      (click)="closeMenu()">
       <ng-icon name="jamPieChartF"></ng-icon>
       Dashboard
     </button>
   </ng-container>
 
-
   <div class="separator"></div>
 
-  <button *isAuth="true" pButton class="p-button-sm p-button-text logout p-button"
-          (click)="logout(); closeMenu()"
-  >Log Out
+  <button
+    *isAuth="true"
+    pButton
+    class="p-button-sm p-button-text logout p-button"
+    (click)="logout(); closeMenu()">
+    Log Out
   </button>
 
-  <button *isAuth="false" routerLinkActive="active-link" pButton class=" p-button-sm p-button-text login mobile" routerLink="/login"
-          (click)="closeMenu()">Log in
+  <button
+    *isAuth="false"
+    routerLinkActive="active-link"
+    pButton
+    class="p-button-sm p-button-text login mobile"
+    routerLink="/login"
+    (click)="closeMenu()">
+    Log in
   </button>
-  <button *isAuth="false" routerLinkActive="active-link" pButton class="p-button-text p-button-sm signup" routerLink="/signup"
-          (click)="closeMenu()">Sign up
+  <button
+    *isAuth="false"
+    routerLinkActive="active-link"
+    pButton
+    class="p-button-text p-button-sm signup"
+    routerLink="/signup"
+    (click)="closeMenu()">
+    Sign up
   </button>
 
-  <button *isAuth="false"  pButton class="p-button-sm login desktop-btn login" routerLink="/login"
-          (click)="closeMenu()">Log in
+  <button
+    *isAuth="false"
+    pButton
+    class="p-button-sm login desktop-btn login"
+    routerLink="/login"
+    (click)="closeMenu()">
+    Log in
   </button>
-
 </div>
-
-
-

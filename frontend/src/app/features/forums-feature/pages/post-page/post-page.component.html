@@ -1,41 +1,50 @@
 <div class="separator"></div>
 <div class="card2">
-
   <ng-container *ngIf="post$ | async as post1">
     <div class="post">
       <div class="buttons">
         <ng-container *ngIf="store$ | async as authData">
-
-          <button *ngIf="authData.id == post1.user.id" routerLink="/forums/{{post.forum.id}}/posts/edit/{{post.id}}" pButton class="p-button-sm nav
-           p-button p-button-text" pTooltip="Edit Post" tooltipPosition="top">
+          <button
+            *ngIf="authData.id === post1.user.id"
+            routerLink="/forums/{{post.forum.id}}/posts/edit/{{post.id}}"
+            pButton
+            class="p-button-sm nav p-button p-button-text"
+            pTooltip="Edit Post"
+            tooltipPosition="top">
             <ng-icon name="jamPencilF"></ng-icon>
           </button>
         </ng-container>
-        <button *isAdmin (click)="deletePost(post1.id)" pButton
-                class="p-button-sm nav p-button p-button-danger p-button-text" tooltipPosition="top"
-                pTooltip="Delete Post">
+        <button
+          *isAdmin
+          (click)="deletePost(post1.id)"
+          pButton
+          class="p-button-sm nav p-button p-button-danger p-button-text"
+          tooltipPosition="top"
+          pTooltip="Delete Post">
           <ng-icon name="jamTrashF"></ng-icon>
         </button>
       </div>
       <div class="header">
-        <span class="category" *ngIf="post.category">{{post.category.name}}</span><span
-        class="title">{{post.title}}</span>
+        <span class="category" *ngIf="post.category"
+          >{{post.category.name}}</span
+        ><span class="title">{{post.title}}</span>
       </div>
       <div class="top">
         <div>{{post.user.username}}</div>
         <div class="sphere"></div>
         <div>{{post.createdAt | timeAgoPipe2}}</div>
       </div>
-      <div class="content">
-        {{post.content}}
-      </div>
+      <div class="content">{{post.content}}</div>
       <div *ngIf="!liked" class="likes clickable" (click)="likePost(post.id)">
         <ng-container>
           <ng-icon name="jamArrowSquareUp" size="1.2rem"></ng-icon>
           {{likes$ | async}}
         </ng-container>
       </div>
-      <div *ngIf="liked" class="likes liked clickable" (click)="dislikePost(post.id)">
+      <div
+        *ngIf="liked"
+        class="likes liked clickable"
+        (click)="dislikePost(post.id)">
         <ng-container>
           <ng-icon name="jamArrowSquareUpF" size="1.2rem"></ng-icon>
           {{likes$ | async}}
@@ -45,22 +54,28 @@
     <div class="separator"></div>
     <div class="comments">
       <ng-container *ngFor="let comment of post.comments">
-        <app-comment (delete)="deleteComment($event)" [comment]="comment"></app-comment>
+        <app-comment
+          (delete)="deleteComment($event)"
+          [comment]="comment"></app-comment>
       </ng-container>
     </div>
   </ng-container>
-
 
   <div class="create-comment">
     <div class="mini-title">Comment</div>
     <form (ngSubmit)="onSubmit()">
       <div class="input">
-        <textarea rows="3" id="comment" [formControl]="comment" cols="30" pInputTextarea [autoResize]="true"></textarea>
+        <textarea
+          rows="3"
+          id="comment"
+          [formControl]="comment"
+          cols="30"
+          pInputTextarea
+          [autoResize]="true"></textarea>
       </div>
       <div class="btn-container">
-        <button pButton class=" smaller p-button p-button-text">Post</button>
+        <button pButton class="smaller p-button p-button-text">Post</button>
       </div>
     </form>
   </div>
 </div>
-

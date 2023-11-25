@@ -1,5 +1,5 @@
-import {UserModel} from "../../../core/models/user.model";
-import {PostModel} from "./post.model";
+import { UserModel } from '../../../core/models/user.model';
+import { PostModel } from './post.model';
 
 export interface CommentModel {
   id: number;
@@ -7,5 +7,4 @@ export interface CommentModel {
   createdAt: string;
   user: UserModel;
   post: PostModel;
-
 }

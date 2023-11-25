@@ -1,8 +1,8 @@
-import {UserModel} from "../../../core/models/user.model";
-import {ForumModel} from "./forum.model";
-import {PostLike} from "./post-like.model";
-import {CommentModel} from "./comment.model";
-import {CategoryModel} from "./category.model";
+import { UserModel } from '../../../core/models/user.model';
+import { ForumModel } from './forum.model';
+import { PostLike } from './post-like.model';
+import { CommentModel } from './comment.model';
+import { CategoryModel } from './category.model';
 
 export interface PostModel {
   id: number;

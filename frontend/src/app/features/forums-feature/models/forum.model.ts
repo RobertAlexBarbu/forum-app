@@ -1,5 +1,5 @@
-import {PostModel} from "./post.model";
-import {CategoryModel} from "./category.model";
+import { PostModel } from './post.model';
+import { CategoryModel } from './category.model';
 
 export interface ForumModel {
   id: number;

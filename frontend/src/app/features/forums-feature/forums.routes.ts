@@ -1,19 +1,12 @@
-import {Routes} from "@angular/router";
-import {HomePageComponent} from "./pages/home-page/home-page.component";
-import {ForumsPageComponent} from "./pages/forums-page/forums-page.component";
-import {
-  ForumPageComponent
-} from "./pages/forum-page/forum-page.component";
-import {isAdminGuard} from "../../core/guards/is-admin.guard";
-import {ForumsFeatureComponent} from "./forums-feature.component";
-import {
-  NewPostPageComponent
-} from "./pages/new-post-page/new-post-page.component";
-import {PostPageComponent} from "./pages/post-page/post-page.component";
-import {PostsComponent} from "./components/posts/posts.component";
-import {
-  EditPostPageComponent
-} from "./pages/edit-post-page/edit-post-page.component";
+import { Routes } from '@angular/router';
+import { HomePageComponent } from './pages/home-page/home-page.component';
+import { ForumsPageComponent } from './pages/forums-page/forums-page.component';
+import { ForumPageComponent } from './pages/forum-page/forum-page.component';
+import { ForumsFeatureComponent } from './forums-feature.component';
+import { NewPostPageComponent } from './pages/new-post-page/new-post-page.component';
+import { PostPageComponent } from './pages/post-page/post-page.component';
+import { PostsComponent } from './components/posts/posts.component';
+import { EditPostPageComponent } from './pages/edit-post-page/edit-post-page.component';
 
 export const forumsRoutes: Routes = [
   {
@@ -31,12 +24,18 @@ export const forumsRoutes: Routes = [
       {
         path: 'new',
         // canMatch: [isAdminGuard],
-        loadComponent: () => import("./pages/edit-forum-page/edit-forum-page.component").then(m => m.EditForumPageComponent)
+        loadComponent: () =>
+          import('./pages/edit-forum-page/edit-forum-page.component').then(
+            (m) => m.EditForumPageComponent
+          )
       },
       {
         path: 'edit/:id',
         // canMatch: [isAdminGuard],
-        loadComponent: () => import("./pages/edit-forum-page/edit-forum-page.component").then(m => m.EditForumPageComponent)
+        loadComponent: () =>
+          import('./pages/edit-forum-page/edit-forum-page.component').then(
+            (m) => m.EditForumPageComponent
+          )
       },
       {
         path: ':id/posts/edit/:post',
@@ -55,14 +54,12 @@ export const forumsRoutes: Routes = [
             path: 'posts/:post',
             component: PostPageComponent
           }
-
         ]
       },
       {
         path: ':id/new-post',
         component: NewPostPageComponent
-      },
+      }
     ]
   }
-
-]
+];

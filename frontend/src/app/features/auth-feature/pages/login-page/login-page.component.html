@@ -3,7 +3,12 @@
     <h2>Log in</h2>
     <div class="input">
       <label for="username">Username or email</label>
-      <input placeholder="Username or email" id="username" type="text" pInputText formControlName="usernameOrEmail">
+      <input
+        placeholder="Username or email"
+        id="username"
+        type="text"
+        pInputText
+        formControlName="usernameOrEmail" />
       <div class="error">
         <ng-container *ngIf="form.get('usernameOrEmail') as username">
           <ng-container *ngIf="username.dirty && username.errors">
@@ -16,9 +21,14 @@
     </div>
     <div class="input-last">
       <label for="password">Password</label>
-      <p-password [feedback]="false" [inputStyle]="{'width': '100%'}" [style]="{'width': '100%'}"
-                  placeholder="Password" id="password"
-                  formControlName="password" [toggleMask]="true"></p-password>
+      <p-password
+        [feedback]="false"
+        [inputStyle]="{'width': '100%'}"
+        [style]="{'width': '100%'}"
+        placeholder="Password"
+        id="password"
+        formControlName="password"
+        [toggleMask]="true"></p-password>
       <div class="error">
         <ng-container *ngIf="form.get('password') as password">
           <ng-container *ngIf="password.dirty && password.errors">
@@ -31,7 +41,12 @@
     </div>
     <div class="top-error">{{error$ | async}}</div>
     <div class="submit">
-      <button pButton type="submit" class="p-button p-button-sm" [class.loading]="loading" [loading]="loading">
+      <button
+        pButton
+        type="submit"
+        class="p-button p-button-sm"
+        [class.loading]="loading"
+        [loading]="loading">
         <ng-container *ngIf="!loading">
           <div>Log in</div>
         </ng-container>

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {RouterOutlet} from "@angular/router";
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-forums-feature',
@@ -10,6 +10,4 @@ import {RouterOutlet} from "@angular/router";
   styleUrls: ['./forums-feature.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ForumsFeatureComponent {
-
-}
+export class ForumsFeatureComponent {}

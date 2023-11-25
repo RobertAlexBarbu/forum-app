@@ -6,7 +6,11 @@
   </div>
   <div class="body">
     <div class="category" *ngIf="post.category">{{post.category.name}}</div>
-    <div class="title clickable" routerLink="/forums/{{post.forum.id}}/posts/{{post.id}}">{{post.title}}</div>
+    <div
+      class="title clickable"
+      routerLink="/forums/{{post.forum.id}}/posts/{{post.id}}">
+      {{post.title}}
+    </div>
   </div>
   <div class="bottom">
     <div *ngIf="!liked" class="likes clickable" (click)="likePost()">

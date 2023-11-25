@@ -1,3 +1,3 @@
 export interface UpdateToAdminDto {
-  username: string
+  username: string;
 }

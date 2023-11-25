@@ -1,40 +1,51 @@
 import {
   ChangeDetectionStrategy,
-  Component, EventEmitter,
-  Input, Output
+  Component,
+  EventEmitter,
+  Input,
+  Output
 } from '@angular/core';
-import {CommonModule, NgOptimizedImage} from '@angular/common';
-import {ForumModel} from "../../models/forum.model";
-import {NgIcon, provideIcons} from "@ng-icons/core";
+import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { ForumModel } from '../../models/forum.model';
+import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
   jamMessagesF,
   jamMessageF,
   jamMessage,
   jamPencilF,
   jamTrashF
-} from "@ng-icons/jam-icons";
-import {ButtonModule} from "primeng/button";
-import {RouterLink} from "@angular/router";
-import {DockModule} from "primeng/dock";
-import {TimeAgoPipe} from "../../../../shared/pipes/time-ago.pipe";
-import {
-  IsAdminDirective
-} from "../../../../shared/directives/is-admin.directive";
+} from '@ng-icons/jam-icons';
+import { ButtonModule } from 'primeng/button';
+import { RouterLink } from '@angular/router';
+import { DockModule } from 'primeng/dock';
+import { TimeAgoPipe } from '../../../../shared/pipes/time-ago.pipe';
+import { IsAdminDirective } from '../../../../shared/directives/is-admin.directive';
 
 @Component({
   selector: 'app-forum',
   standalone: true,
-  imports: [CommonModule, NgOptimizedImage, NgIcon, ButtonModule, RouterLink, DockModule, TimeAgoPipe, IsAdminDirective],
+  imports: [
+    CommonModule,
+    NgOptimizedImage,
+    NgIcon,
+    ButtonModule,
+    RouterLink,
+    DockModule,
+    TimeAgoPipe,
+    IsAdminDirective
+  ],
   templateUrl: './forum.component.html',
   styleUrls: ['./forum.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  viewProviders: [provideIcons({
-    jamMessagesF,
-    jamMessageF,
-    jamMessage,
-    jamPencilF,
-    jamTrashF
-  })]
+  viewProviders: [
+    provideIcons({
+      jamMessagesF,
+      jamMessageF,
+      jamMessage,
+      jamPencilF,
+      jamTrashF
+    })
+  ]
 })
 export class ForumComponent {
   @Input() forum!: ForumModel;

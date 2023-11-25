@@ -1,13 +1,14 @@
 import {
-  Directive, inject, Input,
+  Directive,
+  inject,
+  Input,
   OnInit,
   TemplateRef,
-  ViewContainerRef,
+  ViewContainerRef
 } from '@angular/core';
-import {AuthService} from "../../core/services/auth/auth.service";
-import {select, Store} from "@ngrx/store";
-import {AuthStateModel} from "../../core/store/auth/auth-state.model";
-import {isAuth} from "../../core/store/auth/auth.actions";
+import { AuthService } from '../../core/services/auth/auth.service';
+import { Store } from '@ngrx/store';
+import { AuthStateModel } from '../../core/store/auth/auth-state.model';
 
 @Directive({
   selector: '[isAuth]',
@@ -15,12 +16,12 @@ import {isAuth} from "../../core/store/auth/auth.actions";
 })
 export class IsAuthDirective implements OnInit {
   private show = false;
-  @Input() isAuth!:boolean;
+  @Input() isAuth!: boolean;
   constructor(
     private templateRef: TemplateRef<unknown>,
-    private vcr: ViewContainerRef,
+    private vcr: ViewContainerRef
   ) {}
-  store = inject(Store<AuthStateModel>)
+  store = inject(Store<AuthStateModel>);
   authService = inject(AuthService);
   ngOnInit(): void {
     this.displayTemplate();
@@ -29,23 +30,19 @@ export class IsAuthDirective implements OnInit {
         this.show = this.authService.isAuth(data);
         this.displayTemplate();
       }
-    })
+    });
   }
 
   private displayTemplate() {
     this.vcr.clear();
-    if(this.isAuth) {
+    if (this.isAuth) {
       if (this.show) {
-
-          this.vcr.createEmbeddedView(this.templateRef);
-
-
+        this.vcr.createEmbeddedView(this.templateRef);
       }
     } else {
       if (!this.show) {
         this.vcr.createEmbeddedView(this.templateRef);
       }
     }
-
   }
 }

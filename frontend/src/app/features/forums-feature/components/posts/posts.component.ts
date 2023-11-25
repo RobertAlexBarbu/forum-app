@@ -1,8 +1,8 @@
-import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
-import {CommonModule, NgOptimizedImage} from '@angular/common';
-import {ActivatedRoute} from "@angular/router";
-import {ForumsService} from "../../services/forums/forums.service";
-import {PostComponent} from "../post/post.component";
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { ForumsService } from '../../services/forums/forums.service';
+import { PostComponent } from '../post/post.component';
 
 @Component({
   selector: 'app-posts',
