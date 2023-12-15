@@ -1,9 +1,9 @@
 import {Injectable} from '@nestjs/common';
 import {CreateUserDto} from './dto/create-user.dto';
 import {UpdateUserDto} from './dto/update-user.dto';
-import {CryptoService} from '../../services/crypto/crypto.service';
+import {CryptoService} from '../../global/crypto/crypto.service';
 import {EntityManager} from '@mikro-orm/core';
-import {AppUser} from './entities/AppUser';
+import {User} from './entities/User';
 import {JwtService} from "@nestjs/jwt";
 
 import {ConfigService} from "@nestjs/config";
@@ -20,7 +20,7 @@ export class UsersService {
   async create(createUserDto: CreateUserDto) {
     const username = createUserDto.email.split('@')[0];
     const user = this.em.create(
-      AppUser,
+      User,
       {
         uid: createUserDto.uid,
         email: createUserDto.email,
@@ -29,7 +29,13 @@ export class UsersService {
       }
     );
     await this.em.persist(user).flush();
-    return user;
+    const access = this.jwtService.sign({
+      sub: user.uid,
+      email: user.email,
+      username: user.username,
+      role: user.role
+    })
+    return {access: access};
   }
 
   findAll() {
@@ -41,7 +47,7 @@ export class UsersService {
 
   async findByUsernameOrEmail(usernameOrEmail: string) {
     return await this.em.findOne(
-      AppUser,
+      User,
       {
         $or: [{ email: usernameOrEmail }, { username: usernameOrEmail }],
       },

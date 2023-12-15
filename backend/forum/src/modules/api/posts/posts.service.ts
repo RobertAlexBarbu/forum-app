@@ -3,7 +3,7 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { EntityManager } from '@mikro-orm/core';
 import { Posts } from './entities/Posts';
-import { AppUser } from '../users/entities/AppUser';
+import { User } from '../users/entities/User';
 import {PostLikes} from "./entities/PostLikes";
 import {Categories} from "../forums/entities/Categories";
 

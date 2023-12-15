@@ -5,6 +5,7 @@ import { from, switchMap, throwError } from 'rxjs';
 import { AuthService } from '../../../../core/services/auth/auth.service';
 import firebase from 'firebase/compat/app';
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
+import AuthProvider = firebase.auth.AuthProvider;
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +31,7 @@ export class FirebaseService {
     return this.signupWithProvider(provider);
   }
 
-  private signupWithProvider(provider: any) {
+  private signupWithProvider(provider: AuthProvider) {
     return from(this.firebaseAuthService.signInWithPopup(provider)).pipe(
       switchMap(this.handleUserData)
     );

@@ -1,14 +1,14 @@
 import { Entity, ManyToOne, PrimaryKey } from '@mikro-orm/core';
 import { Posts } from './Posts';
-import { AppUser } from '../../users/entities/AppUser';
+import { User } from '../../users/entities/User';
 
 @Entity()
 export class PostLikes {
   @PrimaryKey()
   id!: number;
 
-  @ManyToOne({ entity: () => AppUser, onDelete: 'cascade', nullable: true })
-  user?: AppUser;
+  @ManyToOne({ entity: () => User, onDelete: 'cascade', nullable: true })
+  user?: User;
 
   @ManyToOne({ entity: () => Posts, onDelete: 'cascade', nullable: true })
   post?: Posts;

@@ -13,7 +13,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import {AuthGuard} from "@nestjs/passport";
 import {JwtAuthGuard} from "../auth/jwt-auth.guard";
 import {UpdateToAdminDto} from "./dto/update-to-admin.dto";
-import {FirebaseGuard} from "../../firebase/firebase.guard";
+
 
 @Controller('users')
 export class UsersController {
@@ -21,7 +21,6 @@ export class UsersController {
 
 
   @Post()
-  @UseGuards(FirebaseGuard)
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }

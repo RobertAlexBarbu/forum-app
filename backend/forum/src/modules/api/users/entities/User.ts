@@ -6,8 +6,8 @@ import {
 } from '@mikro-orm/core';
 import { Role } from './Role';
 
-@Entity()
-export class AppUser {
+@Entity({tableName: "app_user"})
+export class User {
   @PrimaryKey()
   uid!: string;
 

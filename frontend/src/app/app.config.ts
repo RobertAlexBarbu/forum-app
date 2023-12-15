@@ -14,6 +14,8 @@ import {provideAnimations} from '@angular/platform-browser/animations';
 import {jwtInterceptor} from './core/interceptors/jwt.interceptor';
 import {getAuth, provideAuth} from '@angular/fire/auth';
 import {AngularFireModule} from "@angular/fire/compat";
+import {environment} from "../environments/environment";
+import {JsonObject} from "type-fest";
 
 const scrollConfig: InMemoryScrollingOptions = {
   scrollPositionRestoration: 'top',

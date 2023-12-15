@@ -8,7 +8,7 @@ import {
 } from '@mikro-orm/core';
 import { Categories } from '../../forums/entities/Categories';
 import { Forums } from '../../forums/entities/Forums';
-import { AppUser } from '../../users/entities/AppUser';
+import { User } from '../../users/entities/User';
 import { PostLikes } from './PostLikes';
 import { Comments } from '../../comments/entities/Comments';
 
@@ -29,8 +29,8 @@ export class Posts {
   @ManyToOne({ entity: () => Categories, onDelete: 'set null', nullable: true })
   category?: Categories;
 
-  @ManyToOne({ entity: () => AppUser, onDelete: 'set null', nullable: true })
-  user?: AppUser;
+  @ManyToOne({ entity: () => User, onDelete: 'set null', nullable: true })
+  user?: User;
 
   @ManyToOne({ entity: () => Forums, onDelete: 'cascade', nullable: true })
   forum?: Forums;

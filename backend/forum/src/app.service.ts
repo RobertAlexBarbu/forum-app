@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { EntityManager } from '@mikro-orm/core';
-import { Posts } from './modules/posts/entities/Posts';
+import { Posts } from './modules/api/posts/entities/Posts';
 
 @Injectable()
 export class AppService {
