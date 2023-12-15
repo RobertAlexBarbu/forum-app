@@ -1,9 +1,9 @@
 -- migrate:up
-create table categories (
+create table category (
     id serial primary key ,
-    name varchar(16) not null,
-    forum_id integer references forums(id) on delete cascade
+    name varchar(64) not null,
+    forum_id integer references forum(id) on delete cascade
 );
 
 -- migrate:down
-drop table categories;
+drop table category;

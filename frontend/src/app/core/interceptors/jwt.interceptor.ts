@@ -5,10 +5,10 @@ export const jwtInterceptor: HttpInterceptorFn = (
   request,
   next
 ): Observable<HttpEvent<unknown>> => {
-  const access_token = localStorage.getItem('access_token');
-  if (access_token) {
+  const token = localStorage.getItem('token');
+  if (token) {
     request = request.clone({
-      setHeaders: { Authorization: `Bearer ${access_token}` }
+      setHeaders: { Authorization: `Bearer ${token}` }
     });
   }
   return next(request);

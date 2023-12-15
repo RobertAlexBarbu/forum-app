@@ -14,21 +14,35 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: categories; Type: TABLE; Schema: public; Owner: -
+-- Name: app_user; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.categories (
+CREATE TABLE public.app_user (
+    uid character varying(64) NOT NULL,
+    picture_uid character varying(64),
+    username character varying(64),
+    email character varying(64),
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    role_id integer
+);
+
+
+--
+-- Name: category; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.category (
     id integer NOT NULL,
-    name character varying(16) NOT NULL,
+    name character varying(64) NOT NULL,
     forum_id integer
 );
 
 
 --
--- Name: categories_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: category_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.categories_id_seq
+CREATE SEQUENCE public.category_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -38,61 +52,30 @@ CREATE SEQUENCE public.categories_id_seq
 
 
 --
--- Name: categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: category_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public.categories_id_seq OWNED BY public.categories.id;
+ALTER SEQUENCE public.category_id_seq OWNED BY public.category.id;
 
 
 --
--- Name: comment_likes; Type: TABLE; Schema: public; Owner: -
+-- Name: comment; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.comment_likes (
+CREATE TABLE public.comment (
     id integer NOT NULL,
-    user_id integer,
-    comment_id integer
-);
-
-
---
--- Name: comment_likes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.comment_likes_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: comment_likes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.comment_likes_id_seq OWNED BY public.comment_likes.id;
-
-
---
--- Name: comments; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.comments (
-    id integer NOT NULL,
-    user_id integer,
-    content character varying(256) NOT NULL,
+    app_user_id character varying,
+    content text NOT NULL,
     post_id integer,
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
 );
 
 
 --
--- Name: comments_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: comment_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.comments_id_seq
+CREATE SEQUENCE public.comment_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -102,27 +85,27 @@ CREATE SEQUENCE public.comments_id_seq
 
 
 --
--- Name: comments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: comment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public.comments_id_seq OWNED BY public.comments.id;
+ALTER SEQUENCE public.comment_id_seq OWNED BY public.comment.id;
 
 
 --
--- Name: forums; Type: TABLE; Schema: public; Owner: -
+-- Name: forum; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.forums (
+CREATE TABLE public.forum (
     id integer NOT NULL,
-    name character varying(32) NOT NULL
+    name character varying(64) NOT NULL
 );
 
 
 --
--- Name: forums_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: forum_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.forums_id_seq
+CREATE SEQUENCE public.forum_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -132,64 +115,33 @@ CREATE SEQUENCE public.forums_id_seq
 
 
 --
--- Name: forums_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: forum_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public.forums_id_seq OWNED BY public.forums.id;
+ALTER SEQUENCE public.forum_id_seq OWNED BY public.forum.id;
 
 
 --
--- Name: post_likes; Type: TABLE; Schema: public; Owner: -
+-- Name: post; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.post_likes (
+CREATE TABLE public.post (
     id integer NOT NULL,
-    user_id integer,
-    post_id integer
-);
-
-
---
--- Name: post_likes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.post_likes_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: post_likes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.post_likes_id_seq OWNED BY public.post_likes.id;
-
-
---
--- Name: posts; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.posts (
-    id integer NOT NULL,
-    title character varying(32) NOT NULL,
-    content character varying NOT NULL,
+    title character varying(128) NOT NULL,
+    content text NOT NULL,
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     category_id integer,
-    user_id integer,
+    app_user_id character varying,
     forum_id integer,
     likes integer DEFAULT 0
 );
 
 
 --
--- Name: posts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: post_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.posts_id_seq
+CREATE SEQUENCE public.post_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -199,27 +151,28 @@ CREATE SEQUENCE public.posts_id_seq
 
 
 --
--- Name: posts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: post_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public.posts_id_seq OWNED BY public.posts.id;
+ALTER SEQUENCE public.post_id_seq OWNED BY public.post.id;
 
 
 --
--- Name: roles; Type: TABLE; Schema: public; Owner: -
+-- Name: post_like; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.roles (
+CREATE TABLE public.post_like (
     id integer NOT NULL,
-    role character varying(32) NOT NULL
+    app_user_id character varying,
+    post_id integer
 );
 
 
 --
--- Name: roles_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: post_like_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.roles_id_seq
+CREATE SEQUENCE public.post_like_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -229,10 +182,40 @@ CREATE SEQUENCE public.roles_id_seq
 
 
 --
--- Name: roles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: post_like_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public.roles_id_seq OWNED BY public.roles.id;
+ALTER SEQUENCE public.post_like_id_seq OWNED BY public.post_like.id;
+
+
+--
+-- Name: role; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.role (
+    id integer NOT NULL,
+    name character varying(32) NOT NULL
+);
+
+
+--
+-- Name: role_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.role_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: role_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.role_id_seq OWNED BY public.role.id;
 
 
 --
@@ -245,169 +228,125 @@ CREATE TABLE public.schema_migrations (
 
 
 --
--- Name: sessions; Type: TABLE; Schema: public; Owner: -
+-- Name: category id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-CREATE TABLE public.sessions (
-    sid character varying(255) NOT NULL,
-    sess json NOT NULL,
-    expired timestamp with time zone NOT NULL
-);
+ALTER TABLE ONLY public.category ALTER COLUMN id SET DEFAULT nextval('public.category_id_seq'::regclass);
 
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: -
+-- Name: comment id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-CREATE TABLE public.users (
-    id integer NOT NULL,
-    username character varying(32),
-    email character varying(64),
-    password_hash character varying,
-    password_salt character varying,
-    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    role_id integer
-);
+ALTER TABLE ONLY public.comment ALTER COLUMN id SET DEFAULT nextval('public.comment_id_seq'::regclass);
 
 
 --
--- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: forum id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.users_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+ALTER TABLE ONLY public.forum ALTER COLUMN id SET DEFAULT nextval('public.forum_id_seq'::regclass);
 
 
 --
--- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: post id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
-
-
---
--- Name: categories id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.categories ALTER COLUMN id SET DEFAULT nextval('public.categories_id_seq'::regclass);
+ALTER TABLE ONLY public.post ALTER COLUMN id SET DEFAULT nextval('public.post_id_seq'::regclass);
 
 
 --
--- Name: comment_likes id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: post_like id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.comment_likes ALTER COLUMN id SET DEFAULT nextval('public.comment_likes_id_seq'::regclass);
-
-
---
--- Name: comments id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.comments ALTER COLUMN id SET DEFAULT nextval('public.comments_id_seq'::regclass);
+ALTER TABLE ONLY public.post_like ALTER COLUMN id SET DEFAULT nextval('public.post_like_id_seq'::regclass);
 
 
 --
--- Name: forums id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: role id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.forums ALTER COLUMN id SET DEFAULT nextval('public.forums_id_seq'::regclass);
-
-
---
--- Name: post_likes id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.post_likes ALTER COLUMN id SET DEFAULT nextval('public.post_likes_id_seq'::regclass);
+ALTER TABLE ONLY public.role ALTER COLUMN id SET DEFAULT nextval('public.role_id_seq'::regclass);
 
 
 --
--- Name: posts id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: app_user app_user_email_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.posts ALTER COLUMN id SET DEFAULT nextval('public.posts_id_seq'::regclass);
-
-
---
--- Name: roles id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.roles ALTER COLUMN id SET DEFAULT nextval('public.roles_id_seq'::regclass);
+ALTER TABLE ONLY public.app_user
+    ADD CONSTRAINT app_user_email_key UNIQUE (email);
 
 
 --
--- Name: users id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: app_user app_user_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
-
-
---
--- Name: categories categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.categories
-    ADD CONSTRAINT categories_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.app_user
+    ADD CONSTRAINT app_user_pkey PRIMARY KEY (uid);
 
 
 --
--- Name: comment_likes comment_likes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: app_user app_user_username_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.comment_likes
-    ADD CONSTRAINT comment_likes_pkey PRIMARY KEY (id);
-
-
---
--- Name: comments comments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.comments
-    ADD CONSTRAINT comments_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.app_user
+    ADD CONSTRAINT app_user_username_key UNIQUE (username);
 
 
 --
--- Name: forums forums_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: category category_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.forums
-    ADD CONSTRAINT forums_pkey PRIMARY KEY (id);
-
-
---
--- Name: post_likes post_likes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.post_likes
-    ADD CONSTRAINT post_likes_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.category
+    ADD CONSTRAINT category_pkey PRIMARY KEY (id);
 
 
 --
--- Name: posts posts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: comment comment_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.posts
-    ADD CONSTRAINT posts_pkey PRIMARY KEY (id);
-
-
---
--- Name: roles roles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.roles
-    ADD CONSTRAINT roles_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.comment
+    ADD CONSTRAINT comment_pkey PRIMARY KEY (id);
 
 
 --
--- Name: roles roles_role_key; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: forum forum_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.roles
-    ADD CONSTRAINT roles_role_key UNIQUE (role);
+ALTER TABLE ONLY public.forum
+    ADD CONSTRAINT forum_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: post_like post_like_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.post_like
+    ADD CONSTRAINT post_like_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: post post_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.post
+    ADD CONSTRAINT post_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: role role_name_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.role
+    ADD CONSTRAINT role_name_key UNIQUE (name);
+
+
+--
+-- Name: role role_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.role
+    ADD CONSTRAINT role_pkey PRIMARY KEY (id);
 
 
 --
@@ -419,130 +358,75 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
--- Name: sessions sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: app_user app_user_role_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.sessions
-    ADD CONSTRAINT sessions_pkey PRIMARY KEY (sid);
-
-
---
--- Name: users users_email_key; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_email_key UNIQUE (email);
+ALTER TABLE ONLY public.app_user
+    ADD CONSTRAINT app_user_role_id_fkey FOREIGN KEY (role_id) REFERENCES public.role(id) ON DELETE SET NULL;
 
 
 --
--- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: category category_forum_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
-
-
---
--- Name: users users_username_key; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_username_key UNIQUE (username);
+ALTER TABLE ONLY public.category
+    ADD CONSTRAINT category_forum_id_fkey FOREIGN KEY (forum_id) REFERENCES public.forum(id) ON DELETE CASCADE;
 
 
 --
--- Name: sessions_expired_index; Type: INDEX; Schema: public; Owner: -
+-- Name: comment comment_app_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-CREATE INDEX sessions_expired_index ON public.sessions USING btree (expired);
-
-
---
--- Name: categories categories_forum_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.categories
-    ADD CONSTRAINT categories_forum_id_fkey FOREIGN KEY (forum_id) REFERENCES public.forums(id) ON DELETE CASCADE;
+ALTER TABLE ONLY public.comment
+    ADD CONSTRAINT comment_app_user_id_fkey FOREIGN KEY (app_user_id) REFERENCES public.app_user(uid) ON DELETE SET NULL;
 
 
 --
--- Name: comment_likes comment_likes_comment_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: comment comment_post_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.comment_likes
-    ADD CONSTRAINT comment_likes_comment_id_fkey FOREIGN KEY (comment_id) REFERENCES public.comments(id) ON DELETE CASCADE;
-
-
---
--- Name: comment_likes comment_likes_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.comment_likes
-    ADD CONSTRAINT comment_likes_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
+ALTER TABLE ONLY public.comment
+    ADD CONSTRAINT comment_post_id_fkey FOREIGN KEY (post_id) REFERENCES public.post(id) ON DELETE CASCADE;
 
 
 --
--- Name: comments comments_post_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: post post_app_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.comments
-    ADD CONSTRAINT comments_post_id_fkey FOREIGN KEY (post_id) REFERENCES public.posts(id) ON DELETE CASCADE;
-
-
---
--- Name: comments comments_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.comments
-    ADD CONSTRAINT comments_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE SET NULL;
+ALTER TABLE ONLY public.post
+    ADD CONSTRAINT post_app_user_id_fkey FOREIGN KEY (app_user_id) REFERENCES public.app_user(uid) ON DELETE SET NULL;
 
 
 --
--- Name: post_likes post_likes_post_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: post post_category_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.post_likes
-    ADD CONSTRAINT post_likes_post_id_fkey FOREIGN KEY (post_id) REFERENCES public.posts(id) ON DELETE CASCADE;
-
-
---
--- Name: post_likes post_likes_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.post_likes
-    ADD CONSTRAINT post_likes_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
+ALTER TABLE ONLY public.post
+    ADD CONSTRAINT post_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.category(id) ON DELETE SET NULL;
 
 
 --
--- Name: posts posts_category_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: post post_forum_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.posts
-    ADD CONSTRAINT posts_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.categories(id) ON DELETE SET NULL;
-
-
---
--- Name: posts posts_forum_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.posts
-    ADD CONSTRAINT posts_forum_id_fkey FOREIGN KEY (forum_id) REFERENCES public.forums(id) ON DELETE CASCADE;
+ALTER TABLE ONLY public.post
+    ADD CONSTRAINT post_forum_id_fkey FOREIGN KEY (forum_id) REFERENCES public.forum(id) ON DELETE CASCADE;
 
 
 --
--- Name: posts posts_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: post_like post_like_app_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.posts
-    ADD CONSTRAINT posts_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE SET NULL;
+ALTER TABLE ONLY public.post_like
+    ADD CONSTRAINT post_like_app_user_id_fkey FOREIGN KEY (app_user_id) REFERENCES public.app_user(uid) ON DELETE CASCADE;
 
 
 --
--- Name: users users_role_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: post_like post_like_post_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_role_id_fkey FOREIGN KEY (role_id) REFERENCES public.roles(id) ON DELETE SET NULL;
+ALTER TABLE ONLY public.post_like
+    ADD CONSTRAINT post_like_post_id_fkey FOREIGN KEY (post_id) REFERENCES public.post(id) ON DELETE CASCADE;
 
 
 --
@@ -555,13 +439,10 @@ ALTER TABLE ONLY public.users
 --
 
 INSERT INTO public.schema_migrations (version) VALUES
+    ('20231020000000'),
     ('20231020212212'),
-    ('20231020214317'),
-    ('20231023155518'),
-    ('20231023155952'),
     ('20231031140803'),
     ('20231031141321'),
     ('20231031141926'),
     ('20231110134753'),
-    ('20231110135018'),
-    ('20231110135235');
+    ('20231110135018');

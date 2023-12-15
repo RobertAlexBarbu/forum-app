@@ -1,4 +1,8 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormControl,
@@ -10,14 +14,16 @@ import {
 import { InputTextModule } from 'primeng/inputtext';
 import { Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { signup } from '../../../../core/store/auth/auth.actions';
 import { Subject } from 'rxjs';
-import { AuthService } from '../../../../core/services/auth/auth.service';
 import { AuthStateModel } from '../../../../core/store/auth/auth-state.model';
 import { ButtonModule } from 'primeng/button';
 import { PasswordModule } from 'primeng/password';
 import { passwordValidator } from '../../../../shared/validators/password.validator';
 import { FormUtilsService } from '../../../../core/services/form-utils/form-utils.service';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { jamGoogle } from '@ng-icons/jam-icons';
+import firebase from 'firebase/compat/app';
+import { FirebaseService } from '../../services/firebase/firebase.service';
 
 @Component({
   selector: 'app-signup-page',
@@ -29,25 +35,18 @@ import { FormUtilsService } from '../../../../core/services/form-utils/form-util
     InputTextModule,
     ButtonModule,
     RouterLink,
-    PasswordModule
+    PasswordModule,
+    NgIcon
   ],
   templateUrl: './signup-page.component.html',
   styleUrls: ['./signup-page.component.scss', '../auth.styles.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  viewProviders: [provideIcons({ jamGoogle })]
 })
 export class SignupPageComponent {
-  loading = false;
-  authService = inject(AuthService);
-  router = inject(Router);
-  store = inject(Store<{ auth: AuthStateModel }>);
   error$ = new Subject<string>();
-  formUtils = inject(FormUtilsService);
-
+  loading = false;
   form = new FormGroup({
-    username: new FormControl('', {
-      validators: [Validators.maxLength(32), Validators.required],
-      nonNullable: true
-    }),
     email: new FormControl('', {
       validators: [
         Validators.maxLength(64),
@@ -67,27 +66,53 @@ export class SignupPageComponent {
     })
   });
 
+
+  firebaseService = inject(FirebaseService);
+  router = inject(Router);
+  store = inject(Store<{ auth: AuthStateModel }>);
+  formUtils = inject(FormUtilsService);
+
   onSubmit() {
     this.error$.next('');
     if (!this.form.valid) {
       this.formUtils.markGroupDirty(this.form);
     } else {
       this.loading = true;
-      this.authService.signup(this.form.getRawValue()).subscribe({
-        next: (data) => {
-          localStorage.setItem('access_token', data.access_token);
-          const authState = JSON.parse(atob(data.access_token.split('.')[1]));
-          this.store.dispatch(signup({ authState: authState }));
-          this.loading = false;
-          return this.router.navigate(['']);
-        },
-        error: (err) => {
-          this.error$.next(err.message);
-          this.loading = false;
-          this.form.markAsUntouched();
-          this.form.markAsPristine();
-        }
-      });
+      this.firebaseService
+        .signupWithEmailAndPassword({
+          email: this.form.getRawValue().email,
+          password: this.form.getRawValue().password
+        })
+        .subscribe({
+          next: (data) => {
+            console.log(data);
+            this.loading = false;
+            return this.router.navigate(['']);
+          },
+          error: (err) => {
+            this.error$.next(err.message);
+            this.loading = false;
+            this.form.markAsUntouched();
+            this.form.markAsPristine();
+          }
+        });
     }
+  }
+
+  signupGoogle() {
+    console.log('hey');
+    this.firebaseService.signupWithGoogle().subscribe({
+      next: (data) => {
+        console.log(data);
+        this.loading = false;
+        return this.router.navigate(['']);
+      },
+      error: (err) => {
+        this.error$.next(err.message);
+        this.loading = false;
+        this.form.markAsUntouched();
+        this.form.markAsPristine();
+      }
+    });
   }
 }

@@ -1,14 +1,14 @@
 import { Entity, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
 import { Posts } from '../../posts/entities/Posts';
-import { Users } from '../../users/entities/Users';
+import { AppUser } from '../../users/entities/AppUser';
 
 @Entity()
 export class Comments {
   @PrimaryKey()
   id!: number;
 
-  @ManyToOne({ entity: () => Users, onDelete: 'set null', nullable: true })
-  user?: Users;
+  @ManyToOne({ entity: () => AppUser, onDelete: 'set null', nullable: true })
+  user?: AppUser;
 
   @Property({ length: 256 })
   content!: string;

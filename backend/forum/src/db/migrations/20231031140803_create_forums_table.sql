@@ -1,8 +1,8 @@
 -- migrate:up
-create table forums (
+create table forum (
     id serial primary key,
-    name varchar(32) not null
+    name varchar(64) not null
 )
 
 -- migrate:down
-drop table forums;
+drop table forum;

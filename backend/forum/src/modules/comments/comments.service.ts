@@ -8,16 +8,16 @@ import { Comments } from './entities/Comments';
 export class CommentsService {
   constructor(private readonly em: EntityManager) {}
 
-  async create(createCommentDto: CreateCommentDto, userId: number) {
-    const post = this.em.create(Comments, {
-      user: userId,
-      post: createCommentDto.postId,
-      content: createCommentDto.content,
-    });
-    this.em.persist(post);
-    await this.em.flush();
-    return post;
-  }
+  // async create(createCommentDto: CreateCommentDto, userId: string) {
+  //   const post = this.em.create(Comments, {
+  //     user: userId,
+  //     post: createCommentDto.postId,
+  //     content: createCommentDto.content,
+  //   });
+  //   this.em.persist(post);
+  //   await this.em.flush();
+  //   return post;
+  // }
 
   findAllByPost(id: number) {
     return `This action returns all comments`;

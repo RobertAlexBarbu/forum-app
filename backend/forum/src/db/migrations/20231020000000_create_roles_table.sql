@@ -1,10 +1,10 @@
 -- migrate:up
-create table roles (
+create table role (
     id serial primary key ,
-    role varchar(32) not null unique
+    name varchar(32) not null unique
 );
-insert into roles (role)
+insert into role (name)
 values ('user'), ('admin'), ('moderator');
 
 -- migrate:down
-drop table roles;
+drop table role;

@@ -53,7 +53,7 @@ export class AdminsPageComponent {
         .subscribe({
           next: (data) => {
             if (data === null) {
-              this.error$.next('User not found');
+              this.error$.next('AppUser not found');
             } else {
               window.location.reload();
             }

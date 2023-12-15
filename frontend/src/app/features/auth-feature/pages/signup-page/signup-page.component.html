@@ -2,28 +2,6 @@
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <h2>Sign up</h2>
     <div class="input">
-      <label for="username">Username</label>
-      <input
-        placeholder="Username"
-        id="username"
-        type="text"
-        pInputText
-        formControlName="username" />
-      <div class="error">
-        <ng-container *ngIf="form.get('username') as username">
-          <ng-container *ngIf="username.dirty && username.errors">
-            <ng-container *ngIf="username.errors['required']">
-              This field is required
-            </ng-container>
-            <ng-container
-              *ngIf="!username.errors['required'] && username.errors['maxlength']">
-              Maximum length is 32
-            </ng-container>
-          </ng-container>
-        </ng-container>
-      </div>
-    </div>
-    <div class="input">
       <label for="email">Email</label>
       <input
         placeholder="Email"
@@ -90,6 +68,11 @@
         </ng-container>
       </button>
     </div>
+    <div class="separator"></div>
+    <button (click)="signupGoogle()" type="button" pButton class="p-button p-button-outlined" >
+      <ng-icon class="mr-2" name="jamGoogle"></ng-icon>Sign up with Google
+    </button>
+    <div class="separator"></div>
     <div class="help">
       <div class="question">Already have an account?</div>
       <div class="link" routerLink="/login">Log in here</div>

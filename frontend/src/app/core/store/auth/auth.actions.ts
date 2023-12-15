@@ -11,6 +11,6 @@ export const signup = createAction(
 );
 export const logout = createAction('[Auth] Log Out');
 export const isAuth = createAction(
-  '[Auth] User is authenticated',
+  '[Auth] AppUser is authenticated',
   props<{ authState: AuthStateModel }>()
 );

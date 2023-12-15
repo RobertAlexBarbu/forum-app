@@ -3,10 +3,10 @@ import {CreateUserDto} from './dto/create-user.dto';
 import {UpdateUserDto} from './dto/update-user.dto';
 import {CryptoService} from '../../services/crypto/crypto.service';
 import {EntityManager} from '@mikro-orm/core';
-import {Users} from './entities/Users';
+import {AppUser} from './entities/AppUser';
 import {JwtService} from "@nestjs/jwt";
-import {UpdateToAdminDto} from "./dto/update-to-admin.dto";
-import {Roles} from "./entities/Roles";
+
+import {ConfigService} from "@nestjs/config";
 
 @Injectable()
 export class UsersService {
@@ -14,42 +14,34 @@ export class UsersService {
     private readonly cryptoService: CryptoService,
     private readonly em: EntityManager,
     private readonly jwtService: JwtService,
+    private readonly configService: ConfigService
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    const passwordSalt = this.cryptoService.generateSalt(64);
-    const passwordHash = await this.cryptoService.hash(
-      createUserDto.password,
-      passwordSalt,
-    );
+    const username = createUserDto.email.split('@')[0];
     const user = this.em.create(
-      Users,
-      Object.assign(
-        {},
-        createUserDto,
-        { passwordSalt, passwordHash },
-        { role: 1 },
-      ),
+      AppUser,
+      {
+        uid: createUserDto.uid,
+        email: createUserDto.email,
+        username: username,
+        role: 1
+      }
     );
     await this.em.persist(user).flush();
-    delete user.passwordHash;
-    delete user.passwordSalt;
-    const payload = { username: user.username, sub: user.id, role: user.role };
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
+    return user;
   }
 
   findAll() {
     return `This action returns all users`;
   }
-  async findAllAdmins() {
-    return await this.em.find(Users, {role: {role: 'admin'}}, {populate: ['role'], fields: ['username', 'email', 'id', 'role'], orderBy: {username: 'asc'}})
-  }
+  // async findAllAdmins() {
+  //   return await this.em.find(AppUser, {role: {role: 'admin'}}, {populate: ['role'], fields: ['username', 'email', 'uid', 'role'], orderBy: {username: 'asc'}})
+  // }
 
   async findByUsernameOrEmail(usernameOrEmail: string) {
     return await this.em.findOne(
-      Users,
+      AppUser,
       {
         $or: [{ email: usernameOrEmail }, { username: usernameOrEmail }],
       },
@@ -65,23 +57,23 @@ export class UsersService {
     return `This action updates a #${id} user`;
   }
 
-  async updateToAdmin(updateToAdminDto: UpdateToAdminDto) {
+  // async updateToAdmin(updateToAdminDto: UpdateToAdminDto) {
+  //
+  //   const user = await this.em.findOne(AppUser, {username: updateToAdminDto.username});
+  //   if(user === null) {
+  //     return null
+  //   }
+  //   user.role = this.em.getReference(Role, 2);
+  //   await this.em.flush();
+  //   return user;
+  // }
 
-    const user = await this.em.findOne(Users, {username: updateToAdminDto.username});
-    if(user === null) {
-      return null
-    }
-    user.role = this.em.getReference(Roles, 2);
-    await this.em.flush();
-    return user;
-  }
-
-  async demoteAdmin(id: number) {
-    const admin = await this.em.findOne(Users, {id: id});
-    admin.role = this.em.getReference(Roles, 1);
-    await this.em.flush();
-    return admin;
-  }
+  // async demoteAdmin(uid: string) {
+  //   const admin = await this.em.findOne(AppUser, {uid: uid});
+  //   admin.role = this.em.getReference(Role, 1);
+  //   await this.em.flush();
+  //   return admin;
+  // }
 
   remove(id: number) {
     return `This action removes a #${id} user`;
