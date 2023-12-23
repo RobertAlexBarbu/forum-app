@@ -24,7 +24,6 @@ import {FirebaseMiddleware} from "../../global/firebase/firebase.middleware";
       signOptions: { expiresIn: '36000s' },
     }),
     PassportModule,
-    FirebaseModule
   ],
   providers: [AuthService, CryptoService, JwtStrategy],
   controllers: [AuthController],

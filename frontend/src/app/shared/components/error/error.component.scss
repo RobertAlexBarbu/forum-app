@@ -1,0 +1,11 @@
+section {
+  border: 2px red dotted;
+}
+div{
+  font-size: 0;
+  transition:all .1s;
+  color: var(--error)
+}
+div.st1 {
+  font-size: 0.9rem;
+}

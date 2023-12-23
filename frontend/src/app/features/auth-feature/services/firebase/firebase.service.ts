@@ -1,16 +1,19 @@
 import { inject, Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FirebaseAuthDto } from '../../dto/firebase-auth.dto';
-import { from, switchMap, throwError } from 'rxjs';
+import { catchError, from, switchMap, throwError } from 'rxjs';
 import { AuthService } from '../../../../core/services/auth/auth.service';
 import firebase from 'firebase/compat/app';
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 import AuthProvider = firebase.auth.AuthProvider;
+import { ErrorService } from '../../../../core/services/error/error.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
+  errorService = inject(ErrorService);
   authService = inject(AuthService);
   firebaseAuthService = inject(AngularFireAuth);
 
@@ -20,7 +23,12 @@ export class FirebaseService {
         firebaseAuthDto.email,
         firebaseAuthDto.password
       )
-    ).pipe(switchMap(this.handleUserData));
+    ).pipe(
+      catchError((error: HttpErrorResponse) => {
+        return this.errorService.handleError(error);
+      }),
+      switchMap(this.handleUserData)
+    );
   }
 
   signupWithGoogle() {

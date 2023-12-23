@@ -1,4 +1,4 @@
-import {Injectable} from '@nestjs/common';
+import {ConflictException, Injectable} from '@nestjs/common';
 import {CreateUserDto} from './dto/create-user.dto';
 import {UpdateUserDto} from './dto/update-user.dto';
 import {CryptoService} from '../../global/crypto/crypto.service';
@@ -18,6 +18,10 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
+    const exists = await this.em.findOne(User, {uid: createUserDto.uid});;
+    if(exists) {
+      throw new ConflictException('Email already registered!',{ cause: new Error(), description: 'Some error description' });
+    }
     const username = createUserDto.email.split('@')[0];
     const user = this.em.create(
       User,

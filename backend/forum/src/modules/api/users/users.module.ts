@@ -13,7 +13,7 @@ import {FirebaseModule} from "../../global/firebase/firebase.module";
 
 @Module({
   controllers: [UsersController],
-  imports: [ConfigModule, FirebaseModule],
+  imports: [ConfigModule],
   providers: [UsersService, CryptoService],
   exports: [UsersService],
 })

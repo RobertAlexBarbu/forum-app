@@ -5,33 +5,34 @@ import { AuthStateModel } from '../../store/auth/auth-state.model';
 import { catchError, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FirebaseTokenDto } from '../../../features/auth-feature/dto/firebase-token.dto';
+import { ErrorService } from '../error/error.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   httpService = inject(HttpService);
+  errorService = inject(ErrorService);
 
   login(loginData: LoginDto) {
     return this.httpService
       .post<{ access_token: string }>('auth/login', loginData)
       .pipe(
         catchError((error: HttpErrorResponse) => {
-          if (error.status === 401) {
-            return throwError(() => new Error('⚠ Invalid credentials'));
-          } else {
-            return throwError(() => new Error('⚠ ' + error.statusText));
-          }
+          return this.errorService.handleError(error);
         })
       );
   }
 
   signup(firebaseTokenDto: FirebaseTokenDto) {
-    return this.httpService.post('users', firebaseTokenDto).pipe(
-      catchError((error: HttpErrorResponse) => {
-        return throwError(() => new Error('⚠ ' + error.statusText));
-      })
-    );
+    return this.httpService
+      .post<AuthStateModel>('users', firebaseTokenDto)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          console.log(error.message);
+          return this.errorService.handleError(error);
+        })
+      );
   }
 
   logout() {

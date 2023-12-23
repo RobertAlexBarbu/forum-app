@@ -1,8 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormControl,
@@ -14,7 +10,7 @@ import {
 import { InputTextModule } from 'primeng/inputtext';
 import { Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subject } from 'rxjs';
+import {BehaviorSubject, Subject} from 'rxjs';
 import { AuthStateModel } from '../../../../core/store/auth/auth-state.model';
 import { ButtonModule } from 'primeng/button';
 import { PasswordModule } from 'primeng/password';
@@ -24,6 +20,10 @@ import { NgIcon, provideIcons } from '@ng-icons/core';
 import { jamGoogle } from '@ng-icons/jam-icons';
 import firebase from 'firebase/compat/app';
 import { FirebaseService } from '../../services/firebase/firebase.service';
+import { OrDividerComponent } from '../../../../shared/components/or-divider/or-divider.component';
+import {
+  ErrorComponent
+} from "../../../../shared/components/error/error.component";
 
 @Component({
   selector: 'app-signup-page',
@@ -36,7 +36,9 @@ import { FirebaseService } from '../../services/firebase/firebase.service';
     ButtonModule,
     RouterLink,
     PasswordModule,
-    NgIcon
+    NgIcon,
+    OrDividerComponent,
+    ErrorComponent
   ],
   templateUrl: './signup-page.component.html',
   styleUrls: ['./signup-page.component.scss', '../auth.styles.scss'],
@@ -44,7 +46,7 @@ import { FirebaseService } from '../../services/firebase/firebase.service';
   viewProviders: [provideIcons({ jamGoogle })]
 })
 export class SignupPageComponent {
-  error$ = new Subject<string>();
+  error$ = new BehaviorSubject<string>('');
   loading = false;
   form = new FormGroup({
     email: new FormControl('', {
@@ -65,7 +67,6 @@ export class SignupPageComponent {
       nonNullable: true
     })
   });
-
 
   firebaseService = inject(FirebaseService);
   router = inject(Router);
