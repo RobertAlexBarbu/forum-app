@@ -9,6 +9,7 @@ export class FirebaseMiddleware implements NestMiddleware {
     const token = req.body.firebaseToken;
     const auth = this.firebaseService.getAuth();
       const data = await auth.verifyIdToken(token);
+
       req.body = {
         email: data.email,
         uid: data.uid

@@ -1,15 +1,21 @@
-import { Injectable } from '@nestjs/common';
+import {BadRequestException, Injectable} from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
+import {EntityManager} from "@mikro-orm/core";
+import {User} from "../users/entities/User";
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly usersService: UsersService,
+    private readonly em: EntityManager,
     private jwtService: JwtService,
   ) {}
-  async login(user: { username: string; id: number; role: any }) {
-    const payload = { username: user.username, sub: user.id, role: user.role };
+  async login(uid: string) {
+    const user = await this.em.findOne(User, {uid: uid});
+    if(!user) {
+      throw new BadRequestException('Account not registered. Please sign up')
+    }
+    const payload = { username: user.username, sub: user.uid, role: user.role, email: user.email };
     return {
       access: this.jwtService.sign(payload),
     };

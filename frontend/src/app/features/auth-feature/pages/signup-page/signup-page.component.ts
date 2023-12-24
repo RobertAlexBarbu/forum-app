@@ -10,7 +10,7 @@ import {
 import { InputTextModule } from 'primeng/inputtext';
 import { Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
-import {BehaviorSubject, Subject} from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { AuthStateModel } from '../../../../core/store/auth/auth-state.model';
 import { ButtonModule } from 'primeng/button';
 import { PasswordModule } from 'primeng/password';
@@ -18,12 +18,9 @@ import { passwordValidator } from '../../../../shared/validators/password.valida
 import { FormUtilsService } from '../../../../core/services/form-utils/form-utils.service';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { jamGoogle } from '@ng-icons/jam-icons';
-import firebase from 'firebase/compat/app';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { OrDividerComponent } from '../../../../shared/components/or-divider/or-divider.component';
-import {
-  ErrorComponent
-} from "../../../../shared/components/error/error.component";
+import { ErrorComponent } from '../../../../shared/components/error/error.component';
 
 @Component({
   selector: 'app-signup-page',
@@ -86,13 +83,12 @@ export class SignupPageComponent {
         })
         .subscribe({
           next: (data) => {
-            console.log(data);
             this.loading = false;
             return this.router.navigate(['']);
           },
           error: (err) => {
-            this.error$.next(err.message);
             this.loading = false;
+            this.error$.next(err.message);
             this.form.markAsUntouched();
             this.form.markAsPristine();
           }
@@ -101,16 +97,12 @@ export class SignupPageComponent {
   }
 
   signupGoogle() {
-    console.log('hey');
     this.firebaseService.signupWithGoogle().subscribe({
       next: (data) => {
-        console.log(data);
-        this.loading = false;
         return this.router.navigate(['']);
       },
       error: (err) => {
         this.error$.next(err.message);
-        this.loading = false;
         this.form.markAsUntouched();
         this.form.markAsPristine();
       }

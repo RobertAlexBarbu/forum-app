@@ -30,6 +30,19 @@ export class FirebaseService {
       switchMap(this.handleUserData)
     );
   }
+  loginWithEmailAndPassword(firebaseAuthDto: FirebaseAuthDto) {
+    return from(
+      this.firebaseAuthService.signInWithEmailAndPassword(
+        firebaseAuthDto.email,
+        firebaseAuthDto.password
+      )
+    ).pipe(
+      catchError((error: HttpErrorResponse) => {
+        return this.errorService.handleError(error);
+      }),
+      switchMap(this.handleUserDataLogin)
+    );
+  }
 
   signupWithGoogle() {
     const provider = new GoogleAuthProvider();
@@ -39,9 +52,29 @@ export class FirebaseService {
     return this.signupWithProvider(provider);
   }
 
+  loginWithGoogle() {
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({
+      prompt: 'select_account'
+    });
+    return this.loginWithProvider(provider);
+  }
+
   private signupWithProvider(provider: AuthProvider) {
     return from(this.firebaseAuthService.signInWithPopup(provider)).pipe(
+      catchError((error: HttpErrorResponse) => {
+        return this.errorService.handleError(error);
+      }),
       switchMap(this.handleUserData)
+    );
+  }
+
+  private loginWithProvider(provider: AuthProvider) {
+    return from(this.firebaseAuthService.signInWithPopup(provider)).pipe(
+      catchError((error: HttpErrorResponse) => {
+        return this.errorService.handleError(error);
+      }),
+      switchMap(this.handleUserDataLogin)
     );
   }
 
@@ -52,6 +85,22 @@ export class FirebaseService {
       return from(token).pipe(
         switchMap((token) => {
           return this.authService.signup({ firebaseToken: token });
+        })
+      );
+    } else {
+      return throwError(() => new Error('Firebase signup failed'));
+    }
+  };
+
+  private handleUserDataLogin = (
+    firebaseUserData: firebase.auth.UserCredential
+  ) => {
+    const currentUser = firebaseUserData.user;
+    if (currentUser) {
+      const token = currentUser.getIdToken();
+      return from(token).pipe(
+        switchMap((token) => {
+          return this.authService.login({ firebaseToken: token });
         })
       );
     } else {

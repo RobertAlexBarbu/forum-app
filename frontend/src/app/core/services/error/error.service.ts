@@ -7,7 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class ErrorService {
   handleError(error: HttpErrorResponse) {
-    console.log(error);
+    console.log('error happened!');
     if (error.status === 401) {
       return throwError(() => new Error('⚠ Invalid credentials'));
     } else if (error.error) {

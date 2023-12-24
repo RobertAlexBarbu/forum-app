@@ -10,13 +10,14 @@ import {
 import { InputTextModule } from 'primeng/inputtext';
 import { Store } from '@ngrx/store';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../../../core/services/auth/auth.service';
-import {from, Subject} from 'rxjs';
+import { BehaviorSubject, from } from 'rxjs';
 import { ButtonModule } from 'primeng/button';
 import { PasswordModule } from 'primeng/password';
 import { FormUtilsService } from '../../../../core/services/form-utils/form-utils.service';
 import { DropdownModule } from 'primeng/dropdown';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { ErrorComponent } from '../../../../shared/components/error/error.component';
+import { FirebaseService } from '../../services/firebase/firebase.service';
+import { OrDividerComponent } from '../../../../shared/components/or-divider/or-divider.component';
 
 @Component({
   selector: 'app-login-page',
@@ -29,7 +30,9 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
     ButtonModule,
     RouterLink,
     PasswordModule,
-    DropdownModule
+    DropdownModule,
+    ErrorComponent,
+    OrDividerComponent
   ],
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss', '../auth.styles.scss'],
@@ -37,7 +40,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 })
 export class LoginPageComponent {
   loading = false;
-  error$ = new Subject<string>();
+  error$ = new BehaviorSubject<string>('');
   form = new FormGroup({
     email: new FormControl('', {
       validators: [Validators.required],
@@ -49,34 +52,31 @@ export class LoginPageComponent {
     })
   });
 
-  authService = inject(AuthService);
+  firebaseService = inject(FirebaseService);
   formUtils = inject(FormUtilsService);
   router = inject(Router);
   store = inject(Store);
-  afAuth = inject(AngularFireAuth);
 
-  submitForm() {
+  onSubmit() {
     this.error$.next('');
     if (!this.form.valid) {
       this.formUtils.markGroupDirty(this.form);
     } else {
       this.loading = true;
       from(
-        this.afAuth.signInWithEmailAndPassword(
-          this.form.getRawValue().email,
-          this.form.getRawValue().password
-        )
+        this.firebaseService.loginWithEmailAndPassword({
+          email: this.form.getRawValue().email,
+          password: this.form.getRawValue().password
+        })
       ).subscribe({
         next: (data) => {
           // localStorage.setItem('access_token', data.access_token);
           // // const authState = JSON.parse(atob(data.access_token.split('.')[1]));
           // this.store.dispatch(login({ authState: authState }));
-          console.log(data);
           this.loading = false;
           return this.router.navigate(['']);
         },
-        error: (err) => {
-          console.log(err.message);
+        error: (err: Error) => {
           this.error$.next(err.message);
           this.loading = false;
           this.form.markAsUntouched();
@@ -84,5 +84,18 @@ export class LoginPageComponent {
         }
       });
     }
+  }
+  loginGoogle() {
+    this.firebaseService.loginWithGoogle().subscribe({
+      next: (data) => {
+        this.loading = false;
+        return this.router.navigate(['']);
+      },
+      error: (err: Error) => {
+        this.error$.next(err.message);
+        this.form.markAsUntouched();
+        this.form.markAsPristine();
+      }
+    });
   }
 }
