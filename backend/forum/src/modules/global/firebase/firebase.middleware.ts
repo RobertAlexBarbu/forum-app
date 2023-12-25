@@ -12,7 +12,7 @@ export class FirebaseMiddleware implements NestMiddleware {
 
       req.body = {
         email: data.email,
-        uid: data.uid
+        id: data.uid
       }
     next();
     }

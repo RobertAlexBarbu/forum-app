@@ -4,7 +4,7 @@ create table role (
     name varchar(32) not null unique
 );
 insert into role (name)
-values ('user'), ('admin'), ('moderator');
+values ('user'), ('admin'), ('super');
 
 -- migrate:down
 drop table role;

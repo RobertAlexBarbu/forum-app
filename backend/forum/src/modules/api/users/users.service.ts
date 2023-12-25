@@ -1,9 +1,12 @@
 import {ConflictException, Injectable} from '@nestjs/common';
 import {CreateUserDto} from './dto/create-user.dto';
 import {UpdateUserDto} from './dto/update-user.dto';
-import {EntityManager} from '@mikro-orm/core';
+import {EntityManager, Ref, wrap} from '@mikro-orm/core';
 import {User} from './entities/User';
 import {JwtService} from "@nestjs/jwt";
+import {UpdateToAdminDto} from "./dto/update-to-admin.dto";
+import {Role} from "./entities/Role";
+import {Forum} from "../forums/entities/Forum";
 
 
 @Injectable()
@@ -14,7 +17,7 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    const exists = await this.em.findOne(User, {uid: createUserDto.uid});
+    const exists = await this.em.findOne(User, {id: createUserDto.id});
     if(exists) {
       throw new ConflictException('Email already registered!',{ cause: new Error(), description: 'Some error description' });
     }
@@ -22,7 +25,7 @@ export class UsersService {
     const user = this.em.create(
       User,
       {
-        uid: createUserDto.uid,
+        id: createUserDto.id,
         email: createUserDto.email,
         username: username,
         role: 1
@@ -30,7 +33,7 @@ export class UsersService {
     );
     await this.em.persist(user).flush();
     const access = this.jwtService.sign({
-      sub: user.uid,
+      sub: user.id,
       email: user.email,
       username: user.username,
       role: user.role
@@ -41,9 +44,9 @@ export class UsersService {
   findAll() {
     return `This action returns all users`;
   }
-  // async findAllAdmins() {
-  //   return await this.em.find(AppUser, {role: {role: 'admin'}}, {populate: ['role'], fields: ['username', 'email', 'uid', 'role'], orderBy: {username: 'asc'}})
-  // }
+  async findAllAdmins() {
+    return await this.em.find(User, {role: {name: 'admin'}}, {populate: ['role'], fields: ['username', 'email', 'id', 'role'], orderBy: {username: 'asc'}})
+  }
 
   async findByUsernameOrEmail(usernameOrEmail: string) {
     return await this.em.findOne(
@@ -63,23 +66,28 @@ export class UsersService {
     return `This action updates a #${id} user`;
   }
 
-  // async updateToAdmin(updateToAdminDto: UpdateToAdminDto) {
-  //
-  //   const user = await this.em.findOne(AppUser, {username: updateToAdminDto.username});
-  //   if(user === null) {
-  //     return null
-  //   }
-  //   user.role = this.em.getReference(Role, 2);
-  //   await this.em.flush();
-  //   return user;
-  // }
+  async updateToAdmin(updateToAdminDto: UpdateToAdminDto) {
 
-  // async demoteAdmin(uid: string) {
-  //   const admin = await this.em.findOne(AppUser, {uid: uid});
-  //   admin.role = this.em.getReference(Role, 1);
-  //   await this.em.flush();
-  //   return admin;
-  // }
+    // UPDATE METHOD 1
+    const user = await this.em.findOne(User, {username: updateToAdminDto.username});
+    if(user === null) {
+      return null
+    }
+    const ro = this.em.getReference(Role, 2, {wrapped: true});
+    user.role = ro;
+    await this.em.flush();
+    return user;
+  }
+
+  async demoteAdmin(uid: string) {
+    // UPDATE METHOD 2
+    const admin = this.em.getReference(User, uid);
+    wrap(admin).assign({
+      role: 1
+    })
+    await this.em.flush();
+    return admin;
+  }
 
   remove(id: number) {
     return `This action removes a #${id} user`;

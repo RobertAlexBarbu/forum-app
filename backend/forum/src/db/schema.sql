@@ -18,8 +18,8 @@ SET default_table_access_method = heap;
 --
 
 CREATE TABLE public.app_user (
-    uid character varying(64) NOT NULL,
-    picture_uid character varying(64),
+    id character varying(64) NOT NULL,
+    picture_id character varying(64),
     username character varying(64),
     email character varying(64),
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
@@ -64,7 +64,7 @@ ALTER SEQUENCE public.category_id_seq OWNED BY public.category.id;
 
 CREATE TABLE public.comment (
     id integer NOT NULL,
-    app_user_id character varying,
+    user_id character varying,
     content text NOT NULL,
     post_id integer,
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
@@ -131,7 +131,7 @@ CREATE TABLE public.post (
     content text NOT NULL,
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     category_id integer,
-    app_user_id character varying,
+    user_id character varying,
     forum_id integer,
     likes integer DEFAULT 0
 );
@@ -163,7 +163,7 @@ ALTER SEQUENCE public.post_id_seq OWNED BY public.post.id;
 
 CREATE TABLE public.post_like (
     id integer NOT NULL,
-    app_user_id character varying,
+    user_id character varying,
     post_id integer
 );
 
@@ -282,7 +282,7 @@ ALTER TABLE ONLY public.app_user
 --
 
 ALTER TABLE ONLY public.app_user
-    ADD CONSTRAINT app_user_pkey PRIMARY KEY (uid);
+    ADD CONSTRAINT app_user_pkey PRIMARY KEY (id);
 
 
 --
@@ -374,14 +374,6 @@ ALTER TABLE ONLY public.category
 
 
 --
--- Name: comment comment_app_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.comment
-    ADD CONSTRAINT comment_app_user_id_fkey FOREIGN KEY (app_user_id) REFERENCES public.app_user(uid) ON DELETE SET NULL;
-
-
---
 -- Name: comment comment_post_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -390,11 +382,11 @@ ALTER TABLE ONLY public.comment
 
 
 --
--- Name: post post_app_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: comment comment_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.post
-    ADD CONSTRAINT post_app_user_id_fkey FOREIGN KEY (app_user_id) REFERENCES public.app_user(uid) ON DELETE SET NULL;
+ALTER TABLE ONLY public.comment
+    ADD CONSTRAINT comment_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.app_user(id) ON DELETE SET NULL;
 
 
 --
@@ -414,19 +406,27 @@ ALTER TABLE ONLY public.post
 
 
 --
--- Name: post_like post_like_app_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.post_like
-    ADD CONSTRAINT post_like_app_user_id_fkey FOREIGN KEY (app_user_id) REFERENCES public.app_user(uid) ON DELETE CASCADE;
-
-
---
 -- Name: post_like post_like_post_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.post_like
     ADD CONSTRAINT post_like_post_id_fkey FOREIGN KEY (post_id) REFERENCES public.post(id) ON DELETE CASCADE;
+
+
+--
+-- Name: post_like post_like_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.post_like
+    ADD CONSTRAINT post_like_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.app_user(id) ON DELETE CASCADE;
+
+
+--
+-- Name: post post_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.post
+    ADD CONSTRAINT post_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.app_user(id) ON DELETE SET NULL;
 
 
 --

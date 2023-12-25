@@ -9,12 +9,12 @@ export class AuthService {
     private readonly em: EntityManager,
     private jwtService: JwtService,
   ) {}
-  async login(uid: string) {
-    const user = await this.em.findOne(User, {uid: uid});
+  async login(id: string) {
+    const user = await this.em.findOne(User, {id: id});
     if(!user) {
       throw new BadRequestException('Account not registered. Please sign up')
     }
-    const payload = { username: user.username, sub: user.uid, role: user.role, email: user.email };
+    const payload = { username: user.username, sub: user.id, role: user.role, email: user.email };
     return {
       access: this.jwtService.sign(payload, {secret: process.env.SECRET}),
     };

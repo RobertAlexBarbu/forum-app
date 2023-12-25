@@ -16,15 +16,15 @@ export class HttpService {
   port = this.environmentService.getEnvironmentVar('port');
   server = `${this.scheme}://${this.domain}:${this.port}`;
 
-  post<T>(url: string, body: T | {} = {}) {
+  post<T>(url: string, body: any = {}) {
     return this.http.post<T>(`${this.server}/${url}`, body, this.httpOptions);
   }
 
-  put<T>(url: string, body: T) {
+  put<T>(url: string, body: any = {}) {
     return this.http.put<T>(`${this.server}/${url}`, body, this.httpOptions);
   }
 
-  putByID<T>(url: string, body: T, id: string | number) {
+  putByID<T>(url: string, body: any = {}, id: string | number) {
     return this.http.put<T>(
       `${this.server}/${url}/${id}`,
       body,

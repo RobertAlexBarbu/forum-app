@@ -2,24 +2,24 @@ import { Injectable } from '@nestjs/common';
 import { CreateForumDto } from './dto/create-forum.dto';
 import { UpdateForumDto } from './dto/update-forum.dto';
 import { EntityManager } from '@mikro-orm/core';
-import { Forums } from './entities/Forums';
-import { Categories } from './entities/Categories';
-import {Posts} from "../posts/entities/Posts";
-import {Comments} from "../comments/entities/Comments";
+import { Forum } from './entities/Forum';
+import { Category } from './entities/Category';
+import {Post} from "../posts/entities/Post";
+import {Comment} from "../comments/entities/Comment";
 
 @Injectable()
 export class ForumsService {
   constructor(private readonly em: EntityManager) {}
 
   async create(createForumDto: CreateForumDto) {
-    const forum = this.em.create(Forums, createForumDto);
+    const forum = this.em.create(Forum, createForumDto);
     await this.em.persist(forum).flush();
     return forum;
   }
 
   async findAll() {
     const forums = await this.em.find(
-      Forums,
+      Forum,
       {},
       { populate: ['categories'], orderBy: { name: 'asc' } },
     );
@@ -29,15 +29,15 @@ export class ForumsService {
     return forums;
   }
   async findTrending() {
-    const latestPosts = await this.em.find(Posts, {}, {populate: ['postLikes.user','category', 'comments', 'user', 'forum'], orderBy: {createdAt: 'desc'}, limit: 3 })
-    const latestComments = await this.em.find(Comments, {}, {populate: ['user', 'post.forum'], orderBy: {createdAt: 'desc'}, limit: 3, })
+    const latestPosts = await this.em.find(Post, {}, {populate: ['postLikes.user','category', 'comments', 'user', 'forum'], orderBy: {createdAt: 'desc'}, limit: 3 })
+    const latestComments = await this.em.find(Comment, {}, {populate: ['user', 'post.forum'], orderBy: {createdAt: 'desc'}, limit: 3, })
     return {latestPosts, latestComments}
 
   }
 
   async findOne(id: number) {
     const forum = await this.em.findOne(
-      Forums,
+      Forum,
       { id: id },
       { populate: ['categories', 'posts.postLikes', 'posts.category', 'posts.forum'] },
     );
@@ -48,20 +48,20 @@ export class ForumsService {
   }
   async findOneForEdit(id: number) {
     return await this.em.findOne(
-      Forums,
+      Forum,
       { id: id },
       { populate: ['categories'] },
     );
   }
 
   async update(id: number, updateForumDto: UpdateForumDto) {
-    const forum = this.em.getReference(Forums, id);
+    const forum = this.em.getReference(Forum, id);
     updateForumDto.deletedCategories.forEach((c) => {
-      let category = this.em.getReference(Categories, c.id);
+      let category = this.em.getReference(Category, c.id);
       this.em.remove(category);
     });
     updateForumDto.addedCategories.forEach((c) => {
-      let category = this.em.create(Categories, c);
+      let category = this.em.create(Category, c);
       category.forum = forum;
       this.em.persist(category);
     });
@@ -71,7 +71,7 @@ export class ForumsService {
   }
 
   async remove(id: number) {
-    const ref = this.em.getReference(Forums, id);
+    const ref = this.em.getReference(Forum, id);
     this.em.remove(ref);
     await this.em.flush();
     return ref;

@@ -1,9 +1,9 @@
 import { Entity, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
-import { Posts } from '../../posts/entities/Posts';
+import { Post } from '../../posts/entities/Post';
 import { User } from '../../users/entities/User';
 
 @Entity()
-export class Comments {
+export class Comment {
   @PrimaryKey()
   id!: number;
 
@@ -13,8 +13,8 @@ export class Comments {
   @Property({ length: 256 })
   content!: string;
 
-  @ManyToOne({ entity: () => Posts, onDelete: 'cascade', nullable: true })
-  post?: Posts;
+  @ManyToOne({ entity: () => Post, onDelete: 'cascade', nullable: true })
+  post?: Post;
 
   @Property()
   createdAt?: Date = new Date();

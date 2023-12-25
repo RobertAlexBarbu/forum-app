@@ -91,16 +91,18 @@ export class EditForumPageComponent implements OnInit {
   }
 
   deleteCategory(category: CategoryModel, index: number) {
+
     this.categories!.splice(index, 1);
     this.categories$.next(this.categories);
-    this.categoriesAdded.splice(
-      this.categoriesAdded.findIndex((c) => {
-        return c.name == category.name;
-      }),
-      1
-    );
     if (category.id > 0) {
       this.categoriesDeleted.push(category);
+    } else {
+      this.categoriesAdded.splice(
+        this.categoriesAdded.findIndex((c) => {
+          return c.name == category.name;
+        }),
+        1
+      );
     }
   }
 

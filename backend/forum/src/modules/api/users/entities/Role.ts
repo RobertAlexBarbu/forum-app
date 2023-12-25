@@ -6,5 +6,5 @@ export class Role {
   id!: number;
 
   @Property({ length: 32 })
-  name!: string;
+  name?: string;
 }

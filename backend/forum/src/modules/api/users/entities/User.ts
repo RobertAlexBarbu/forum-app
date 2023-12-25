@@ -1,7 +1,7 @@
 import {
   Entity,
   ManyToOne,
-  PrimaryKey,
+  PrimaryKey, PrimaryKeyType,
   Property, Ref,
 } from '@mikro-orm/core';
 import { Role } from './Role';
@@ -9,7 +9,7 @@ import { Role } from './Role';
 @Entity({tableName: "app_user"})
 export class User {
   @PrimaryKey()
-  uid!: string;
+  id!: string;
 
   @Property({nullable: true})
   pictureUid?: string;
@@ -24,5 +24,5 @@ export class User {
   createdAt?: Date;
 
   @ManyToOne({ entity: () => Role, ref: true, nullable: true })
-  role?: Ref<Role>;
+  role?: Role;
 }

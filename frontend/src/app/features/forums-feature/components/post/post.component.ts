@@ -49,6 +49,7 @@ export class PostComponent implements OnInit {
     this.store.select('auth').subscribe({
       next: (data) => {
         this.userId = data.id;
+        console.log(this.userId);
         if (
           this.post.postLikes.find((like) => {
             return like.user.id == this.userId;

@@ -41,7 +41,7 @@ export class AuthService {
     localStorage.setItem('access', data.access);
     const authState = JSON.parse(atob(data.access.split('.')[1]));
     return {
-      uid: authState.sub,
+      id: authState.sub,
       username: authState.username,
       email: authState.email,
       role: authState.role.id

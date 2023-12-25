@@ -4,18 +4,17 @@ import { AppService } from './app.service';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { UsersModule } from './modules/api/users/users.module';
 import { defineConfig } from '@mikro-orm/postgresql';
-import { Posts } from './modules/api/posts/entities/Posts';
+import { Post } from './modules/api/posts/entities/Post';
 import { User } from './modules/api/users/entities/User';
 import { Role } from './modules/api/users/entities/Role';
 import { CryptoService } from './modules/global/crypto/crypto.service';
 import { AuthModule } from './modules/api/auth/auth.module';
 import { ForumsModule } from './modules/api/forums/forums.module';
-import { Categories } from './modules/api/forums/entities/Categories';
-import { Forums } from './modules/api/forums/entities/Forums';
+import { Category } from './modules/api/forums/entities/Category';
+import { Forum } from './modules/api/forums/entities/Forum';
 import { PostsModule } from './modules/api/posts/posts.module';
 import { CommentsModule } from './modules/api/comments/comments.module';
 import { ConfigModule } from '@nestjs/config';
-import {FirebaseService} from "./modules/global/firebase/firebase.service";
 import {FirebaseModule} from "./modules/global/firebase/firebase.module";
 
 
@@ -24,7 +23,7 @@ import {FirebaseModule} from "./modules/global/firebase/firebase.module";
     ConfigModule.forRoot(),
     MikroOrmModule.forRoot(
       defineConfig({
-        entities: [Posts, User, Role, Categories, Forums],
+        entities: [Post, User, Role, Category, Forum],
         dbName: 'forum',
         forceUtcTimezone: true,
       }),

@@ -143,7 +143,8 @@ export class PostPageComponent implements OnInit {
         })
         .subscribe({
           next: (data) => {
-            data.user = { username: this.username };
+            data.user = { username: this.username,
+            id: this.userId};
             this.comment.reset();
             if (Array.isArray(this.post?.comments) && this.post) {
               this.post?.comments.push(data);

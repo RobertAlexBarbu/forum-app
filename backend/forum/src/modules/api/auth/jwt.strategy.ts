@@ -6,7 +6,6 @@ import * as process from "process";
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor() {
-    console.log(process.env.SECRET);
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
@@ -15,6 +14,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: any) {
-    return { uid: payload.sub, username: payload.username, email: payload.email, role: payload.role.id };
+    return { id: payload.sub, username: payload.username, email: payload.email, role: payload.role.id };
   }
 }

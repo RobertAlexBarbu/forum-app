@@ -29,12 +29,12 @@ export class UsersController {
   findAll() {
     return this.usersService.findAll();
   }
-  //
-  // @Get('admins')
-  // @UseGuards(JwtAuthGuard)
-  // findAllAdmins() {
-  //   return this.usersService.findAllAdmins()
-  // }
+
+  @Get('admins')
+  @UseGuards(JwtAuthGuard)
+  findAllAdmins() {
+    return this.usersService.findAllAdmins()
+  }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
@@ -46,15 +46,15 @@ export class UsersController {
     return this.usersService.update(+id, updateUserDto);
   }
 
-  // @Post('admins')
-  // updateToAdmin(@Body() updateToAdminDto: UpdateToAdminDto) {
-  //   console.log(updateToAdminDto);
-  //   return this.usersService.updateToAdmin(updateToAdminDto);
-  // }
-  // @Put('admins/:id')
-  // demoteAdmin(@Param('id') id: string) {
-  //   return this.usersService.demoteAdmin(id);
-  // }
+  @Post('admins')
+  updateToAdmin(@Body() updateToAdminDto: UpdateToAdminDto) {
+    console.log(updateToAdminDto);
+    return this.usersService.updateToAdmin(updateToAdminDto);
+  }
+  @Put('admins/:id')
+  demoteAdmin(@Param('id') id: string) {
+    return this.usersService.demoteAdmin(id);
+  }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
