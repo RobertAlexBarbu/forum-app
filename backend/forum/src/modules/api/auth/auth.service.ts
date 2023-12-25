@@ -1,5 +1,4 @@
 import {BadRequestException, Injectable} from '@nestjs/common';
-import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import {EntityManager} from "@mikro-orm/core";
 import {User} from "../users/entities/User";
@@ -17,7 +16,7 @@ export class AuthService {
     }
     const payload = { username: user.username, sub: user.uid, role: user.role, email: user.email };
     return {
-      access: this.jwtService.sign(payload),
+      access: this.jwtService.sign(payload, {secret: process.env.SECRET}),
     };
   }
 }

@@ -11,16 +11,15 @@ import {CryptoService} from '../../global/crypto/crypto.service';
 import {JwtModule} from '@nestjs/jwt';
 import {PassportModule} from '@nestjs/passport';
 import {JwtStrategy} from './jwt.strategy';
-import * as process from "process";
-import {FirebaseModule} from "../../global/firebase/firebase.module";
 import {FirebaseMiddleware} from "../../global/firebase/firebase.middleware";
+import {ConfigModule} from "@nestjs/config";
 
 @Module({
   imports: [
     UsersModule,
+    ConfigModule,
     JwtModule.register({
       global: true,
-      secret: '' + process.env.SECRET,
       signOptions: { expiresIn: '36000s' },
     }),
     PassportModule,

@@ -17,7 +17,6 @@ export class HttpService {
   server = `${this.scheme}://${this.domain}:${this.port}`;
 
   post<T>(url: string, body: T | {} = {}) {
-    console.log(new Date());
     return this.http.post<T>(`${this.server}/${url}`, body, this.httpOptions);
   }
 

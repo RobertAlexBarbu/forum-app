@@ -1,24 +1,20 @@
 import {ConflictException, Injectable} from '@nestjs/common';
 import {CreateUserDto} from './dto/create-user.dto';
 import {UpdateUserDto} from './dto/update-user.dto';
-import {CryptoService} from '../../global/crypto/crypto.service';
 import {EntityManager} from '@mikro-orm/core';
 import {User} from './entities/User';
 import {JwtService} from "@nestjs/jwt";
 
-import {ConfigService} from "@nestjs/config";
 
 @Injectable()
 export class UsersService {
   constructor(
-    private readonly cryptoService: CryptoService,
     private readonly em: EntityManager,
     private readonly jwtService: JwtService,
-    private readonly configService: ConfigService
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    const exists = await this.em.findOne(User, {uid: createUserDto.uid});;
+    const exists = await this.em.findOne(User, {uid: createUserDto.uid});
     if(exists) {
       throw new ConflictException('Email already registered!',{ cause: new Error(), description: 'Some error description' });
     }
@@ -38,7 +34,7 @@ export class UsersService {
       email: user.email,
       username: user.username,
       role: user.role
-    })
+    }, {secret: process.env.SECRET})
     return {access: access};
   }
 

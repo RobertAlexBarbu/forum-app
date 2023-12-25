@@ -1,4 +1,4 @@
-<div class="test">
+<div class="test" *ngIf="check$ | async">
   <app-header></app-header>
   <div class="main">
     <router-outlet></router-outlet>

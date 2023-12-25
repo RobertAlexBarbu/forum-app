@@ -18,6 +18,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ErrorComponent } from '../../../../shared/components/error/error.component';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { OrDividerComponent } from '../../../../shared/components/or-divider/or-divider.component';
+import {AuthService} from "../../../../core/services/auth/auth.service";
+import {login} from "../../../../core/store/auth/auth.actions";
 
 @Component({
   selector: 'app-login-page',
@@ -53,6 +55,7 @@ export class LoginPageComponent {
   });
 
   firebaseService = inject(FirebaseService);
+  authService = inject(AuthService);
   formUtils = inject(FormUtilsService);
   router = inject(Router);
   store = inject(Store);
@@ -70,9 +73,8 @@ export class LoginPageComponent {
         })
       ).subscribe({
         next: (data) => {
-          // localStorage.setItem('access_token', data.access_token);
-          // // const authState = JSON.parse(atob(data.access_token.split('.')[1]));
-          // this.store.dispatch(login({ authState: authState }));
+          const authState = this.authService.extractState(data);
+          this.store.dispatch(login({ authState: authState }));
           this.loading = false;
           return this.router.navigate(['']);
         },
@@ -88,7 +90,8 @@ export class LoginPageComponent {
   loginGoogle() {
     this.firebaseService.loginWithGoogle().subscribe({
       next: (data) => {
-        this.loading = false;
+        const authState = this.authService.extractState(data);
+        this.store.dispatch(login({ authState: authState }));
         return this.router.navigate(['']);
       },
       error: (err: Error) => {

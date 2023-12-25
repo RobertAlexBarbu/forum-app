@@ -1,4 +1,4 @@
 export interface RoleModel {
   id: number;
-  role: 'admin' | 'user' | 'none';
+  role: string;
 }

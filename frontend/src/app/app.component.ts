@@ -12,6 +12,7 @@ import { Store } from '@ngrx/store';
 import { isAuth } from './core/store/auth/auth.actions';
 import { HeaderComponent } from './core/components/header/header.component';
 import { FooterComponent } from './core/components/footer/footer.component';
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -29,15 +30,18 @@ import { FooterComponent } from './core/components/footer/footer.component';
 })
 export class AppComponent implements OnInit {
   title = 'forum-app';
+  check$ = new Subject<boolean>();
   authService = inject(AuthService);
   store = inject(Store);
   router = inject(Router);
   ngOnInit() {
     this.authService.checkAuth().subscribe({
       next: (data) => {
-        console.log('hey');
-        console.log(data);
+        this.check$.next(true);
         this.store.dispatch(isAuth({ authState: data }));
+      },
+      error: () => {
+        this.check$.next(true);
       }
     });
   }

@@ -21,6 +21,8 @@ import { jamGoogle } from '@ng-icons/jam-icons';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { OrDividerComponent } from '../../../../shared/components/or-divider/or-divider.component';
 import { ErrorComponent } from '../../../../shared/components/error/error.component';
+import {login, signup} from "../../../../core/store/auth/auth.actions";
+import {AuthService} from "../../../../core/services/auth/auth.service";
 
 @Component({
   selector: 'app-signup-page',
@@ -66,6 +68,7 @@ export class SignupPageComponent {
   });
 
   firebaseService = inject(FirebaseService);
+  authService = inject(AuthService);
   router = inject(Router);
   store = inject(Store<{ auth: AuthStateModel }>);
   formUtils = inject(FormUtilsService);
@@ -84,6 +87,8 @@ export class SignupPageComponent {
         .subscribe({
           next: (data) => {
             this.loading = false;
+            const authState = this.authService.extractState(data);
+            this.store.dispatch(signup({ authState: authState }));
             return this.router.navigate(['']);
           },
           error: (err) => {
@@ -99,6 +104,8 @@ export class SignupPageComponent {
   signupGoogle() {
     this.firebaseService.signupWithGoogle().subscribe({
       next: (data) => {
+        const authState = this.authService.extractState(data);
+        this.store.dispatch(signup({ authState: authState }));
         return this.router.navigate(['']);
       },
       error: (err) => {

@@ -1,8 +1,8 @@
-import { RoleModel } from '../../models/role.model';
+import { Roles } from '../../models/roles.enum';
 
 export interface AuthStateModel {
-  id: number;
+  uid: string;
   username: string;
-  role: RoleModel;
-  loggedIn: boolean;
+  email: string;
+  role: Roles;
 }
