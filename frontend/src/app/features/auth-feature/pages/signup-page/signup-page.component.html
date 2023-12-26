@@ -20,10 +20,6 @@
               *ngIf="!email.errors['required'] && email.errors['email']">
               Invalid email address
             </ng-container>
-            <ng-container
-              *ngIf="!email.errors['required'] && !email.errors['email'] && email.errors['maxlength']">
-              Maximum length is 64
-            </ng-container>
           </ng-container>
         </ng-container>
       </div>

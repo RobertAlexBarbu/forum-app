@@ -12,9 +12,11 @@ export class AdminService {
   findAdmins() {
     return this.http.get<UserModel[]>('users/admins');
   }
+
   updateToAdmin(updateToAdminDto: UpdateToAdminDto) {
     return this.http.post<UserModel>('users/admins', updateToAdminDto);
   }
+
   demoteAdmin(id: number) {
     return this.http.putByID<UserModel>('users/admins', {}, id);
   }

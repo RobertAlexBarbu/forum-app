@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ForumsService } from '../../services/forums/forums.service';
 import { PostComponent } from '../../components/post/post.component';
 import { CommentComponent } from '../../components/comment/comment.component';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-home-page',
@@ -14,5 +15,8 @@ import { CommentComponent } from '../../components/comment/comment.component';
 })
 export class HomePageComponent {
   forumsService = inject(ForumsService);
+
+  authState$ = inject(Store).select('auth');
+
   trending$ = this.forumsService.getTrending();
 }

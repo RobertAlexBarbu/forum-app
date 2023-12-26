@@ -38,11 +38,17 @@ import { Store } from '@ngrx/store';
 export class PostComponent implements OnInit {
   @Input()
   post!: PostModel;
+
   userId!: number;
+
   liked = false;
+
   likes = 0;
+
   likes$ = new BehaviorSubject<number>(0);
+
   postsService = inject(PostsService);
+
   store = inject(Store);
 
   ngOnInit() {

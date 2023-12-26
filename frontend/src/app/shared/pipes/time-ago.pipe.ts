@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'timeAgoPipe2',
+  name: 'timeAgo',
   standalone: true
 })
 export class TimeAgoPipe implements PipeTransform {
@@ -9,9 +9,7 @@ export class TimeAgoPipe implements PipeTransform {
     if (value) {
       const date2 = new Date(value);
       const seconds = Math.floor((+new Date() - +date2) / 1000);
-      if (seconds < 29)
-        // less than 30 seconds ago will show as 'Just now'
-        return 'Just now';
+      if (seconds < 29) return 'Just now';
       const intervals: { [key: string]: number } = {
         year: 31536000,
         month: 2592000,
@@ -26,9 +24,9 @@ export class TimeAgoPipe implements PipeTransform {
         counter = Math.floor(seconds / intervals[i]);
         if (counter > 0)
           if (counter === 1) {
-            return counter + ' ' + i + ' ago'; // singular (1 day ago)
+            return counter + ' ' + i + ' ago';
           } else {
-            return counter + ' ' + i + 's ago'; // plural (2 days ago)
+            return counter + ' ' + i + 's ago';
           }
       }
     }

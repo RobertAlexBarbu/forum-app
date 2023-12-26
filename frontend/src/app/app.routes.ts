@@ -1,10 +1,13 @@
 import { Routes } from '@angular/router';
-import { authRoutes } from './features/auth-feature/auth.routes';
 import { forumsRoutes } from './features/forums-feature/forums.routes';
 
 export const routes: Routes = [
-  ...authRoutes,
   ...forumsRoutes,
+  {
+    path: 'auth',
+    loadChildren: () =>
+      import('./features/auth-feature/auth.routes').then((m) => m.authRoutes)
+  },
   {
     path: 'admin',
     loadChildren: () =>

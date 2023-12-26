@@ -1,4 +1,4 @@
-@import "../../../shared/styles/variables";
+
 
 .navbar {
   display: flex;
@@ -14,7 +14,7 @@ ng-icon {
 .active-link.p-button.p-element {
   background-color: rgba(59, 130, 246, .10) !important;
 }
-@media (min-width: $desktop-min-width) {
+@media (min-width: 768px) {
   .navbar {
     padding: 0;
     flex-direction: row;

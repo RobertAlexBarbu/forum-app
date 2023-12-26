@@ -2,7 +2,7 @@
   <div class="header">
     <div class="name">Forumly</div>
     <div class="desktop">
-      <app-navbar></app-navbar>
+      <app-navbar [authState]="authState" *ngIf="check$ | async"></app-navbar>
     </div>
     <div class="mobile">
       <button
@@ -15,5 +15,6 @@
     </div>
   </div>
 </div>
-
-<app-menu [(isVisible)]="menuVisible"> </app-menu>
+<app-modal [(isVisible)]="isVisible">
+  <app-navbar [authState]="authState" (navigate)="closeMenu()"></app-navbar>
+</app-modal>

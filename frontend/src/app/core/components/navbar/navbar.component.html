@@ -18,53 +18,48 @@
     <ng-icon name="jamMessagesF"></ng-icon>
     Forum
   </button>
-  <ng-container *ngIf="authState$ | async as authState">
-    <button
-      *ngIf="authState | isAdmin"
-      routerLinkActive="active-link"
-      pButton
-      class="p-button p-button-sm p-button-text"
-      routerLink="/admin"
-      (click)="closeMenu()">
-      <ng-icon name="jamPieChartF"></ng-icon>
-      Dashboard
-    </button>
-  </ng-container>
+  <button
+    *ngIf="authState | isAdmin"
+    routerLinkActive="active-link"
+    pButton
+    class="p-button p-button-sm p-button-text"
+    routerLink="/admin"
+    (click)="closeMenu()">
+    <ng-icon name="jamPieChartF"></ng-icon>
+    Dashboard
+  </button>
 
   <div class="separator"></div>
-
   <button
-    *isAuth="true"
+    *ngIf="authState | isAuth"
     pButton
     class="p-button-sm p-button-text logout p-button"
     (click)="logout(); closeMenu()">
     Log Out
   </button>
-
   <button
-    *isAuth="false"
+    *ngIf="!(authState | isAuth)"
     routerLinkActive="active-link"
     pButton
     class="p-button-sm p-button-text login mobile"
-    routerLink="/login"
+    routerLink="/auth/login"
     (click)="closeMenu()">
     Log in
   </button>
   <button
-    *isAuth="false"
+    *ngIf="!(authState | isAuth)"
     routerLinkActive="active-link"
     pButton
     class="p-button-text p-button-sm signup"
-    routerLink="/signup"
+    routerLink="/auth/signup"
     (click)="closeMenu()">
     Sign up
   </button>
-
   <button
-    *isAuth="false"
+    *ngIf="!(authState | isAuth)"
     pButton
     class="p-button-sm login desktop-btn login"
-    routerLink="/login"
+    routerLink="/auth/login"
     (click)="closeMenu()">
     Log in
   </button>

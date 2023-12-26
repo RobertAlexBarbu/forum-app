@@ -16,7 +16,7 @@
       <div class="data-group desktop">
         <div class="info">
           <div *ngIf="forum.posts.length; else noDisc">
-            Latest: {{forum.posts[0].createdAt | timeAgoPipe2}}
+            Latest: {{forum.posts[0].createdAt | timeAgo}}
           </div>
           <ng-template #noDisc>
             <div>Latest: Nothing yet</div>
@@ -27,7 +27,7 @@
   </div>
   <div class="btn">
     <button
-      *isAdmin
+      *ngIf="authState | isAdmin"
       [routerLink]="['', 'forums', 'edit', forum.id]"
       pButton
       class="p-button-text p-button nav"
@@ -36,7 +36,7 @@
       <ng-icon name="jamPencilF"></ng-icon>
     </button>
     <button
-      *isAdmin
+      *ngIf="authState | isAdmin"
       pButton
       (click)="delete()"
       class="p-button-text p-button p-button-danger nav"

@@ -41,9 +41,13 @@ import { CategoryModel } from '../../models/category.model';
 })
 export class NewPostPageComponent implements OnInit {
   forumsService = inject(ForumsService);
+
   postsService = inject(PostsService);
+
   route = inject(ActivatedRoute);
+
   router = inject(Router);
+
   formUtils = inject(FormUtilsService);
 
   ngOnInit() {

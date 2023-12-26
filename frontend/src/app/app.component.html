@@ -1,6 +1,6 @@
-<div class="test" *ngIf="check$ | async">
-  <app-header></app-header>
+<ng-container *ngIf="authState$ | async as authState">
+  <app-header [authState]="authState" [check$]="check$"></app-header>
   <div class="main">
     <router-outlet></router-outlet>
   </div>
-</div>
+</ng-container>

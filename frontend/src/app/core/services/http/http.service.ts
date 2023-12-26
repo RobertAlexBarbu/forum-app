@@ -7,13 +7,19 @@ import { EnvironmentService } from '../environment/environment.service';
 })
 export class HttpService {
   http = inject(HttpClient);
+
   environmentService = inject(EnvironmentService);
+
   httpOptions = {
     withCredentials: true
   };
+
   scheme = this.environmentService.getEnvironmentVar('scheme');
+
   domain = this.environmentService.getEnvironmentVar('domain');
+
   port = this.environmentService.getEnvironmentVar('port');
+
   server = `${this.scheme}://${this.domain}:${this.port}`;
 
   post<T>(url: string, body: any = {}) {

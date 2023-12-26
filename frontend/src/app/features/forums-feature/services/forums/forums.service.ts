@@ -25,6 +25,7 @@ export class ForumsService {
   getForums() {
     return this.http.get<ForumModel[]>('forums');
   }
+
   getTrending() {
     return this.http.get<{
       latestPosts: PostModel[];
@@ -35,6 +36,7 @@ export class ForumsService {
   getForum(id: number) {
     return this.http.getByID<ForumModel>('forums', id);
   }
+
   getForumForEdit(id: number) {
     return this.http.getByID<ForumModel>('forums/edit', id);
   }

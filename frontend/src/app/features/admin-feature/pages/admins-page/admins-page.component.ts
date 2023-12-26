@@ -39,6 +39,7 @@ export class AdminsPageComponent {
   adminService = inject(AdminService);
 
   admins$ = this.adminService.findAdmins();
+
   error$ = new Subject<string>();
 
   addAdminForm = new FormControl('', {

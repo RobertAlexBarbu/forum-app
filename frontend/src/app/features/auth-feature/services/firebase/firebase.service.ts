@@ -9,12 +9,12 @@ import AuthProvider = firebase.auth.AuthProvider;
 import { ErrorService } from '../../../../core/services/error/error.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class FirebaseService {
   errorService = inject(ErrorService);
+
   authService = inject(AuthService);
+
   firebaseAuthService = inject(AngularFireAuth);
 
   signupWithEmailAndPassword(firebaseAuthDto: FirebaseAuthDto) {
@@ -30,6 +30,7 @@ export class FirebaseService {
       switchMap(this.handleUserData)
     );
   }
+
   loginWithEmailAndPassword(firebaseAuthDto: FirebaseAuthDto) {
     return from(
       this.firebaseAuthService.signInWithEmailAndPassword(

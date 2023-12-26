@@ -3,7 +3,6 @@
 
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
-@import './app/shared/styles/variables';
 
 
 
@@ -33,7 +32,7 @@ body {
   background-color: var(--base);
   overflow-y: scroll;
 }
-@media (min-width: $desktop-min-width) {
+@media (min-width: 768px) {
   body {
     background-color: #3B82F609;
   }
@@ -44,7 +43,7 @@ body {
 .desktop-btn {
   display: none
 }
-@media (min-width: $desktop-min-width) {
+@media (min-width: 768px) {
   .desktop {
     display: block;
   }
@@ -90,7 +89,7 @@ button.test {
   padding: 1rem 1rem;
   margin: auto;
 }
-@media (min-width: $desktop-min-width) {
+@media (min-width: 768px) {
   .card {
     border-radius: var(--radius);
     box-shadow: var(--box-shadow);
@@ -115,7 +114,7 @@ button.test {
   cursor: pointer;
 }
 .clickable:active {
-  transform: scale(0.90);
+  text-decoration: underline;
 }
 .clickable::selection {
   background-color: transparent;

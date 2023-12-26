@@ -40,7 +40,9 @@ import { ForumModel } from '../../models/forum.model';
 })
 export class EditForumPageComponent implements OnInit {
   route = inject(ActivatedRoute);
+
   router = inject(Router);
+
   forumsService = inject(ForumsService);
 
   ngOnInit() {
@@ -57,11 +59,15 @@ export class EditForumPageComponent implements OnInit {
   }
 
   forum!: ForumModel;
+
   categories: CategoryModel[] = [];
+
   categoriesDeleted: { id: number; name: string }[] = [];
+
   categoriesAdded: { name: string }[] = [];
 
   categories$: Subject<CategoryModel[]> = new Subject<CategoryModel[]>();
+
   errors$: Subject<string> = new Subject<string>();
 
   categoryName = new FormControl('', {
@@ -69,6 +75,7 @@ export class EditForumPageComponent implements OnInit {
     updateOn: 'blur',
     validators: [Validators.required]
   });
+
   forumName = new FormControl('', {
     nonNullable: true,
     validators: [Validators.required]
@@ -91,7 +98,6 @@ export class EditForumPageComponent implements OnInit {
   }
 
   deleteCategory(category: CategoryModel, index: number) {
-
     this.categories!.splice(index, 1);
     this.categories$.next(this.categories);
     if (category.id > 0) {

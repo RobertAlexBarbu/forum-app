@@ -21,6 +21,7 @@ import { ForumModel } from '../../../forums-feature/models/forum.model';
 })
 export class StatisticsPageComponent implements OnInit {
   colorService = inject(ColorService);
+
   forumsService = inject(ForumsService);
 
   data: any = {
@@ -33,6 +34,7 @@ export class StatisticsPageComponent implements OnInit {
       }
     ]
   };
+
   data2: any = {
     labels: [],
     datasets: [
@@ -43,6 +45,7 @@ export class StatisticsPageComponent implements OnInit {
       }
     ]
   };
+
   data3: any = {
     labels: [],
     datasets: [
@@ -53,11 +56,17 @@ export class StatisticsPageComponent implements OnInit {
       }
     ]
   };
+
   data$ = new Subject();
+
   data2$ = new Subject();
+
   data3$ = new Subject();
+
   options: any;
+
   options2: any;
+
   options3: any;
 
   ngOnInit() {

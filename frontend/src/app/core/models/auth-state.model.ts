@@ -1,4 +1,4 @@
-import { Roles } from '../../models/roles.enum';
+import { Roles } from './roles.enum';
 
 export interface AuthStateModel {
   id: string;

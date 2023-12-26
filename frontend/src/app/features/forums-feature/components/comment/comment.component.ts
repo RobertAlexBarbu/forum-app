@@ -12,7 +12,8 @@ import { ButtonModule } from 'primeng/button';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { jamTrashF } from '@ng-icons/jam-icons';
 import { TooltipModule } from 'primeng/tooltip';
-import { IsAdminDirective } from '../../../../shared/directives/is-admin.directive';
+import { AuthStateModel } from '../../../../core/models/auth-state.model';
+import { isAdminPipe } from '../../../../shared/pipes/is-admin.pipe';
 
 @Component({
   selector: 'app-comment',
@@ -23,7 +24,7 @@ import { IsAdminDirective } from '../../../../shared/directives/is-admin.directi
     ButtonModule,
     NgIcon,
     TooltipModule,
-    IsAdminDirective
+    isAdminPipe
   ],
   templateUrl: './comment.component.html',
   styleUrls: ['./comment.component.scss'],
@@ -31,7 +32,10 @@ import { IsAdminDirective } from '../../../../shared/directives/is-admin.directi
   viewProviders: [provideIcons({ jamTrashF })]
 })
 export class CommentComponent {
+  @Input() authState!: AuthStateModel;
+
   @Input() comment!: CommentModel;
+
   @Output() delete = new EventEmitter<number>();
 
   onDelete() {

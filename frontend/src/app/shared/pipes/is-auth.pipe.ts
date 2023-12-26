@@ -1,6 +1,6 @@
 import { inject, Pipe, PipeTransform } from '@angular/core';
 import { AuthService } from '../../core/services/auth/auth.service';
-import { AuthStateModel } from '../../core/store/auth/auth-state.model';
+import { AuthStateModel } from '../../core/models/auth-state.model';
 
 @Pipe({
   name: 'isAuth',
@@ -9,6 +9,7 @@ import { AuthStateModel } from '../../core/store/auth/auth-state.model';
 })
 export class isAuthPipe implements PipeTransform {
   authService = inject(AuthService);
+
   transform(value: AuthStateModel): boolean {
     return this.authService.isAuth(value);
   }

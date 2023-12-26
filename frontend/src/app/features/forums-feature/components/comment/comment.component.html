@@ -3,13 +3,13 @@
     <ng-container *ngIf="comment.createdAt">
       <div>{{comment.user.username}}</div>
       <div class="sphere"></div>
-      <div>{{comment.createdAt | timeAgoPipe2}}</div>
+      <div>{{comment.createdAt | timeAgo}}</div>
     </ng-container>
   </div>
   <div class="content">
     <div>{{comment.content}}</div>
     <button
-      *isAdmin
+      *ngIf="authState | isAdmin"
       (click)="onDelete()"
       pTooltip="Delete"
       pButton

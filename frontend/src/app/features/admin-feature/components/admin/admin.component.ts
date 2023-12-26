@@ -23,7 +23,9 @@ import { DockModule } from 'primeng/dock';
 })
 export class AdminComponent {
   @Input() admin!: UserModel;
+
   @Output() demote = new EventEmitter<number>();
+
   demoteAdmin() {
     this.demote.emit(this.admin.id);
   }

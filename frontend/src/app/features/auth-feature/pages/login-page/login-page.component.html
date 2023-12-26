@@ -11,10 +11,14 @@
         pInputText
         formControlName="email" />
       <div class="error">
-        <ng-container *ngIf="form.get('email') as username">
-          <ng-container *ngIf="username.dirty && username.errors">
-            <ng-container *ngIf="username.errors['required']">
+        <ng-container *ngIf="form.get('email') as email">
+          <ng-container *ngIf="email.dirty && email.errors">
+            <ng-container *ngIf="email.errors['required']">
               This field is required
+            </ng-container>
+            <ng-container
+              *ngIf="!email.errors['required'] && email.errors['email']">
+              Invalid email address
             </ng-container>
           </ng-container>
         </ng-container>
@@ -24,7 +28,7 @@
       <label for="password">Password</label>
       <input
         pInputText
-        type="text"
+        type="password"
         placeholder="Password"
         id="password"
         formControlName="password" />

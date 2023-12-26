@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
+  OnDestroy,
   OnInit
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -11,38 +12,49 @@ import { AuthService } from './core/services/auth/auth.service';
 import { Store } from '@ngrx/store';
 import { isAuth } from './core/store/auth/auth.actions';
 import { HeaderComponent } from './core/components/header/header.component';
-import { FooterComponent } from './core/components/footer/footer.component';
-import {Subject} from "rxjs";
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { AuthStateModel } from './core/models/auth-state.model';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterOutlet,
-    NavbarComponent,
-    HeaderComponent,
-    FooterComponent
-  ],
+  imports: [CommonModule, RouterOutlet, NavbarComponent, HeaderComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'forum-app';
+
   check$ = new Subject<boolean>();
+
+  destroy$ = new Subject<boolean>();
+
+  authState$!: Observable<AuthStateModel>;
+
   authService = inject(AuthService);
+
   store = inject(Store);
+
   router = inject(Router);
+
   ngOnInit() {
-    this.authService.checkAuth().subscribe({
-      next: (data) => {
-        this.check$.next(true);
-        this.store.dispatch(isAuth({ authState: data }));
-      },
-      error: () => {
-        this.check$.next(true);
-      }
-    });
+    this.authState$ = this.store.select('auth');
+    this.authService
+      .checkAuth()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (data) => {
+          this.check$.next(true);
+          this.store.dispatch(isAuth({ authState: data }));
+        },
+        error: () => {
+          this.check$.next(true);
+        }
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
   }
 }

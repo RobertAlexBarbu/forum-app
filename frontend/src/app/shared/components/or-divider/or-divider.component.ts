@@ -9,6 +9,4 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./or-divider.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class OrDividerComponent {
-
-}
+export class OrDividerComponent {}

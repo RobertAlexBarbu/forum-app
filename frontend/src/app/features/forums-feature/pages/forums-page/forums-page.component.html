@@ -1,8 +1,8 @@
-<div class="card" ontouchstart="">
+<div class="card" ontouchstart="" *ngIf="authState$ | async as authState">
   <div class="header">
     <div class="title">Forum</div>
     <button
-      *isAdmin
+      *ngIf="authState | isAdmin"
       (click)="openForumModal()"
       pButton
       class="smaller p-button-text p-button-sm smaller">
@@ -13,6 +13,7 @@
   <ng-container *ngIf="forums$ | async as forums">
     <ng-container *ngFor="let forum of forums">
       <app-forum
+        [authState]="authState"
         [forum]="forum"
         (deleteForum)="openDeleteModal($event)"></app-forum>
     </ng-container>

@@ -1,11 +1,10 @@
-section {
-  border: 2px red dotted;
-}
 div{
   font-size: 0;
-  transition:all .25s;
+  opacity: 0;
+  transition: font-size .25s, opacity .25s ease-in-out 0.25s;
   color: var(--error)
 }
-div.st1 {
+div.reveal {
   font-size: 0.9rem;
+  opacity: 1;
 }

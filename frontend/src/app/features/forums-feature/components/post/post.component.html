@@ -2,7 +2,7 @@
   <div class="top">
     <div>{{post.user.username}}</div>
     <div class="sphere"></div>
-    <div>{{post.createdAt | timeAgoPipe2}}</div>
+    <div>{{post.createdAt | timeAgo}}</div>
   </div>
   <div class="body">
     <div class="category" *ngIf="post.category">{{post.category.name}}</div>

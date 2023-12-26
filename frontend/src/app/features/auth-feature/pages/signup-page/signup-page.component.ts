@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnDestroy
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormControl,
@@ -10,8 +15,8 @@ import {
 import { InputTextModule } from 'primeng/inputtext';
 import { Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject } from 'rxjs';
-import { AuthStateModel } from '../../../../core/store/auth/auth-state.model';
+import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
+import { AuthStateModel } from '../../../../core/models/auth-state.model';
 import { ButtonModule } from 'primeng/button';
 import { PasswordModule } from 'primeng/password';
 import { passwordValidator } from '../../../../shared/validators/password.validator';
@@ -21,8 +26,8 @@ import { jamGoogle } from '@ng-icons/jam-icons';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { OrDividerComponent } from '../../../../shared/components/or-divider/or-divider.component';
 import { ErrorComponent } from '../../../../shared/components/error/error.component';
-import {login, signup} from "../../../../core/store/auth/auth.actions";
-import {AuthService} from "../../../../core/services/auth/auth.service";
+import { signup } from '../../../../core/store/auth/auth.actions';
+import { AuthService } from '../../../../core/services/auth/auth.service';
 
 @Component({
   selector: 'app-signup-page',
@@ -44,16 +49,16 @@ import {AuthService} from "../../../../core/services/auth/auth.service";
   changeDetection: ChangeDetectionStrategy.OnPush,
   viewProviders: [provideIcons({ jamGoogle })]
 })
-export class SignupPageComponent {
+export class SignupPageComponent implements OnDestroy {
+  destroy$ = new Subject<boolean>();
+
   error$ = new BehaviorSubject<string>('');
+
   loading = false;
+
   form = new FormGroup({
     email: new FormControl('', {
-      validators: [
-        Validators.maxLength(64),
-        Validators.required,
-        Validators.email
-      ],
+      validators: [Validators.required, Validators.email],
       nonNullable: true
     }),
     password: new FormControl('', {
@@ -68,9 +73,13 @@ export class SignupPageComponent {
   });
 
   firebaseService = inject(FirebaseService);
+
   authService = inject(AuthService);
+
   router = inject(Router);
+
   store = inject(Store<{ auth: AuthStateModel }>);
+
   formUtils = inject(FormUtilsService);
 
   onSubmit() {
@@ -80,10 +89,8 @@ export class SignupPageComponent {
     } else {
       this.loading = true;
       this.firebaseService
-        .signupWithEmailAndPassword({
-          email: this.form.getRawValue().email,
-          password: this.form.getRawValue().password
-        })
+        .signupWithEmailAndPassword(this.form.getRawValue())
+        .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (data) => {
             this.loading = false;
@@ -102,17 +109,24 @@ export class SignupPageComponent {
   }
 
   signupGoogle() {
-    this.firebaseService.signupWithGoogle().subscribe({
-      next: (data) => {
-        const authState = this.authService.extractState(data);
-        this.store.dispatch(signup({ authState: authState }));
-        return this.router.navigate(['']);
-      },
-      error: (err) => {
-        this.error$.next(err.message);
-        this.form.markAsUntouched();
-        this.form.markAsPristine();
-      }
-    });
+    this.firebaseService
+      .signupWithGoogle()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (data) => {
+          const authState = this.authService.extractState(data);
+          this.store.dispatch(signup({ authState: authState }));
+          return this.router.navigate(['']);
+        },
+        error: (err) => {
+          this.error$.next(err.message);
+          this.form.markAsUntouched();
+          this.form.markAsPristine();
+        }
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
   }
 }

@@ -1,4 +1,4 @@
-@import './shared/styles/variables';
+
 app-header {
   position: fixed;
   width: 100%;
@@ -13,9 +13,7 @@ app-header {
   background-attachment: fixed;
 }
 
-
-
-@media (min-width: $desktop-min-width) {
+@media (min-width: 768px) {
   .main {
     padding: 2rem 0;
     margin-left: 1rem;

@@ -16,15 +16,19 @@ export class PostsService {
   createPost(body: CreatePostDto) {
     return this.http.post('posts', body);
   }
+
   deletePost(id: number) {
     return this.http.deleteByID<PostModel>('posts', id);
   }
+
   likePost(postId: number) {
     return this.http.post<PostLike>(`posts/likes/${postId}`);
   }
+
   dislikePost(postId: number) {
     return this.http.delete<PostLike>(`posts/likes/${postId}`);
   }
+
   getPost(id: number) {
     return this.http.getByID<PostModel>('posts', id);
   }
@@ -32,9 +36,11 @@ export class PostsService {
   commentPost(comment: CreateCommentDto) {
     return this.http.post<CommentModel>('comments', comment);
   }
+
   updatePost(post: UpdatePostDto, id: number) {
     return this.http.putByID('posts', post, id);
   }
+
   deleteComment(id: number) {
     return this.http.deleteByID<CommentModel>('comments', id);
   }

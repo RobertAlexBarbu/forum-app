@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpService } from '../http/http.service';
-import { AuthStateModel } from '../../store/auth/auth-state.model';
+import { AuthStateModel } from '../../models/auth-state.model';
 import { FirebaseTokenDto } from '../../../features/auth-feature/dto/firebase-token.dto';
 import { Roles } from '../../models/roles.enum';
 

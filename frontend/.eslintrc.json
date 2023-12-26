@@ -16,6 +16,7 @@
         "plugin:prettier/recommended"
       ],
       "rules": {
+        "lines-between-class-members": ["error", "always"],
         "@angular-eslint/directive-selector": [
           "error",
           {

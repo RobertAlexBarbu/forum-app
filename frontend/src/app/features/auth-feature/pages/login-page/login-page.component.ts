@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnDestroy
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormControl,
@@ -10,7 +15,7 @@ import {
 import { InputTextModule } from 'primeng/inputtext';
 import { Store } from '@ngrx/store';
 import { Router, RouterLink } from '@angular/router';
-import { BehaviorSubject, from } from 'rxjs';
+import { BehaviorSubject, from, Subject, takeUntil } from 'rxjs';
 import { ButtonModule } from 'primeng/button';
 import { PasswordModule } from 'primeng/password';
 import { FormUtilsService } from '../../../../core/services/form-utils/form-utils.service';
@@ -18,8 +23,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ErrorComponent } from '../../../../shared/components/error/error.component';
 import { FirebaseService } from '../../services/firebase/firebase.service';
 import { OrDividerComponent } from '../../../../shared/components/or-divider/or-divider.component';
-import {AuthService} from "../../../../core/services/auth/auth.service";
-import {login} from "../../../../core/store/auth/auth.actions";
+import { AuthService } from '../../../../core/services/auth/auth.service';
+import { login } from '../../../../core/store/auth/auth.actions';
 
 @Component({
   selector: 'app-login-page',
@@ -40,12 +45,16 @@ import {login} from "../../../../core/store/auth/auth.actions";
   styleUrls: ['./login-page.component.scss', '../auth.styles.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoginPageComponent {
+export class LoginPageComponent implements OnDestroy {
+  destroy$ = new Subject<boolean>();
+
   loading = false;
+
   error$ = new BehaviorSubject<string>('');
+
   form = new FormGroup({
     email: new FormControl('', {
-      validators: [Validators.required],
+      validators: [Validators.required, Validators.email],
       nonNullable: true
     }),
     password: new FormControl('', {
@@ -55,9 +64,13 @@ export class LoginPageComponent {
   });
 
   firebaseService = inject(FirebaseService);
+
   authService = inject(AuthService);
+
   formUtils = inject(FormUtilsService);
+
   router = inject(Router);
+
   store = inject(Store);
 
   onSubmit() {
@@ -67,38 +80,46 @@ export class LoginPageComponent {
     } else {
       this.loading = true;
       from(
-        this.firebaseService.loginWithEmailAndPassword({
-          email: this.form.getRawValue().email,
-          password: this.form.getRawValue().password
-        })
-      ).subscribe({
+        this.firebaseService.loginWithEmailAndPassword(this.form.getRawValue())
+      )
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (data) => {
+            const authState = this.authService.extractState(data);
+            this.store.dispatch(login({ authState: authState }));
+            this.loading = false;
+            return this.router.navigate(['']);
+          },
+          error: (err: Error) => {
+            this.error$.next(err.message);
+            this.loading = false;
+            this.form.markAsUntouched();
+            this.form.markAsPristine();
+          }
+        });
+    }
+  }
+
+  loginGoogle() {
+    this.error$.next('');
+    this.firebaseService
+      .loginWithGoogle()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
         next: (data) => {
           const authState = this.authService.extractState(data);
           this.store.dispatch(login({ authState: authState }));
-          this.loading = false;
           return this.router.navigate(['']);
         },
         error: (err: Error) => {
           this.error$.next(err.message);
-          this.loading = false;
           this.form.markAsUntouched();
           this.form.markAsPristine();
         }
       });
-    }
   }
-  loginGoogle() {
-    this.firebaseService.loginWithGoogle().subscribe({
-      next: (data) => {
-        const authState = this.authService.extractState(data);
-        this.store.dispatch(login({ authState: authState }));
-        return this.router.navigate(['']);
-      },
-      error: (err: Error) => {
-        this.error$.next(err.message);
-        this.form.markAsUntouched();
-        this.form.markAsPristine();
-      }
-    });
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
   }
 }

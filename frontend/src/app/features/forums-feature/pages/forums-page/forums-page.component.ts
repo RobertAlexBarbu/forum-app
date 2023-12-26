@@ -10,7 +10,6 @@ import { NgIcon, provideIcons } from '@ng-icons/core';
 import { jamPlus } from '@ng-icons/jam-icons';
 import { RouterLink } from '@angular/router';
 import { ModalComponent } from '../../../../shared/components/modal/modal.component';
-import { MenuComponent } from '../../../../core/components/menu/menu.component';
 import {
   FormControl,
   FormsModule,
@@ -19,11 +18,13 @@ import {
 } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule } from 'primeng/paginator';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { ForumsService } from '../../services/forums/forums.service';
 import { ForumComponent } from '../../components/forum/forum.component';
 import { ForumModel } from '../../models/forum.model';
-import { IsAdminDirective } from '../../../../shared/directives/is-admin.directive';
+import { AuthStateModel } from '../../../../core/models/auth-state.model';
+import { Store } from '@ngrx/store';
+import { isAdminPipe } from '../../../../shared/pipes/is-admin.pipe';
 
 @Component({
   selector: 'app-forums-page',
@@ -34,13 +35,12 @@ import { IsAdminDirective } from '../../../../shared/directives/is-admin.directi
     NgIcon,
     RouterLink,
     ModalComponent,
-    MenuComponent,
     FormsModule,
     InputTextModule,
     PaginatorModule,
     ReactiveFormsModule,
     ForumComponent,
-    IsAdminDirective
+    isAdminPipe
   ],
   templateUrl: './forums-page.component.html',
   styleUrls: ['./forums-page.component.scss'],
@@ -49,12 +49,21 @@ import { IsAdminDirective } from '../../../../shared/directives/is-admin.directi
 })
 export class ForumsPageComponent implements OnInit {
   addForumModal = false;
+
   deleteForumModal = false;
+
   forums: ForumModel[] = [];
+
   toBeDeletedForum: ForumModel | null = null;
+
   loading = false;
+
   error$ = new Subject<string>();
+
   forums$ = new Subject<ForumModel[]>();
+
+  authState$: Observable<AuthStateModel> = inject(Store).select('auth');
+
   forumsService = inject(ForumsService);
 
   addForumForm = new FormControl('', {

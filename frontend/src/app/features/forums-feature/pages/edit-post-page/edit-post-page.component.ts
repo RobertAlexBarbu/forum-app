@@ -40,9 +40,13 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 })
 export class EditPostPageComponent implements OnInit {
   forumsService = inject(ForumsService);
+
   postsService = inject(PostsService);
+
   route = inject(ActivatedRoute);
+
   router = inject(Router);
+
   formUtils = inject(FormUtilsService);
 
   ngOnInit() {
@@ -61,9 +65,13 @@ export class EditPostPageComponent implements OnInit {
       }
     });
   }
+
   ph = '';
+
   id = 0;
+
   forum$ = new Observable<ForumModel>();
+
   form = new FormGroup({
     category: new FormControl<number | null>(null, {}),
     title: new FormControl('', {

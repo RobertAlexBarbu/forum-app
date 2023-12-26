@@ -25,7 +25,7 @@ import { ButtonModule } from 'primeng/button';
 import { CommentComponent } from '../../components/comment/comment.component';
 import { PostModel } from '../../models/post.model';
 import { TooltipModule } from 'primeng/tooltip';
-import { IsAdminDirective } from '../../../../shared/directives/is-admin.directive';
+import { isAdminPipe } from '../../../../shared/pipes/is-admin.pipe';
 
 @Component({
   selector: 'app-post-page',
@@ -41,7 +41,7 @@ import { IsAdminDirective } from '../../../../shared/directives/is-admin.directi
     ButtonModule,
     CommentComponent,
     TooltipModule,
-    IsAdminDirective
+    isAdminPipe
   ],
   templateUrl: './post-page.component.html',
   styleUrls: ['./post-page.component.scss'],
@@ -58,8 +58,11 @@ import { IsAdminDirective } from '../../../../shared/directives/is-admin.directi
 })
 export class PostPageComponent implements OnInit {
   postsService = inject(PostsService);
+
   route = inject(ActivatedRoute);
+
   store = inject(Store);
+
   router = inject(Router);
 
   ngOnInit() {
@@ -89,13 +92,19 @@ export class PostPageComponent implements OnInit {
   }
 
   post!: PostModel;
+
   userId!: number;
+
   username!: string;
+
   liked = false;
+
   likes = 0;
 
-  store$ = this.store.select('auth');
+  authState$ = this.store.select('auth');
+
   post$ = new Subject<PostModel>();
+
   likes$ = new BehaviorSubject<number>(0);
 
   comment = new FormControl('', {
@@ -143,8 +152,7 @@ export class PostPageComponent implements OnInit {
         })
         .subscribe({
           next: (data) => {
-            data.user = { username: this.username,
-            id: this.userId};
+            data.user = { username: this.username, id: this.userId };
             this.comment.reset();
             if (Array.isArray(this.post?.comments) && this.post) {
               this.post?.comments.push(data);

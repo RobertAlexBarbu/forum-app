@@ -19,7 +19,8 @@ import { ButtonModule } from 'primeng/button';
 import { RouterLink } from '@angular/router';
 import { DockModule } from 'primeng/dock';
 import { TimeAgoPipe } from '../../../../shared/pipes/time-ago.pipe';
-import { IsAdminDirective } from '../../../../shared/directives/is-admin.directive';
+import { AuthStateModel } from '../../../../core/models/auth-state.model';
+import { isAdminPipe } from '../../../../shared/pipes/is-admin.pipe';
 
 @Component({
   selector: 'app-forum',
@@ -32,7 +33,7 @@ import { IsAdminDirective } from '../../../../shared/directives/is-admin.directi
     RouterLink,
     DockModule,
     TimeAgoPipe,
-    IsAdminDirective
+    isAdminPipe
   ],
   templateUrl: './forum.component.html',
   styleUrls: ['./forum.component.scss'],
@@ -48,7 +49,10 @@ import { IsAdminDirective } from '../../../../shared/directives/is-admin.directi
   ]
 })
 export class ForumComponent {
+  @Input() authState!: AuthStateModel;
+
   @Input() forum!: ForumModel;
+
   @Output() deleteForum = new EventEmitter<ForumModel>();
 
   delete() {

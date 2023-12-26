@@ -25,28 +25,30 @@ import { jamClose } from '@ng-icons/jam-icons';
 })
 export class ModalComponent {
   private _visible = false;
+
   renderer2 = inject(Renderer2);
+
   document = inject(DOCUMENT);
+
   elementRef = inject(ElementRef);
+
   @Output() isVisibleChange = new EventEmitter();
+
   @Input()
   set isVisible(value: boolean) {
-    // const menu = document.querySelector('.hamburger-menu1');
     const menu =
-      this.elementRef.nativeElement.querySelector('.hamburger-menu1');
+      this.elementRef.nativeElement.querySelector('.modal');
     if (value) {
-      // this.document.body.style.overflow = 'hidden';
       this.document.body.style.position = 'fixed';
       if (menu !== null) {
         (menu as HTMLElement).style.display = 'flex';
       }
-      this.renderer2.addClass(menu, 'hamburger-menu-active');
-      this.renderer2.removeClass(menu, 'hamburger-menu-closed');
+      this.renderer2.addClass(menu, 'modal-active');
+      this.renderer2.removeClass(menu, 'modal-closed');
     } else {
-      // this.document.body.style.overflow = '';
       this.document.body.style.position = 'static';
-      this.renderer2.addClass(menu, 'hamburger-menu-closed');
-      this.renderer2.removeClass(menu, 'hamburger-menu-active');
+      this.renderer2.addClass(menu, 'modal-closed');
+      this.renderer2.removeClass(menu, 'modal-active');
       setTimeout(() => {
         if (menu !== null) {
           (menu as HTMLElement).style.display = 'none';
@@ -56,8 +58,8 @@ export class ModalComponent {
     }
     this._visible = value;
   }
+
   closeMenu() {
-    console.log('closed');
     this.isVisible = false;
   }
 }

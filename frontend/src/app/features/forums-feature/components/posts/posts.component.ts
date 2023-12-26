@@ -14,6 +14,8 @@ import { PostComponent } from '../post/post.component';
 })
 export class PostsComponent {
   route = inject(ActivatedRoute);
+
   forumsService = inject(ForumsService);
+
   forum$ = this.forumsService.getForum(this.route.snapshot.params['id']);
 }
