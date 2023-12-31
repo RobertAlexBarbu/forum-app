@@ -22,7 +22,7 @@ export class PostsService {
   }
 
   likePost(postId: number) {
-    return this.http.post<PostLike>(`posts/likes/${postId}`);
+    return this.http.post<PostLike>(`posts/likes/${postId}`, {});
   }
 
   dislikePost(postId: number) {
@@ -34,7 +34,7 @@ export class PostsService {
   }
 
   commentPost(comment: CreateCommentDto) {
-    return this.http.post<CommentModel>('comments', comment);
+    return this.http.post<CommentModel, CreateCommentDto>('comments', comment);
   }
 
   updatePost(post: UpdatePostDto, id: number) {

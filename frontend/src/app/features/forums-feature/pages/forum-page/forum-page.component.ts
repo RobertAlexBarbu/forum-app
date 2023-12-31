@@ -7,10 +7,10 @@ import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { ForumsService } from '../../services/forums/forums.service';
 import { ForumsPageComponent } from '../forums-page/forums-page.component';
 import { PostComponent } from '../../components/post/post.component';
-import { PostsComponent } from '../../components/posts/posts.component';
+import { PostsPageComponent } from '../posts-page/posts-page.component';
 
 @Component({
-  selector: 'forum-page',
+  selector: 'app-forum-page',
   standalone: true,
   imports: [
     CommonModule,
@@ -19,7 +19,7 @@ import { PostsComponent } from '../../components/posts/posts.component';
     RouterLink,
     ForumsPageComponent,
     PostComponent,
-    PostsComponent,
+    PostsPageComponent,
     RouterOutlet
   ],
   templateUrl: './forum-page.component.html',

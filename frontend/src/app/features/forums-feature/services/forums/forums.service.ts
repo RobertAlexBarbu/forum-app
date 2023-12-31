@@ -15,7 +15,7 @@ export class ForumsService {
   http = inject(HttpService);
 
   createForum(forum: CreateForumDto) {
-    return this.http.post<ForumModel>('forums', forum).pipe(
+    return this.http.post<ForumModel, CreateForumDto>('forums', forum).pipe(
       catchError((error: HttpErrorResponse) => {
         return throwError(() => new Error('⚠ ' + error.statusText));
       })

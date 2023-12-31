@@ -1,9 +1,9 @@
 <div class="card" ontouchstart="" *ngIf="authState$ | async as authState">
   <div class="header">
-    <div class="title">Forum</div>
+    <div class="title">Forums</div>
     <button
       *ngIf="authState | isAdmin"
-      (click)="openForumModal()"
+      (click)="openAddModal()"
       pButton
       class="smaller p-button-text p-button-sm smaller">
       <ng-icon name="jamPlus"></ng-icon>
@@ -47,7 +47,7 @@
     <div class="double-submit">
       <button
         type="button"
-        (click)="closeForumModal()"
+        (click)="closeAddModal()"
         pButton
         class="p-button p-button-outlined">
         Cancel

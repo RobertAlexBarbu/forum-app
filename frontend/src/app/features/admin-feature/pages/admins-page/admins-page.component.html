@@ -1,7 +1,7 @@
 <div class="page">
-  <div class="title">
-    <div class="top-error">{{error$ | async}}</div>
-    <div class="p-inputgroup">
+  <div class="title mt-5">
+    <app-error [errorMessage]="error$ | async"></app-error>
+    <div class="p-inputgroup mt-1 mb-1">
       <input
         [formControl]="addAdminForm"
         id="category"

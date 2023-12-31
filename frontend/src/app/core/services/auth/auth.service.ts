@@ -11,14 +11,17 @@ export class AuthService {
   httpService = inject(HttpService);
 
   login(firebaseTokenDto: FirebaseTokenDto) {
-    return this.httpService.post<{ access: string }>(
+    return this.httpService.post<{ access: string }, FirebaseTokenDto>(
       'auth/login',
       firebaseTokenDto
     );
   }
 
   signup(firebaseTokenDto: FirebaseTokenDto) {
-    return this.httpService.post<{ access: string }>('users', firebaseTokenDto);
+    return this.httpService.post<{ access: string }, FirebaseTokenDto>(
+      'users',
+      firebaseTokenDto
+    );
   }
 
   logout() {
@@ -26,7 +29,7 @@ export class AuthService {
   }
 
   checkAuth() {
-    return this.httpService.post<AuthStateModel>('auth/check');
+    return this.httpService.post<AuthStateModel>('auth/check', {});
   }
 
   isAuth(state: AuthStateModel) {

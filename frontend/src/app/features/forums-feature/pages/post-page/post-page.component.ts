@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
+  OnDestroy,
   OnInit
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -17,15 +18,17 @@ import {
   jamTrashF
 } from '@ng-icons/jam-icons';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { PaginatorModule } from 'primeng/paginator';
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CommentComponent } from '../../components/comment/comment.component';
 import { PostModel } from '../../models/post.model';
 import { TooltipModule } from 'primeng/tooltip';
 import { isAdminPipe } from '../../../../shared/pipes/is-admin.pipe';
+import { LikeComponent } from '../../components/like/like.component';
+import { PostCommentsComponent } from '../../components/post-comments/post-comments.component';
 
 @Component({
   selector: 'app-post-page',
@@ -41,7 +44,9 @@ import { isAdminPipe } from '../../../../shared/pipes/is-admin.pipe';
     ButtonModule,
     CommentComponent,
     TooltipModule,
-    isAdminPipe
+    isAdminPipe,
+    LikeComponent,
+    PostCommentsComponent
   ],
   templateUrl: './post-page.component.html',
   styleUrls: ['./post-page.component.scss'],
@@ -56,110 +61,35 @@ import { isAdminPipe } from '../../../../shared/pipes/is-admin.pipe';
     })
   ]
 })
-export class PostPageComponent implements OnInit {
+export class PostPageComponent implements OnInit, OnDestroy {
   postsService = inject(PostsService);
 
   route = inject(ActivatedRoute);
 
-  store = inject(Store);
+  destroy$ = new Subject<boolean>();
 
   router = inject(Router);
 
+  authState$ = inject(Store).select('auth');
+
+  post$!: Observable<PostModel>;
+
   ngOnInit() {
-    this.postsService.getPost(this.route.snapshot.params['post']).subscribe({
-      next: (data) => {
-        this.post = data;
-        this.post$.next(data);
-        this.store.select('auth').subscribe({
-          next: (data) => {
-            this.userId = data.id;
-            this.username = data.username;
-            if (this.post) {
-              if (
-                this.post.postLikes.find((like) => {
-                  return like.user.id == this.userId;
-                })
-              ) {
-                this.liked = true;
-              }
-              this.likes = this.post.postLikes.length;
-              this.likes$.next(this.post.postLikes.length);
-            }
-          }
-        });
-      }
-    });
+    this.post$ = this.postsService.getPost(this.route.snapshot.params['post']);
   }
 
-  post!: PostModel;
-
-  userId!: number;
-
-  username!: string;
-
-  liked = false;
-
-  likes = 0;
-
-  authState$ = this.store.select('auth');
-
-  post$ = new Subject<PostModel>();
-
-  likes$ = new BehaviorSubject<number>(0);
-
-  comment = new FormControl('', {
-    nonNullable: true,
-    validators: [Validators.required]
-  });
-
-  likePost(id: number) {
-    this.postsService.likePost(id).subscribe();
-    this.likes += 1;
-    this.likes$.next(this.likes);
-    this.liked = true;
+  deletePost(post: PostModel) {
+    this.postsService
+      .deletePost(post.id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: () => {
+          return this.router.navigate(['forums', post.forum.id]);
+        }
+      });
   }
 
-  dislikePost(id: number) {
-    this.likes -= 1;
-    this.likes$.next(this.likes);
-    this.postsService.dislikePost(id).subscribe();
-    this.liked = false;
-  }
-
-  deletePost(id: number) {
-    console.log(id);
-    this.postsService.deletePost(id).subscribe({
-      next: () => {
-        return this.router.navigate(['forums', this.post.forum.id]);
-      }
-    });
-  }
-
-  deleteComment(id: number) {
-    this.postsService.deleteComment(id).subscribe({
-      next: () => {
-        window.location.reload();
-      }
-    });
-  }
-
-  onSubmit() {
-    if (this.comment.valid && this.post) {
-      this.postsService
-        .commentPost({
-          postId: this.post.id,
-          content: this.comment.getRawValue()
-        })
-        .subscribe({
-          next: (data) => {
-            data.user = { username: this.username, id: this.userId };
-            this.comment.reset();
-            if (Array.isArray(this.post?.comments) && this.post) {
-              this.post?.comments.push(data);
-              this.post$.next(this.post);
-            }
-          }
-        });
-    }
+  ngOnDestroy() {
+    this.destroy$.next(true);
   }
 }

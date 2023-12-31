@@ -15,7 +15,7 @@ import {
 import { InputTextModule } from 'primeng/inputtext';
 import { Router, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { AuthStateModel } from '../../../../core/models/auth-state.model';
 import { ButtonModule } from 'primeng/button';
 import { PasswordModule } from 'primeng/password';
@@ -52,7 +52,7 @@ import { AuthService } from '../../../../core/services/auth/auth.service';
 export class SignupPageComponent implements OnDestroy {
   destroy$ = new Subject<boolean>();
 
-  error$ = new BehaviorSubject<string>('');
+  error$: Subject<string> = new Subject<string>();
 
   loading = false;
 
@@ -86,26 +86,24 @@ export class SignupPageComponent implements OnDestroy {
     this.error$.next('');
     if (!this.form.valid) {
       this.formUtils.markGroupDirty(this.form);
-    } else {
-      this.loading = true;
-      this.firebaseService
-        .signupWithEmailAndPassword(this.form.getRawValue())
-        .pipe(takeUntil(this.destroy$))
-        .subscribe({
-          next: (data) => {
-            this.loading = false;
-            const authState = this.authService.extractState(data);
-            this.store.dispatch(signup({ authState: authState }));
-            return this.router.navigate(['']);
-          },
-          error: (err) => {
-            this.loading = false;
-            this.error$.next(err.message);
-            this.form.markAsUntouched();
-            this.form.markAsPristine();
-          }
-        });
+      return;
     }
+    this.loading = true;
+    this.firebaseService
+      .signupWithEmailAndPassword(this.form.getRawValue())
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (data) => {
+          const authState = this.authService.extractState(data);
+          this.store.dispatch(signup({ authState: authState }));
+          this.loading = false;
+          return this.router.navigate(['']);
+        },
+        error: (err) => {
+          this.formUtils.handleSubmitError(err, this.form, this.error$);
+          this.loading = false;
+        }
+      });
   }
 
   signupGoogle() {
@@ -119,9 +117,7 @@ export class SignupPageComponent implements OnDestroy {
           return this.router.navigate(['']);
         },
         error: (err) => {
-          this.error$.next(err.message);
-          this.form.markAsUntouched();
-          this.form.markAsPristine();
+          this.formUtils.handleSubmitError(err, this.form, this.error$);
         }
       });
   }

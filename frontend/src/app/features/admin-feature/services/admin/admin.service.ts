@@ -14,10 +14,13 @@ export class AdminService {
   }
 
   updateToAdmin(updateToAdminDto: UpdateToAdminDto) {
-    return this.http.post<UserModel>('users/admins', updateToAdminDto);
+    return this.http.post<UserModel, UpdateToAdminDto>(
+      'users/admins',
+      updateToAdminDto
+    );
   }
 
-  demoteAdmin(id: number) {
+  demoteAdmin(id: string) {
     return this.http.putByID<UserModel>('users/admins', {}, id);
   }
 }

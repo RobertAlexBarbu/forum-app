@@ -1,8 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -25,7 +21,6 @@ export class ErrorComponent {
       this.currentClass = 'reveal';
     } else if (value === '') {
       this.currentClass = '';
-
     }
   }
 

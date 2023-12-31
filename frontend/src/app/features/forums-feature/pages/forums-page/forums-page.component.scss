@@ -1,11 +1,16 @@
 .title {
-  font-size: 1.3rem;
-  font-weight: 700;
+  font-size: 1.1rem;
+  font-weight: 400;
+  display: flex;
+  column-gap: 0.5rem;
+  color: var(--text-gray);
 }
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid var(--border);
+  padding: 5px 0;
 }
 .card {
   max-width: 70rem;

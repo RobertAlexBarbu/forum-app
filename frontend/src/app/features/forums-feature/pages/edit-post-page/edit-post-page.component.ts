@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
+  OnDestroy,
   OnInit
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -9,7 +10,7 @@ import { ForumsService } from '../../services/forums/forums.service';
 import { PostsService } from '../../services/posts/posts.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormUtilsService } from '../../../../core/services/form-utils/form-utils.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { ForumModel } from '../../models/forum.model';
 import {
   FormControl,
@@ -21,6 +22,7 @@ import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ErrorComponent } from '../../../../shared/components/error/error.component';
 
 @Component({
   selector: 'app-edit-post-page',
@@ -32,13 +34,18 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     InputTextModule,
     InputTextareaModule,
     ReactiveFormsModule,
-    RouterLink
+    RouterLink,
+    ErrorComponent
   ],
   templateUrl: './edit-post-page.component.html',
   styleUrls: ['./edit-post-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EditPostPageComponent implements OnInit {
+export class EditPostPageComponent implements OnInit, OnDestroy {
+  destroy$ = new Subject<boolean>();
+
+  error$: Subject<string> = new Subject<string>();
+
   forumsService = inject(ForumsService);
 
   postsService = inject(PostsService);
@@ -48,25 +55,6 @@ export class EditPostPageComponent implements OnInit {
   router = inject(Router);
 
   formUtils = inject(FormUtilsService);
-
-  ngOnInit() {
-    this.forum$ = this.forumsService.getForum(this.route.snapshot.params['id']);
-    this.postsService.getPost(this.route.snapshot.params['post']).subscribe({
-      next: (data) => {
-        console.log(data);
-        if (data.category) {
-          this.form.get('category')?.setValue(data.category.id);
-        }
-
-        this.ph = 'Category';
-        this.id = data.id;
-        this.form.get('title')?.setValue(data.title);
-        this.form.get('content')?.setValue(data.content);
-      }
-    });
-  }
-
-  ph = '';
 
   id = 0;
 
@@ -84,7 +72,25 @@ export class EditPostPageComponent implements OnInit {
     })
   });
 
+  ngOnInit() {
+    this.forum$ = this.forumsService.getForum(this.route.snapshot.params['id']);
+    this.postsService
+      .getPost(this.route.snapshot.params['post'])
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (data) => {
+          if (data.category) {
+            this.form.get('category')?.setValue(data.category.id);
+          }
+          this.id = data.id;
+          this.form.get('title')?.setValue(data.title);
+          this.form.get('content')?.setValue(data.content);
+        }
+      });
+  }
+
   onSubmit() {
+    this.error$.next('');
     if (this.form.valid) {
       this.postsService
         .updatePost(
@@ -95,15 +101,23 @@ export class EditPostPageComponent implements OnInit {
           },
           this.id
         )
+        .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: () => {
             return this.router.navigate([`../../${this.id}`], {
               relativeTo: this.route
             });
+          },
+          error: (err) => {
+            this.formUtils.handleSubmitError(err, this.form, this.error$);
           }
         });
     } else {
       this.formUtils.markGroupDirty(this.form);
     }
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
   }
 }

@@ -23,7 +23,7 @@ export const authReducer = createReducer(
     id: authState.id,
     role: authState.role
   })),
-  on(AuthActions.logout, (state) => ({ ...initialAuthState })),
+  on(AuthActions.logout, () => ({ ...initialAuthState })),
   on(AuthActions.isAuth, (state, { authState }) => ({
     username: authState.username,
     email: authState.email,

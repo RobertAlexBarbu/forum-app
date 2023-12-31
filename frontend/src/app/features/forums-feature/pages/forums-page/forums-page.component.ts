@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
+  OnDestroy,
   OnInit
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -18,13 +19,14 @@ import {
 } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule } from 'primeng/paginator';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { ForumsService } from '../../services/forums/forums.service';
 import { ForumComponent } from '../../components/forum/forum.component';
 import { ForumModel } from '../../models/forum.model';
 import { AuthStateModel } from '../../../../core/models/auth-state.model';
 import { Store } from '@ngrx/store';
 import { isAdminPipe } from '../../../../shared/pipes/is-admin.pipe';
+import { FormUtilsService } from '../../../../core/services/form-utils/form-utils.service';
 
 @Component({
   selector: 'app-forums-page',
@@ -47,12 +49,12 @@ import { isAdminPipe } from '../../../../shared/pipes/is-admin.pipe';
   viewProviders: [provideIcons({ jamPlus })],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ForumsPageComponent implements OnInit {
+export class ForumsPageComponent implements OnInit, OnDestroy {
+  destroy$ = new Subject<boolean>();
+
   addForumModal = false;
 
   deleteForumModal = false;
-
-  forums: ForumModel[] = [];
 
   toBeDeletedForum: ForumModel | null = null;
 
@@ -61,6 +63,10 @@ export class ForumsPageComponent implements OnInit {
   error$ = new Subject<string>();
 
   forums$ = new Subject<ForumModel[]>();
+
+  forums: ForumModel[] = [];
+
+  formUtils = inject(FormUtilsService);
 
   authState$: Observable<AuthStateModel> = inject(Store).select('auth');
 
@@ -74,7 +80,7 @@ export class ForumsPageComponent implements OnInit {
   ngOnInit() {
     this.forumsService
       .getForums()
-      .pipe()
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (data) => {
           this.forums$.next(data);
@@ -84,73 +90,74 @@ export class ForumsPageComponent implements OnInit {
   }
 
   openDeleteModal(forum: ForumModel) {
+    this.error$.next('');
     this.toBeDeletedForum = forum;
     this.deleteForumModal = true;
-    this.error$.next('');
   }
 
   closeDeleteModal() {
     this.deleteForumModal = false;
   }
 
-  openForumModal() {
+  openAddModal() {
+    this.error$.next('');
     this.addForumForm.reset();
     this.addForumModal = true;
-    this.error$.next('');
   }
 
-  closeForumModal() {
+  closeAddModal() {
     this.addForumModal = false;
   }
 
   deleteForum() {
-    if (this.toBeDeletedForum) {
-      this.forumsService
-        .deleteForum(this.toBeDeletedForum.id)
-        .pipe()
-        .subscribe({
-          next: () => {
-            this.forums.splice(
-              this.forums.findIndex(
-                (forum) => forum.id === this.toBeDeletedForum!.id
-              ),
-              1
-            );
-            this.forums$.next(this.forums);
-            this.deleteForumModal = false;
-          },
-          error: (err) => {
-            err.next(err.message);
-          }
-        });
+    this.error$.next('');
+    const deletedForum = this.toBeDeletedForum;
+    if (!deletedForum) {
+      return;
     }
+    this.forumsService
+      .deleteForum(deletedForum.id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: () => {
+          this.forums.splice(
+            this.forums.findIndex((forum) => forum.id === deletedForum.id),
+            1
+          );
+          this.forums$.next(this.forums);
+          this.deleteForumModal = false;
+        },
+        error: (err) => {
+          err.next(err.message);
+        }
+      });
   }
 
   addForum() {
     this.error$.next('');
     if (!this.addForumForm.valid) {
       this.addForumForm.markAsDirty();
-    } else {
-      this.loading = true;
-      this.forumsService
-        .createForum({ name: this.addForumForm.value })
-        .pipe()
-        .subscribe({
-          next: (data) => {
-            this.error$.next('');
-            this.forums.push(data);
-            this.forums$.next(this.forums);
-            this.loading = false;
-            this.addForumModal = false;
-            window.location.reload();
-          },
-          error: (err) => {
-            this.error$.next(err.message);
-            this.loading = false;
-            this.addForumForm.markAsUntouched();
-            this.addForumForm.markAsPristine();
-          }
-        });
+      return;
     }
+    this.loading = true;
+    this.forumsService
+      .createForum({ name: this.addForumForm.value })
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (data) => {
+          this.forums.push(data);
+          this.forums$.next(this.forums);
+          this.loading = false;
+          this.addForumModal = false;
+        },
+        error: (err) => {
+          this.formUtils.handleSubmitError(err, this.addForumForm, this.error$);
+          this.loading = false;
+        }
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
   }
 }

@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { EnvironmentService } from '../environment/environment.service';
+import { JsonObject } from 'type-fest';
 
 @Injectable({
   providedIn: 'root'
@@ -22,15 +23,15 @@ export class HttpService {
 
   server = `${this.scheme}://${this.domain}:${this.port}`;
 
-  post<T>(url: string, body: any = {}) {
+  post<T, V = JsonObject>(url: string, body: V) {
     return this.http.post<T>(`${this.server}/${url}`, body, this.httpOptions);
   }
 
-  put<T>(url: string, body: any = {}) {
+  put<T, V = JsonObject>(url: string, body: V) {
     return this.http.put<T>(`${this.server}/${url}`, body, this.httpOptions);
   }
 
-  putByID<T>(url: string, body: any = {}, id: string | number) {
+  putByID<T, V = JsonObject>(url: string, body: V, id: string | number) {
     return this.http.put<T>(
       `${this.server}/${url}/${id}`,
       body,

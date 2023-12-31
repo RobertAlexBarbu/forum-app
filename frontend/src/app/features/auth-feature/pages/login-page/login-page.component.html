@@ -1,7 +1,9 @@
 <div class="card" ontouchstart="">
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <h2>Log in</h2>
+
     <app-error [errorMessage]="error$ | async"></app-error>
+
     <div class="input mt-4">
       <label for="email">Email</label>
       <input
@@ -86,7 +88,7 @@
     <div class="separator"></div>
     <div class="help">
       <div class="question">Don't have an account?</div>
-      <div class="link" routerLink="/signup">Sign up for Forumly</div>
+      <div class="link" routerLink="/auth/signup">Sign up for Forumly</div>
     </div>
   </form>
 </div>

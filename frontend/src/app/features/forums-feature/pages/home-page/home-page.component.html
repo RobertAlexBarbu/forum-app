@@ -4,7 +4,7 @@
       <div class="posts">
         <h3>Latest posts</h3>
         <ng-container *ngFor="let post of trending.latestPosts">
-          <app-post [post]="post"></app-post>
+          <app-post [authState]="authState" [post]="post"></app-post>
         </ng-container>
       </div>
       <div class="comments">

@@ -1,12 +1,13 @@
 <div class="card" ontouchstart="">
   <ng-container *ngIf="forum$ | async as forumWithCategories">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <h2>New post</h2>
+      <h2>Edit post</h2>
+      <app-error [errorMessage]="error$ | async"></app-error>
       <ng-container *ngIf="forumWithCategories.categories.length > 0">
         <div class="input">
           <label for="category">Category</label>
           <p-dropdown
-            [placeholder]="ph"
+            placeholder="Category"
             [showClear]="true"
             id="category"
             formControlName="category"

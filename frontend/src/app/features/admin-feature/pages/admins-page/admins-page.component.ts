@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnDestroy
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminService } from '../../services/admin/admin.service';
 import { AdminComponent } from '../../components/admin/admin.component';
@@ -11,10 +16,11 @@ import {
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { InputTextModule } from 'primeng/inputtext';
 import { ModalComponent } from '../../../../shared/components/modal/modal.component';
 import { PaginatorModule } from 'primeng/paginator';
+import { ErrorComponent } from '../../../../shared/components/error/error.component';
 
 @Component({
   selector: 'app-admins-page',
@@ -28,19 +34,22 @@ import { PaginatorModule } from 'primeng/paginator';
     InputTextModule,
     ModalComponent,
     PaginatorModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ErrorComponent
   ],
   templateUrl: './admins-page.component.html',
   styleUrls: ['./admins-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   viewProviders: [provideIcons({ jamPlus })]
 })
-export class AdminsPageComponent {
+export class AdminsPageComponent implements OnDestroy {
   adminService = inject(AdminService);
+
+  destroy$ = new Subject<boolean>();
 
   admins$ = this.adminService.findAdmins();
 
-  error$ = new Subject<string>();
+  error$: Subject<string> = new Subject<string>();
 
   addAdminForm = new FormControl('', {
     validators: Validators.required,
@@ -48,13 +57,15 @@ export class AdminsPageComponent {
   });
 
   addAdmin() {
+    this.error$.next('');
     if (this.addAdminForm.valid) {
       this.adminService
         .updateToAdmin({ username: this.addAdminForm.getRawValue() })
+        .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (data) => {
             if (data === null) {
-              this.error$.next('AppUser not found');
+              this.error$.next('User not found');
             } else {
               window.location.reload();
             }
@@ -65,11 +76,18 @@ export class AdminsPageComponent {
     }
   }
 
-  demoteAdmin(id: number) {
-    this.adminService.demoteAdmin(id).subscribe({
-      next: () => {
-        window.location.reload();
-      }
-    });
+  demoteAdmin(id: string) {
+    this.adminService
+      .demoteAdmin(id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: () => {
+          window.location.reload();
+        }
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
   }
 }

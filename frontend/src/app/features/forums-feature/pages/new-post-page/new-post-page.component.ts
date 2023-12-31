@@ -2,13 +2,14 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
+  OnDestroy,
   OnInit
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DropdownModule } from 'primeng/dropdown';
 import { ForumsService } from '../../services/forums/forums.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import {
   FormControl,
   FormGroup,
@@ -22,6 +23,7 @@ import { PostsService } from '../../services/posts/posts.service';
 import { FormUtilsService } from '../../../../core/services/form-utils/form-utils.service';
 import { ForumModel } from '../../models/forum.model';
 import { CategoryModel } from '../../models/category.model';
+import { ErrorComponent } from '../../../../shared/components/error/error.component';
 
 @Component({
   selector: 'app-new-post-page',
@@ -33,13 +35,18 @@ import { CategoryModel } from '../../models/category.model';
     ChipsModule,
     InputTextareaModule,
     ButtonModule,
-    RouterLink
+    RouterLink,
+    ErrorComponent
   ],
   templateUrl: './new-post-page.component.html',
   styleUrls: ['./new-post-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewPostPageComponent implements OnInit {
+export class NewPostPageComponent implements OnInit, OnDestroy {
+  destroy$ = new Subject<boolean>();
+
+  error$: Subject<string> = new Subject();
+
   forumsService = inject(ForumsService);
 
   postsService = inject(PostsService);
@@ -49,15 +56,6 @@ export class NewPostPageComponent implements OnInit {
   router = inject(Router);
 
   formUtils = inject(FormUtilsService);
-
-  ngOnInit() {
-    this.forum$ = this.forumsService.getForum(this.route.snapshot.params['id']);
-    this.forumsService.getForum(this.route.snapshot.params['id']).subscribe({
-      next: (data) => {
-        console.log(data);
-      }
-    });
-  }
 
   forum$ = new Observable<ForumModel>();
 
@@ -73,28 +71,42 @@ export class NewPostPageComponent implements OnInit {
     })
   });
 
+  ngOnInit() {
+    this.forum$ = this.forumsService.getForum(this.route.snapshot.params['id']);
+  }
+
   onSubmit() {
+    this.error$.next('');
     if (this.form.valid) {
-      let category_id: number | null = null;
-      if (this.form.controls['category'].getRawValue()) {
-        category_id = this.form.controls['category'].getRawValue()!.id;
+      let categoryId: number | null = null;
+      const category = this.form.controls['category'].getRawValue();
+      if (category) {
+        categoryId = category.id;
       }
       this.postsService
         .createPost({
           title: this.form.controls['title'].getRawValue(),
           content: this.form.controls['content'].getRawValue(),
           forumId: +this.route.snapshot.params['id'],
-          categoryId: category_id
+          categoryId: categoryId
         })
+        .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: () => {
             return this.router.navigate(['../'], {
               relativeTo: this.route
             });
+          },
+          error: (err) => {
+            this.formUtils.handleSubmitError(err, this.form, this.error$);
           }
         });
     } else {
       this.formUtils.markGroupDirty(this.form);
     }
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
   }
 }

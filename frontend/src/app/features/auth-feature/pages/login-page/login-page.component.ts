@@ -15,7 +15,7 @@ import {
 import { InputTextModule } from 'primeng/inputtext';
 import { Store } from '@ngrx/store';
 import { Router, RouterLink } from '@angular/router';
-import { BehaviorSubject, from, Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ButtonModule } from 'primeng/button';
 import { PasswordModule } from 'primeng/password';
 import { FormUtilsService } from '../../../../core/services/form-utils/form-utils.service';
@@ -50,7 +50,7 @@ export class LoginPageComponent implements OnDestroy {
 
   loading = false;
 
-  error$ = new BehaviorSubject<string>('');
+  error$: Subject<string> = new Subject<string>();
 
   form = new FormGroup({
     email: new FormControl('', {
@@ -77,27 +77,24 @@ export class LoginPageComponent implements OnDestroy {
     this.error$.next('');
     if (!this.form.valid) {
       this.formUtils.markGroupDirty(this.form);
-    } else {
-      this.loading = true;
-      from(
-        this.firebaseService.loginWithEmailAndPassword(this.form.getRawValue())
-      )
-        .pipe(takeUntil(this.destroy$))
-        .subscribe({
-          next: (data) => {
-            const authState = this.authService.extractState(data);
-            this.store.dispatch(login({ authState: authState }));
-            this.loading = false;
-            return this.router.navigate(['']);
-          },
-          error: (err: Error) => {
-            this.error$.next(err.message);
-            this.loading = false;
-            this.form.markAsUntouched();
-            this.form.markAsPristine();
-          }
-        });
+      return;
     }
+    this.loading = true;
+    this.firebaseService
+      .loginWithEmailAndPassword(this.form.getRawValue())
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (data) => {
+          const authState = this.authService.extractState(data);
+          this.store.dispatch(login({ authState: authState }));
+          this.loading = false;
+          return this.router.navigate(['']);
+        },
+        error: (err: Error) => {
+          this.formUtils.handleSubmitError(err, this.form, this.error$);
+          this.loading = false;
+        }
+      });
   }
 
   loginGoogle() {
@@ -112,9 +109,7 @@ export class LoginPageComponent implements OnDestroy {
           return this.router.navigate(['']);
         },
         error: (err: Error) => {
-          this.error$.next(err.message);
-          this.form.markAsUntouched();
-          this.form.markAsPristine();
+          this.formUtils.handleSubmitError(err, this.form, this.error$);
         }
       });
   }

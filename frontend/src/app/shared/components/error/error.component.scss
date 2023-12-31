@@ -1,10 +1,8 @@
 div{
   font-size: 0;
-  opacity: 0;
-  transition: font-size .25s, opacity .25s ease-in-out 0.25s;
+  transition: font-size .2s;
   color: var(--error)
 }
 div.reveal {
   font-size: 0.9rem;
-  opacity: 1;
 }

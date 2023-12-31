@@ -2,13 +2,14 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
+  OnDestroy,
   OnInit
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChartModule } from 'primeng/chart';
-import { ColorService } from '../../../../core/services/color/color.service';
+import { ColorService } from '../../services/color/color.service';
 import { ForumsService } from '../../../forums-feature/services/forums/forums.service';
-import { forkJoin, Observable, Subject, switchMap } from 'rxjs';
+import { forkJoin, Observable, Subject, switchMap, takeUntil } from 'rxjs';
 import { ForumModel } from '../../../forums-feature/models/forum.model';
 
 @Component({
@@ -19,7 +20,9 @@ import { ForumModel } from '../../../forums-feature/models/forum.model';
   styleUrls: ['./statistics-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class StatisticsPageComponent implements OnInit {
+export class StatisticsPageComponent implements OnInit, OnDestroy {
+  destroy$ = new Subject<boolean>();
+
   colorService = inject(ColorService);
 
   forumsService = inject(ForumsService);
@@ -79,7 +82,8 @@ export class StatisticsPageComponent implements OnInit {
             forumObservables.push(this.forumsService.getForum(forum.id));
           });
           return forkJoin(forumObservables);
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe({
         next: (data) => {
@@ -164,5 +168,9 @@ export class StatisticsPageComponent implements OnInit {
         }
       }
     };
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
   }
 }

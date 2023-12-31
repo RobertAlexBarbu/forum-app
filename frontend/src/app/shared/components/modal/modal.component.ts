@@ -36,8 +36,7 @@ export class ModalComponent {
 
   @Input()
   set isVisible(value: boolean) {
-    const menu =
-      this.elementRef.nativeElement.querySelector('.modal');
+    const menu = this.elementRef.nativeElement.querySelector('.modal');
     if (value) {
       this.document.body.style.position = 'fixed';
       if (menu !== null) {

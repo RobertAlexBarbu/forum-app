@@ -1,11 +1,10 @@
-<div class="separator"></div>
-<div class="card2">
-  <ng-container *ngIf="post$ | async as post1">
+<div class="mt-5">
+  <ng-container *ngIf="post$ | async as post">
     <ng-container *ngIf="authState$ | async as authState">
       <div class="post">
         <div class="buttons">
           <button
-            *ngIf="authState.id === post1.user.id"
+            *ngIf="authState.id === post.user.id"
             routerLink="/forums/{{post.forum.id}}/posts/edit/{{post.id}}"
             pButton
             class="p-button-sm nav p-button p-button-text"
@@ -13,10 +12,9 @@
             tooltipPosition="top">
             <ng-icon name="jamPencilF"></ng-icon>
           </button>
-
           <button
             *ngIf="authState | isAdmin"
-            (click)="deletePost(post1.id)"
+            (click)="deletePost(post)"
             pButton
             class="p-button-sm nav p-button p-button-danger p-button-text"
             tooltipPosition="top"
@@ -35,49 +33,11 @@
           <div>{{post.createdAt | timeAgo}}</div>
         </div>
         <div class="content">{{post.content}}</div>
-        <div *ngIf="!liked" class="likes clickable" (click)="likePost(post.id)">
-          <ng-container>
-            <ng-icon name="jamArrowSquareUp" size="1.2rem"></ng-icon>
-            {{likes$ | async}}
-          </ng-container>
-        </div>
-        <div
-          *ngIf="liked"
-          class="likes liked clickable"
-          (click)="dislikePost(post.id)">
-          <ng-container>
-            <ng-icon name="jamArrowSquareUpF" size="1.2rem"></ng-icon>
-            {{likes$ | async}}
-          </ng-container>
-        </div>
+        <app-like [authState]="authState" [post]="post"></app-like>
       </div>
-      <div class="separator"></div>
-      <div class="comments">
-        <ng-container *ngFor="let comment of post.comments">
-          <app-comment
-            [authState]="authState"
-            (delete)="deleteComment($event)"
-            [comment]="comment"></app-comment>
-        </ng-container>
-      </div>
+      <app-post-comments
+        [authState]="authState"
+        [post]="post"></app-post-comments>
     </ng-container>
-
-    <div class="create-comment">
-      <div class="mini-title">Comment</div>
-      <form (ngSubmit)="onSubmit()">
-        <div class="input">
-          <textarea
-            rows="3"
-            id="comment"
-            [formControl]="comment"
-            cols="30"
-            pInputTextarea
-            [autoResize]="true"></textarea>
-        </div>
-        <div class="btn-container">
-          <button pButton class="smaller p-button p-button-text">Post</button>
-        </div>
-      </form>
-    </div>
   </ng-container>
 </div>
