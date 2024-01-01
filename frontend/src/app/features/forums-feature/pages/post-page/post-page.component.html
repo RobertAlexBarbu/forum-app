@@ -28,7 +28,11 @@
           ><span class="title">{{post.title}}</span>
         </div>
         <div class="top">
-          <div>{{post.user.username}}</div>
+          <div
+            class="clickable"
+            [routerLink]="['/profile', post.user.username]">
+            {{post.user.username}}
+          </div>
           <div class="sphere"></div>
           <div>{{post.createdAt | timeAgo}}</div>
         </div>

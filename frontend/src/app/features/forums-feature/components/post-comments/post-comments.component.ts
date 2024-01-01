@@ -91,10 +91,7 @@ export class PostCommentsComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (data) => {
-            data.user = {
-              username: this.authState.username,
-              id: this.authState.id
-            };
+            data.user.username = this.authState.username;
             this.comment.reset();
             this.post.comments.push(data);
             this.comments$.next(this.post.comments);

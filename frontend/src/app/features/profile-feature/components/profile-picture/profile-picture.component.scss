@@ -1,0 +1,28 @@
+.profile-picture {
+  position: relative;
+  width: 8rem;
+}
+.skeleton {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 100%;
+  background-color: var(--border);
+  position: relative;
+  border: 2px solid var(--border);
+  box-sizing: content-box;
+}
+.profile-picture p-fileUpload {
+  border-radius: 100px;
+  position: absolute;
+  right: 0;
+  bottom: 0.2rem;
+  z-index: 3;
+}
+.profile-picture img {
+  width: 8rem;
+  position: absolute;
+  z-index: 2;
+  top: 2px;
+  left: 2px;
+  border-radius: 100%;
+}

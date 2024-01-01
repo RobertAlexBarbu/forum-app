@@ -19,6 +19,16 @@
     Forum
   </button>
   <button
+    *ngIf="authState | isAuth"
+    routerLinkActive="active-link"
+    pButton
+    class="p-button p-button-sm p-button-text"
+    [routerLink]="['/profile', authState.username]"
+    (click)="closeMenu()">
+    <ng-icon name="jamUser"></ng-icon>
+    Profile
+  </button>
+  <button
     *ngIf="authState | isAdmin"
     routerLinkActive="active-link"
     pButton

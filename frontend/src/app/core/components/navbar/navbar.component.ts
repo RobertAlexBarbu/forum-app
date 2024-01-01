@@ -17,7 +17,7 @@ import { isAdminPipe } from '../../../shared/pipes/is-admin.pipe';
 import { AuthStateModel } from '../../models/auth-state.model';
 import { ButtonModule } from 'primeng/button';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { jamHomeF, jamMessagesF, jamPieChartF } from '@ng-icons/jam-icons';
+import { jamHomeF, jamMessagesF, jamPieChartF, jamUser } from '@ng-icons/jam-icons';
 
 @Component({
   selector: 'app-navbar',
@@ -34,7 +34,7 @@ import { jamHomeF, jamMessagesF, jamPieChartF } from '@ng-icons/jam-icons';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  viewProviders: [provideIcons({ jamHomeF, jamMessagesF, jamPieChartF })]
+  viewProviders: [provideIcons({ jamHomeF, jamMessagesF, jamPieChartF, jamUser })]
 })
 export class NavbarComponent {
   @Input() authState!: AuthStateModel;

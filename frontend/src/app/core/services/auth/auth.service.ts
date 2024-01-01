@@ -40,6 +40,10 @@ export class AuthService {
     return state.role === Roles.Admin;
   }
 
+  isUser(state: AuthStateModel, id: string) {
+    return state.id === id;
+  }
+
   extractState(data: { access: string }): AuthStateModel {
     localStorage.setItem('access', data.access);
     const authState = JSON.parse(atob(data.access.split('.')[1]));

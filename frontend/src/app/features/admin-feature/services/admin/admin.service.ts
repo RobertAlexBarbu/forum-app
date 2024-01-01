@@ -3,9 +3,7 @@ import { HttpService } from '../../../../core/services/http/http.service';
 import { UserModel } from '../../../../core/models/user.model';
 import { UpdateToAdminDto } from '../../dto/update-to-admin.dto';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AdminService {
   http = inject(HttpService);
 

@@ -1,7 +1,9 @@
 <div class="comment">
   <div class="top">
     <ng-container *ngIf="comment.createdAt">
-      <div>{{comment.user.username}}</div>
+      <div class="clickable" [routerLink]="['/profile', comment.user.username]">
+        {{comment.user.username}}
+      </div>
       <div class="sphere"></div>
       <div>{{comment.createdAt | timeAgo}}</div>
     </ng-container>

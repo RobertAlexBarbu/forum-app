@@ -12,7 +12,7 @@ export class User {
   id!: string;
 
   @Property({nullable: true})
-  pictureUid?: string;
+  pictureId: string;
 
   @Property({ nullable: true })
   username!: string;

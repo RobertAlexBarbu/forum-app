@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
-import { EntityManager } from '@mikro-orm/core';
+import {EntityManager, serialize} from '@mikro-orm/core';
 import { Comment } from './entities/Comment';
 
 @Injectable()
@@ -16,7 +16,9 @@ export class CommentsService {
     });
     this.em.persist(post);
     await this.em.flush();
-    return post;
+    return serialize(post, {
+      forceObject: true
+    })
   }
 
   findAllByPost(id: number) {

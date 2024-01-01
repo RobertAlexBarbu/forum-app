@@ -29,6 +29,8 @@ import { AuthStateModel } from '../../../../core/models/auth-state.model';
   ]
 })
 export class PostComponent {
+  @Input() forum = false;
+
   @Input()
   post!: PostModel;
 

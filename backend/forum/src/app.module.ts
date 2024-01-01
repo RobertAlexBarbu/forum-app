@@ -16,6 +16,7 @@ import { PostsModule } from './modules/api/posts/posts.module';
 import { CommentsModule } from './modules/api/comments/comments.module';
 import { ConfigModule } from '@nestjs/config';
 import {FirebaseModule} from "./modules/global/firebase/firebase.module";
+import {ProfileModule} from "./modules/api/profile/profile.module";
 
 
 @Module({
@@ -32,6 +33,7 @@ import {FirebaseModule} from "./modules/global/firebase/firebase.module";
     AuthModule,
     ForumsModule,
     PostsModule,
+    ProfileModule,
     CommentsModule,
     FirebaseModule
   ],

@@ -6,6 +6,7 @@ import { NewPostPageComponent } from './pages/new-post-page/new-post-page.compon
 import { PostPageComponent } from './pages/post-page/post-page.component';
 import { PostsPageComponent } from './pages/posts-page/posts-page.component';
 import { EditPostPageComponent } from './pages/edit-post-page/edit-post-page.component';
+import {isAdminGuard} from "../../core/guards/is-admin.guard";
 
 export const forumsRoutes: Routes = [
   {
@@ -21,7 +22,7 @@ export const forumsRoutes: Routes = [
       },
       {
         path: 'edit/:id',
-        // canMatch: [isAdminGuard],
+        canMatch: [isAdminGuard],
         loadComponent: () =>
           import('./pages/edit-forum-page/edit-forum-page.component').then(
             (m) => m.EditForumPageComponent
