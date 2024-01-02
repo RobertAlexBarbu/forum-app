@@ -20,6 +20,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@emailjs/nodejs": "^2.2.0",
     "@mikro-orm/core": "^5.9.3",
     "@mikro-orm/entity-generator": "^5.9.3",
     "@mikro-orm/nestjs": "^5.2.2",
