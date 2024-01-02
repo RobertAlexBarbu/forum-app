@@ -1,7 +1,6 @@
 import {
   Collection,
   Entity,
-  ManyToOne,
   OneToMany,
   PrimaryKey,
   Property,
@@ -20,6 +19,10 @@ export class Forum {
   @OneToMany(() => Category, (category) => category.forum)
   categories? = new Collection<Category>(this);
 
-  @OneToMany(() => Post, (post) => post.forum)
+  @OneToMany({
+    entity: () => Post,
+    mappedBy: (post) => post.forum,
+    orderBy: { createdAt: 'desc' },
+  })
   posts? = new Collection<Post>(this);
 }

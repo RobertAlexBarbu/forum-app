@@ -15,16 +15,18 @@ import { Forum } from './modules/api/forums/entities/Forum';
 import { PostsModule } from './modules/api/posts/posts.module';
 import { CommentsModule } from './modules/api/comments/comments.module';
 import { ConfigModule } from '@nestjs/config';
-import {FirebaseModule} from "./modules/global/firebase/firebase.module";
-import {ProfileModule} from "./modules/api/profile/profile.module";
-
+import { FirebaseModule } from './modules/global/firebase/firebase.module';
+import { ProfileModule } from './modules/api/profile/profile.module';
+import { EmailModule } from './modules/global/email/email.module';
+import { PostLike } from './modules/api/posts/entities/PostLike';
+import { Comment } from './modules/api/comments/entities/Comment';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     MikroOrmModule.forRoot(
       defineConfig({
-        entities: [Post, User, Role, Category, Forum],
+        entities: [Post, PostLike, User, Role, Category, Forum, Comment],
         dbName: 'forum',
         forceUtcTimezone: true,
       }),
@@ -35,7 +37,8 @@ import {ProfileModule} from "./modules/api/profile/profile.module";
     PostsModule,
     ProfileModule,
     CommentsModule,
-    FirebaseModule
+    FirebaseModule,
+    EmailModule,
   ],
   controllers: [AppController],
   providers: [AppService, CryptoService],

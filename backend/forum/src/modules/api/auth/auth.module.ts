@@ -2,17 +2,17 @@ import {
   MiddlewareConsumer,
   Module,
   NestModule,
-  RequestMethod
+  RequestMethod,
 } from '@nestjs/common';
-import {AuthService} from './auth.service';
-import {AuthController} from './auth.controller';
-import {UsersModule} from '../users/users.module';
-import {CryptoService} from '../../global/crypto/crypto.service';
-import {JwtModule} from '@nestjs/jwt';
-import {PassportModule} from '@nestjs/passport';
-import {JwtStrategy} from './jwt.strategy';
-import {FirebaseMiddleware} from "../../global/firebase/firebase.middleware";
-import {ConfigModule} from "@nestjs/config";
+import { AuthService } from './auth.service';
+import { AuthController } from './auth.controller';
+import { UsersModule } from '../users/users.module';
+import { CryptoService } from '../../global/crypto/crypto.service';
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
+import { JwtStrategy } from './jwt.strategy';
+import { FirebaseMiddleware } from '../../../shared/middleware/firebase.middleware';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -27,11 +27,11 @@ import {ConfigModule} from "@nestjs/config";
   providers: [AuthService, CryptoService, JwtStrategy],
   controllers: [AuthController],
 })
-export class AuthModule implements NestModule{
+export class AuthModule implements NestModule {
   configure(consumer: MiddlewareConsumer): any {
     consumer.apply(FirebaseMiddleware).forRoutes({
       path: 'auth/login',
-      method: RequestMethod.POST
-    })
+      method: RequestMethod.POST,
+    });
   }
 }

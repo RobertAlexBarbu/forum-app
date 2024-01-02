@@ -3,20 +3,23 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { ForumsService } from './forums.service';
 import { CreateForumDto } from './dto/create-forum.dto';
 import { UpdateForumDto } from './dto/update-forum.dto';
+import { IsAdminGuard } from '../../../shared/guards/is-admin.guard';
+import { IsAuthGuard } from '../../../shared/guards/is-auth.guard';
 
 @Controller('forums')
 export class ForumsController {
   constructor(private readonly forumsService: ForumsService) {}
 
   @Post()
+  @UseGuards(IsAuthGuard, IsAdminGuard)
   create(@Body() createForumDto: CreateForumDto) {
     return this.forumsService.create(createForumDto);
   }
@@ -42,11 +45,13 @@ export class ForumsController {
   }
 
   @Put(':id')
+  @UseGuards(IsAuthGuard, IsAdminGuard)
   update(@Param('id') id: string, @Body() updateForumDto: UpdateForumDto) {
     return this.forumsService.update(+id, updateForumDto);
   }
 
   @Delete(':id')
+  @UseGuards(IsAuthGuard, IsAdminGuard)
   remove(@Param('id') id: string) {
     return this.forumsService.remove(+id);
   }

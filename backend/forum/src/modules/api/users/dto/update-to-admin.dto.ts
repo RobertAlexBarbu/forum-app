@@ -1,3 +1,3 @@
 export class UpdateToAdminDto {
-  username: string
+  username: string;
 }

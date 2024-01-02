@@ -87,7 +87,9 @@ export class PostCommentsComponent implements OnInit, OnDestroy {
         .commentPost({
           postId: this.post.id,
           content: this.comment.getRawValue(),
-          userEmail: this.post.user.email
+          userEmail: this.post.user.email,
+          postName: this.post.title,
+          username: this.post.user.username
         })
         .pipe(takeUntil(this.destroy$))
         .subscribe({

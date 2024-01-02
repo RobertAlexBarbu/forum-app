@@ -146,7 +146,15 @@ export class ForumsPageComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data) => {
           this.forums.push(data);
-          this.forums$.next(this.forums);
+          this.forums$.next(
+            this.forums.sort((a, b) => {
+              if (a.name.toLowerCase() > b.name.toLowerCase()) {
+                return 1;
+              } else {
+                return -1;
+              }
+            })
+          );
           this.loading = false;
           this.addForumModal = false;
         },

@@ -37,6 +37,10 @@ export class ForumsService {
     return this.http.getByID<ForumModel>('forums', id);
   }
 
+  getForumByName(name: string) {
+    return this.http.getByID<ForumModel>('forums', name);
+  }
+
   getForumForEdit(id: number) {
     return this.http.getByID<ForumModel>('forums/edit', id);
   }

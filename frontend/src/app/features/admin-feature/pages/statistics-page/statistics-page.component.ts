@@ -87,7 +87,6 @@ export class StatisticsPageComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (data) => {
-          console.log(data);
           data.forEach((forum: ForumModel) => {
             this.data.labels.push(forum.name);
             this.data2.labels.push(forum.name);
@@ -119,7 +118,6 @@ export class StatisticsPageComponent implements OnInit, OnDestroy {
 
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
-    console.log(textColor);
 
     this.options = {
       cutout: '30%',

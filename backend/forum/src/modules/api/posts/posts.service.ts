@@ -1,21 +1,19 @@
-import {Inject, Injectable} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
-import {EntityManager, PrimaryKey} from '@mikro-orm/core';
+import { EntityManager } from '@mikro-orm/core';
 import { Post } from './entities/Post';
 import { User } from '../users/entities/User';
-import {PostLike} from "./entities/PostLike";
-import {Category} from "../forums/entities/Category";
+import { PostLike } from './entities/PostLike';
+import { Category } from '../forums/entities/Category';
 
 @Injectable()
 export class PostsService {
-  constructor(private readonly em: EntityManager) {
-  }
+  constructor(private readonly em: EntityManager) {}
 
   // @Inject(EntityManager) private readonly em: EntityManager;
 
   async create(createPostDto: CreatePostDto, userId: string) {
-    console.log(userId);
     const user = this.em.getReference(User, userId);
     const post = this.em.create(Post, {
       user: user,
@@ -33,8 +31,11 @@ export class PostsService {
   async findAllByForum(id: number) {
     const posts = await this.em.find(
       Post,
-      {forum: id},
-      {populate: ['postLikes.user', 'category'], orderBy: {createdAt: 'desc'}},
+      { forum: id },
+      {
+        populate: ['postLikes.user', 'category'],
+        orderBy: { createdAt: 'desc' },
+      },
     );
     await this.em.populate(posts, ['comments'], {
       fields: ['comments.createdAt'],
@@ -44,33 +45,49 @@ export class PostsService {
 
   async findOne(id: number) {
     return await this.em.findOne(Post, id, {
-      populate: ['postLikes.user', 'comments.user', 'category', 'user', 'forum.categories'],
-      fields: ['user.username', 'comments', 'category', 'title', 'createdAt', 'content', 'postLikes', 'postLikes.user.id', 'postLikes.user.username', 'forum'],
+      populate: [
+        'postLikes.user',
+        'comments.user',
+        'category',
+        'user',
+        'forum.categories',
+      ],
+      fields: [
+        'user.username',
+        'user.email',
+        'comments',
+        'category',
+        'title',
+        'createdAt',
+        'content',
+        'postLikes',
+        'postLikes.user.id',
+        'postLikes.user.username',
+        'forum',
+      ],
     });
-
   }
 
   async likePost(id: number, userId: string) {
-    const like = this.em.create(PostLike, {post: id, user: userId});
+    const like = this.em.create(PostLike, { post: id, user: userId });
     this.em.persist(like);
     await this.em.flush();
     return like;
   }
 
   async dislikePost(id: number, userId: string) {
-    const like = await this.em.find(PostLike, {post:id, user: userId});
+    const like = await this.em.find(PostLike, { post: id, user: userId });
     this.em.remove(like);
     await this.em.flush();
-    return like
+    return like;
   }
 
   async update(id: number, updatePostDto: UpdatePostDto) {
-    console.log(updatePostDto.categoryId + ' - ' + id);
     const post = await this.em.findOne(Post, id);
-    if(updatePostDto.categoryId === null) {
+    if (updatePostDto.categoryId === null) {
       post.category = null;
     } else {
-      post.category = this.em.getReference(Category, updatePostDto.categoryId)
+      post.category = this.em.getReference(Category, updatePostDto.categoryId);
     }
 
     post.content = updatePostDto.content;
@@ -80,12 +97,10 @@ export class PostsService {
     return post;
   }
 
-
   async remove(id: number) {
     const post = this.em.getReference(Post, id);
     this.em.remove(post);
     await this.em.flush();
     return post;
   }
-
 }

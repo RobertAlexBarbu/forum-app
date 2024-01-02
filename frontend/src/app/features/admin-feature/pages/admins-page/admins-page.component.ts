@@ -2,7 +2,8 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
-  OnDestroy
+  OnDestroy,
+  OnInit
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminService } from '../../services/admin/admin.service';
@@ -16,11 +17,12 @@ import {
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
-import { Subject, takeUntil } from 'rxjs';
+import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { InputTextModule } from 'primeng/inputtext';
 import { ModalComponent } from '../../../../shared/components/modal/modal.component';
 import { PaginatorModule } from 'primeng/paginator';
 import { ErrorComponent } from '../../../../shared/components/error/error.component';
+import { UserModel } from '../../../../core/models/user.model';
 
 @Component({
   selector: 'app-admins-page',
@@ -42,12 +44,14 @@ import { ErrorComponent } from '../../../../shared/components/error/error.compon
   changeDetection: ChangeDetectionStrategy.OnPush,
   viewProviders: [provideIcons({ jamPlus })]
 })
-export class AdminsPageComponent implements OnDestroy {
+export class AdminsPageComponent implements OnDestroy, OnInit {
   adminService = inject(AdminService);
 
   destroy$ = new Subject<boolean>();
 
-  admins$ = this.adminService.findAdmins();
+  admins$ = new BehaviorSubject<UserModel[]>([]);
+
+  admins: UserModel[] = [];
 
   error$: Subject<string> = new Subject<string>();
 
@@ -55,6 +59,18 @@ export class AdminsPageComponent implements OnDestroy {
     validators: Validators.required,
     nonNullable: true
   });
+
+  ngOnInit() {
+    this.adminService
+      .findAdmins()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (data) => {
+          this.admins$.next(data);
+          this.admins = data;
+        }
+      });
+  }
 
   addAdmin() {
     this.error$.next('');
@@ -67,7 +83,16 @@ export class AdminsPageComponent implements OnDestroy {
             if (data === null) {
               this.error$.next('User not found');
             } else {
-              window.location.reload();
+              this.admins.push(data);
+              this.admins$.next(
+                this.admins.sort((a, b) => {
+                  if (a.username > b.username) {
+                    return 1;
+                  } else {
+                    return -1;
+                  }
+                })
+              );
             }
           }
         });
@@ -82,7 +107,13 @@ export class AdminsPageComponent implements OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {
-          window.location.reload();
+          this.admins.splice(
+            this.admins.findIndex((user) => {
+              return user.id === id;
+            }),
+            1
+          );
+          this.admins$.next(this.admins);
         }
       });
   }

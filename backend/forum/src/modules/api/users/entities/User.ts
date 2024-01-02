@@ -1,17 +1,12 @@
-import {
-  Entity,
-  ManyToOne,
-  PrimaryKey, PrimaryKeyType,
-  Property, Ref,
-} from '@mikro-orm/core';
+import { Entity, ManyToOne, PrimaryKey, Property } from '@mikro-orm/core';
 import { Role } from './Role';
 
-@Entity({tableName: "app_user"})
+@Entity({ tableName: 'app_user' })
 export class User {
   @PrimaryKey()
   id!: string;
 
-  @Property({nullable: true})
+  @Property({ nullable: true })
   pictureId: string;
 
   @Property({ nullable: true })
