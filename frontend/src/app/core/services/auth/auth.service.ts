@@ -11,22 +11,22 @@ export class AuthService {
   httpService = inject(HttpService);
 
   login(firebaseTokenDto: FirebaseTokenDto) {
-    return this.httpService.post<{ access: string }, FirebaseTokenDto>(
+    localStorage.setItem('access', firebaseTokenDto.firebaseToken);
+    return this.httpService.post<AuthStateModel, FirebaseTokenDto>(
       'auth/login',
       firebaseTokenDto
     );
   }
 
   signup(firebaseTokenDto: FirebaseTokenDto) {
-    return this.httpService.post<{ access: string }, FirebaseTokenDto>(
+    localStorage.setItem('access', firebaseTokenDto.firebaseToken);
+    return this.httpService.post<AuthStateModel, FirebaseTokenDto>(
       'users',
       firebaseTokenDto
     );
   }
 
-  logout() {
-    localStorage.removeItem('access');
-  }
+
 
   checkAuth() {
     return this.httpService.post<AuthStateModel>('auth/check', {});
@@ -44,14 +44,14 @@ export class AuthService {
     return state.id === id;
   }
 
-  extractState(data: { access: string }): AuthStateModel {
-    localStorage.setItem('access', data.access);
-    const authState = JSON.parse(atob(data.access.split('.')[1]));
-    return {
-      id: authState.sub,
-      username: authState.username,
-      email: authState.email,
-      role: authState.role.id
-    };
-  }
+  // extractState(data: { access: string }): AuthStateModel {
+  //   localStorage.setItem('access', data.access);
+  //   const authState = JSON.parse(atob(data.access.split('.')[1]));
+  //   return {
+  //     id: authState.sub,
+  //     username: authState.username,
+  //     email: authState.email,
+  //     role: authState.role.id
+  //   };
+  // }
 }

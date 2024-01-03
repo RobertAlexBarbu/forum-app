@@ -2,8 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
-  OnDestroy,
-  OnInit
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
@@ -13,11 +11,11 @@ import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { ForumsService } from '../../services/forums/forums.service';
 import { ForumsPageComponent } from '../forums-page/forums-page.component';
 import { PostComponent } from '../../components/post/post.component';
-import { PostsPageComponent } from './pages/posts-page/posts-page.component';
+import { PostsPageComponent } from '../posts-page/posts-page.component';
 import { Store } from '@ngrx/store';
 import { isAuthPipe } from '../../../../shared/pipes/is-auth.pipe';
 import { ForumModel } from '../../models/forum.model';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-forum-page',
@@ -38,29 +36,16 @@ import { Subject, takeUntil } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
   viewProviders: [provideIcons({ jamPlus })]
 })
-export class ForumPageComponent implements OnInit, OnDestroy {
+export class ForumPageComponent {
   destroy$ = new Subject<boolean>();
 
   route = inject(ActivatedRoute);
 
-  forumsService = inject(ForumsService);
+  forum$ = inject(ForumsService).getForum(this.route.snapshot.params['id']);
 
   forum!: ForumModel;
 
   authState$ = inject(Store).select('auth');
 
-  ngOnInit() {
-    this.forumsService
-      .getForum(this.route.snapshot.params['id'])
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (data) => {
-          this.forum = data;
-        }
-      });
-  }
 
-  ngOnDestroy() {
-    this.destroy$.next(true);
-  }
 }

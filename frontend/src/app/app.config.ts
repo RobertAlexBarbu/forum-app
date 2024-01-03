@@ -2,7 +2,8 @@ import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import {
   InMemoryScrollingOptions,
   provideRouter,
-  withInMemoryScrolling
+  withInMemoryScrolling,
+  withRouterConfig
 } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -15,6 +16,8 @@ import { jwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { AngularFireModule } from '@angular/fire/compat';
 import { errorInterceptor } from './core/interceptors/error.interceptor';
+import { provideStoreDevtools } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 
 const scrollConfig: InMemoryScrollingOptions = {
   scrollPositionRestoration: 'top',
@@ -23,13 +26,23 @@ const scrollConfig: InMemoryScrollingOptions = {
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes, withInMemoryScrolling(scrollConfig)),
+    provideRouter(
+      routes,
+      withInMemoryScrolling(scrollConfig),
+      withRouterConfig({
+        onSameUrlNavigation: 'reload'
+      })
+    ),
     provideHttpClient(withInterceptors([jwtInterceptor, errorInterceptor])),
     provideNgIconsConfig({ size: '1rem' }),
     provideStore(),
     provideState({
       name: 'auth',
       reducer: authReducer
+    }),
+    provideStoreDevtools({
+      maxAge: 25, // Retains last 25 states
+      logOnly: environment['production'] as boolean // Restrict extension to log-only mode
     }),
     provideAnimations(),
     importProvidersFrom(

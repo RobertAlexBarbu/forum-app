@@ -20,6 +20,8 @@ import { ProfileModule } from './modules/api/profile/profile.module';
 import { EmailModule } from './modules/global/email/email.module';
 import { PostLike } from './modules/api/posts/entities/PostLike';
 import { Comment } from './modules/api/comments/entities/Comment';
+import * as process from "process";
+
 
 @Module({
   imports: [
@@ -27,7 +29,7 @@ import { Comment } from './modules/api/comments/entities/Comment';
     MikroOrmModule.forRoot(
       defineConfig({
         entities: [Post, PostLike, User, Role, Category, Forum, Comment],
-        dbName: 'forum',
+        clientUrl: process.env.DATABASE_URL,
         forceUtcTimezone: true,
       }),
     ),

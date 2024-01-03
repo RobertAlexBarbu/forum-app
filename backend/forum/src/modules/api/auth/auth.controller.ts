@@ -1,6 +1,6 @@
 import { Controller, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { IsAuthGuard } from '../../../shared/guards/is-auth.guard';
+import {FirebaseGuard} from "../../../shared/guards/firebase.guard";
 
 @Controller('auth')
 export class AuthController {
@@ -12,7 +12,7 @@ export class AuthController {
   }
 
   @Post('check')
-  @UseGuards(IsAuthGuard)
+  @UseGuards(FirebaseGuard)
   async check(@Req() req) {
     return req.user;
   }

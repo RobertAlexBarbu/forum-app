@@ -1,16 +1,14 @@
-import { ConflictException, Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { EntityManager, wrap } from '@mikro-orm/core';
-import { User } from './entities/User';
-import { JwtService } from '@nestjs/jwt';
-import { UpdateToAdminDto } from './dto/update-to-admin.dto';
-import { Role } from './entities/Role';
+import {ConflictException, Injectable} from '@nestjs/common';
+import {CreateUserDto} from './dto/create-user.dto';
+import {EntityManager, wrap} from '@mikro-orm/core';
+import {User} from './entities/User';
+import {UpdateToAdminDto} from './dto/update-to-admin.dto';
+import {Role} from './entities/Role';
 
 @Injectable()
 export class UsersService {
   constructor(
     private readonly em: EntityManager,
-    private readonly jwtService: JwtService,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
@@ -21,7 +19,8 @@ export class UsersService {
         description: 'Some error description',
       });
     }
-    const username = createUserDto.email.split('@')[0];
+    const count = await this.em.getRepository(User).count();
+    const username = createUserDto.email.split('@')[0] + count;
     const user = this.em.create(User, {
       id: createUserDto.id,
       email: createUserDto.email,
@@ -29,16 +28,12 @@ export class UsersService {
       role: 1,
     });
     await this.em.persist(user).flush();
-    const access = this.jwtService.sign(
-      {
-        sub: user.id,
-        email: user.email,
-        username: user.username,
-        role: user.role,
-      },
-      { secret: process.env.SECRET },
-    );
-    return { access: access };
+    return {
+      id: user.id,
+      role: user.role.id,
+      username: user.username,
+      email: user.email
+    };
   }
 
   findAll() {
@@ -74,8 +69,7 @@ export class UsersService {
     if (user === null) {
       return null;
     }
-    const ro = this.em.getReference(Role, 2, { wrapped: true });
-    user.role = ro;
+    user.role = this.em.getReference(Role, 2, {wrapped: true});
     await this.em.flush();
     return user;
   }

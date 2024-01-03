@@ -6,9 +6,9 @@ import {
   OnInit
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PostsService } from '../../../../services/posts/posts.service';
+import { PostsService } from '../../services/posts/posts.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { TimeAgoPipe } from '../../../../../../shared/pipes/time-ago.pipe';
+import { TimeAgoPipe } from '../../../../shared/pipes/time-ago.pipe';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
   jamArrowSquareUp,
@@ -23,12 +23,12 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { PaginatorModule } from 'primeng/paginator';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
-import { CommentComponent } from '../../../../components/comment/comment.component';
-import { PostModel } from '../../../../models/post.model';
+import { CommentComponent } from '../../components/comment/comment.component';
+import { PostModel } from '../../models/post.model';
 import { TooltipModule } from 'primeng/tooltip';
-import { isAdminPipe } from '../../../../../../shared/pipes/is-admin.pipe';
-import { LikeComponent } from '../../../../components/like/like.component';
-import { PostCommentsComponent } from '../../../../components/post-comments/post-comments.component';
+import { isAdminPipe } from '../../../../shared/pipes/is-admin.pipe';
+import { LikeComponent } from '../../components/like/like.component';
+import { PostCommentsComponent } from '../../components/post-comments/post-comments.component';
 
 @Component({
   selector: 'app-post-page',

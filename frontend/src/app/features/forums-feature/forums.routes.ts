@@ -2,8 +2,8 @@ import { Routes } from '@angular/router';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { ForumsPageComponent } from './pages/forums-page/forums-page.component';
 import { ForumPageComponent } from './pages/forum-page/forum-page.component';
-import { PostPageComponent } from './pages/forum-page/pages/post-page/post-page.component';
-import { PostsPageComponent } from './pages/forum-page/pages/posts-page/posts-page.component';
+import { PostPageComponent } from './pages/post-page/post-page.component';
+import { PostsPageComponent } from './pages/posts-page/posts-page.component';
 import { isAdminGuard } from '../../core/guards/is-admin.guard';
 import { isAuthGuard } from '../../core/guards/is-auth.guard';
 

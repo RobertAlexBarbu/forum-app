@@ -128,7 +128,7 @@ export class ForumsPageComponent implements OnInit, OnDestroy {
           this.deleteForumModal = false;
         },
         error: (err) => {
-          err.next(err.message);
+          this.error$.next(err.message);
         }
       });
   }

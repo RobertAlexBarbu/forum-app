@@ -9,9 +9,9 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { IsAuthGuard } from '../../../shared/guards/is-auth.guard';
 import { UpdateToAdminDto } from './dto/update-to-admin.dto';
 import { IsAdminGuard } from '../../../shared/guards/is-admin.guard';
+import {FirebaseGuard} from "../../../shared/guards/firebase.guard";
 
 @Controller('users')
 export class UsersController {
@@ -28,18 +28,18 @@ export class UsersController {
   }
 
   @Get('admins')
-  @UseGuards(IsAuthGuard, IsAdminGuard)
+  @UseGuards(FirebaseGuard, IsAdminGuard)
   findAllAdmins() {
     return this.usersService.findAllAdmins();
   }
 
   @Post('admins')
-  @UseGuards(IsAuthGuard, IsAdminGuard)
+  @UseGuards(FirebaseGuard, IsAdminGuard)
   updateToAdmin(@Body() updateToAdminDto: UpdateToAdminDto) {
     return this.usersService.updateToAdmin(updateToAdminDto);
   }
   @Put('admins/:id')
-  @UseGuards(IsAuthGuard, IsAdminGuard)
+  @UseGuards(FirebaseGuard, IsAdminGuard)
   demoteAdmin(@Param('id') id: string) {
     return this.usersService.demoteAdmin(id);
   }

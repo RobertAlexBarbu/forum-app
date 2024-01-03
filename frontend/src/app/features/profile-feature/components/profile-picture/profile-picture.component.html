@@ -17,7 +17,7 @@
   </ng-container>
 
   <p-fileUpload
-    *ngIf="authState | isUser:user.id"
+
     [customUpload]="true"
     mode="basic"
     [chooseIcon]="'pi pi-camera p-button-rounded'"
@@ -29,3 +29,4 @@
     [maxFileSize]="1000000">
   </p-fileUpload>
 </div>
+<!--*ngIf="authState | isUser:user.id"-->

@@ -6,8 +6,6 @@ export class User {
   @PrimaryKey()
   id!: string;
 
-  @Property({ nullable: true })
-  pictureId: string;
 
   @Property({ nullable: true })
   username!: string;

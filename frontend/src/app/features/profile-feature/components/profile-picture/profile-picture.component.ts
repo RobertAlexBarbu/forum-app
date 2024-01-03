@@ -46,11 +46,9 @@ export class ProfilePictureComponent implements OnInit, OnDestroy {
 
   onUpload(event: FileUploadHandlerEvent) {
     for (const file of event.files) {
-      this.profileService
-        .uploadProfilePicture(file, this.user.id + '.jpg')
-        .then(() => {
-          this.profilePictureUrl$.next(URL.createObjectURL(file));
-        });
+      this.profileService.uploadProfilePicture(file, this.user.id).then(() => {
+        this.profilePictureUrl$.next(URL.createObjectURL(file));
+      });
     }
   }
 

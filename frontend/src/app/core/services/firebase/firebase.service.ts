@@ -1,15 +1,17 @@
 import { inject, Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { FirebaseAuthDto } from '../../dto/firebase-auth.dto';
+import { FirebaseAuthDto } from '../../../features/auth-feature/dto/firebase-auth.dto';
 import { catchError, from, switchMap, throwError } from 'rxjs';
-import { AuthService } from '../../../../core/services/auth/auth.service';
+import { AuthService } from '../auth/auth.service';
 import firebase from 'firebase/compat/app';
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 import AuthProvider = firebase.auth.AuthProvider;
-import { ErrorService } from '../../../../core/services/error/error.service';
+import { ErrorService } from '../error/error.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class FirebaseService {
   errorService = inject(ErrorService);
 
@@ -83,6 +85,7 @@ export class FirebaseService {
     const currentUser = firebaseUserData.user;
     if (currentUser) {
       const token = currentUser.getIdToken();
+
       return from(token).pipe(
         switchMap((token) => {
           return this.authService.signup({ firebaseToken: token });
@@ -108,4 +111,15 @@ export class FirebaseService {
       return throwError(() => new Error('Firebase signup failed'));
     }
   };
+
+  logout() {
+    this.firebaseAuthService
+      .signOut()
+      .then(() => {
+        localStorage.removeItem('access');
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
 }

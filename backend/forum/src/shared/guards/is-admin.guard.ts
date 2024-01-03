@@ -7,6 +7,6 @@ export class IsAdminGuard implements CanActivate {
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const req = context.switchToHttp().getRequest();
-    return req.user.role === 2;
+    return req.user.role.id === 2;
   }
 }

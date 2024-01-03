@@ -14,6 +14,7 @@ import { isAuth } from './core/store/auth/auth.actions';
 import { HeaderComponent } from './core/components/header/header.component';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { AuthStateModel } from './core/models/auth-state.model';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
   selector: 'app-root',
@@ -38,7 +39,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
   router = inject(Router);
 
+  af = inject(AngularFireAuth);
+
   ngOnInit() {
+    this.af.onAuthStateChanged((user) => {
+      console.log(user);
+    });
     this.authState$ = this.store.select('auth');
     this.authService
       .checkAuth()
@@ -46,6 +52,7 @@ export class AppComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data) => {
           this.check$.next(true);
+          console.log(data);
           this.store.dispatch(isAuth({ authState: data }));
         },
         error: () => {

@@ -19,7 +19,6 @@ SET default_table_access_method = heap;
 
 CREATE TABLE public.app_user (
     id character varying(64) NOT NULL,
-    picture_id character varying(64),
     username character varying(64),
     email character varying(64),
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,

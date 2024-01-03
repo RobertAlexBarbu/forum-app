@@ -10,14 +10,19 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { AuthService } from '../../services/auth/auth.service';
 import { logout } from '../../store/auth/auth.actions';
 import { isAuthPipe } from '../../../shared/pipes/is-auth.pipe';
 import { isAdminPipe } from '../../../shared/pipes/is-admin.pipe';
 import { AuthStateModel } from '../../models/auth-state.model';
 import { ButtonModule } from 'primeng/button';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { jamHomeF, jamMessagesF, jamPieChartF, jamUser } from '@ng-icons/jam-icons';
+import {
+  jamHomeF,
+  jamMessagesF,
+  jamPieChartF,
+  jamUser
+} from '@ng-icons/jam-icons';
+import {FirebaseService} from "../../services/firebase/firebase.service";
 
 @Component({
   selector: 'app-navbar',
@@ -34,7 +39,9 @@ import { jamHomeF, jamMessagesF, jamPieChartF, jamUser } from '@ng-icons/jam-ico
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  viewProviders: [provideIcons({ jamHomeF, jamMessagesF, jamPieChartF, jamUser })]
+  viewProviders: [
+    provideIcons({ jamHomeF, jamMessagesF, jamPieChartF, jamUser })
+  ]
 })
 export class NavbarComponent {
   @Input() authState!: AuthStateModel;
@@ -43,7 +50,7 @@ export class NavbarComponent {
 
   store = inject(Store<AuthStateModel>);
 
-  authService = inject(AuthService);
+  firebase = inject(FirebaseService);
 
   router = inject(Router);
 
@@ -52,7 +59,7 @@ export class NavbarComponent {
   }
 
   logout() {
-    this.authService.logout();
+    this.firebase.logout();
     this.store.dispatch(logout());
     return this.router.navigate(['']);
   }

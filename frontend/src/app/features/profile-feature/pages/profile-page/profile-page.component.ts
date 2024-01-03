@@ -2,15 +2,14 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
+  OnDestroy,
   OnInit
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProfileService } from '../../services/profile/profile.service';
 import { ActivatedRoute } from '@angular/router';
-import {
-  FileUploadModule
-} from 'primeng/fileupload';
-import { Observable } from 'rxjs';
+import { FileUploadModule } from 'primeng/fileupload';
+import { BehaviorSubject, Observable, Subject, takeUntil } from 'rxjs';
 import { ProfileModel } from '../../models/profile.model';
 import { PostComponent } from '../../../forums-feature/components/post/post.component';
 import { Store } from '@ngrx/store';
@@ -38,19 +37,31 @@ import { ProfilePictureComponent } from '../../components/profile-picture/profil
   changeDetection: ChangeDetectionStrategy.OnPush,
   viewProviders: [provideIcons({ jamCameraF })]
 })
-export class ProfilePageComponent implements OnInit {
+export class ProfilePageComponent implements OnInit, OnDestroy {
+  destroy$ = new Subject<boolean>();
+
   profileService = inject(ProfileService);
 
   route = inject(ActivatedRoute);
 
-  profile$!: Observable<ProfileModel>;
+  profileSubject$: BehaviorSubject<Observable<ProfileModel>> =
+    new BehaviorSubject<Observable<ProfileModel>>(
+      this.profileService.getProfile(this.route.snapshot.params['username'])
+    );
 
   authState$: Observable<AuthStateModel> = inject(Store).select('auth');
 
-
   ngOnInit() {
-    this.profile$ = this.profileService.getProfile(
-      this.route.snapshot.params['username']
-    );
+    this.route.params.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (params) => {
+        this.profileSubject$.next(
+          this.profileService.getProfile(params['username'])
+        );
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
   }
 }

@@ -8,9 +8,7 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { UsersModule } from '../users/users.module';
 import { CryptoService } from '../../global/crypto/crypto.service';
-import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
-import { JwtStrategy } from './jwt.strategy';
 import { FirebaseMiddleware } from '../../../shared/middleware/firebase.middleware';
 import { ConfigModule } from '@nestjs/config';
 
@@ -18,13 +16,9 @@ import { ConfigModule } from '@nestjs/config';
   imports: [
     UsersModule,
     ConfigModule,
-    JwtModule.register({
-      global: true,
-      signOptions: { expiresIn: '36000s' },
-    }),
     PassportModule,
   ],
-  providers: [AuthService, CryptoService, JwtStrategy],
+  providers: [AuthService, CryptoService],
   controllers: [AuthController],
 })
 export class AuthModule implements NestModule {
