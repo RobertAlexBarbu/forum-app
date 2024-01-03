@@ -17,16 +17,22 @@ export class ProfileService {
   }
 
   uploadProfilePicture(file: File, name: string) {
-    return this.storage.uploadFile(`profile`, name, file);
+    return this.storage.uploadFile(
+      `profile/users/${name}`,
+      'profile.jpg',
+      file
+    );
   }
 
   getProfilePictureURL(name: string) {
-    return this.storage.getDownloadFileURL('profile', name).pipe(
-      catchError(() => {
-        return this.storage
-          .getFileReference('profile', 'default.webp')
-          .getDownloadURL();
-      })
-    );
+    return this.storage
+      .getDownloadFileURL(`profile/users/${name}`, 'profile.jpg')
+      .pipe(
+        catchError(() => {
+          return this.storage
+            .getFileReference('profile', 'default.webp')
+            .getDownloadURL();
+        })
+      );
   }
 }

@@ -35,7 +35,7 @@ export class ProfilePictureComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.profileService
-      .getProfilePictureURL(this.user.id + '.jpg')
+      .getProfilePictureURL(this.user.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (url) => {

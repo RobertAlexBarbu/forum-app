@@ -44,14 +44,4 @@ export class AuthService {
     return state.id === id;
   }
 
-  // extractState(data: { access: string }): AuthStateModel {
-  //   localStorage.setItem('access', data.access);
-  //   const authState = JSON.parse(atob(data.access.split('.')[1]));
-  //   return {
-  //     id: authState.sub,
-  //     username: authState.username,
-  //     email: authState.email,
-  //     role: authState.role.id
-  //   };
-  // }
 }
