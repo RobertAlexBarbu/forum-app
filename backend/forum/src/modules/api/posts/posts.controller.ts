@@ -16,7 +16,7 @@ import { IsAdminGuard } from '../../../shared/guards/is-admin.guard';
 import {CanEditPostGuard} from "../../../shared/guards/can-edit-post.guard";
 import {FirebaseGuard} from "../../../shared/guards/firebase.guard";
 
-@Controller('posts')
+@Controller('api/posts')
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 

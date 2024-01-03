@@ -14,7 +14,7 @@ import { UpdateForumDto } from './dto/update-forum.dto';
 import { IsAdminGuard } from '../../../shared/guards/is-admin.guard';
 import {FirebaseGuard} from "../../../shared/guards/firebase.guard";
 
-@Controller('forums')
+@Controller('api/forums')
 export class ForumsController {
   constructor(private readonly forumsService: ForumsService) {}
 

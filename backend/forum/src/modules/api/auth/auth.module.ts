@@ -8,7 +8,6 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { UsersModule } from '../users/users.module';
 import { CryptoService } from '../../global/crypto/crypto.service';
-import { PassportModule } from '@nestjs/passport';
 import { FirebaseMiddleware } from '../../../shared/middleware/firebase.middleware';
 import { ConfigModule } from '@nestjs/config';
 
@@ -16,7 +15,6 @@ import { ConfigModule } from '@nestjs/config';
   imports: [
     UsersModule,
     ConfigModule,
-    PassportModule,
   ],
   providers: [AuthService, CryptoService],
   controllers: [AuthController],
@@ -24,7 +22,7 @@ import { ConfigModule } from '@nestjs/config';
 export class AuthModule implements NestModule {
   configure(consumer: MiddlewareConsumer): any {
     consumer.apply(FirebaseMiddleware).forRoutes({
-      path: 'auth/login',
+      path: 'api/auth/login',
       method: RequestMethod.POST,
     });
   }

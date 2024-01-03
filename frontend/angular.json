@@ -30,6 +30,9 @@
           "options": {
             "outputPath": "dist/forum-app",
             "index": "src/index.html",
+            "styles": [
+              "src/styles.css"
+            ],
             "main": "src/main.ts",
             "polyfills": [
               "zone.js"
@@ -39,9 +42,7 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "styles": [
-              "src/styles.scss"
-            ],
+
             "scripts": []
           },
           "configurations": {
@@ -49,13 +50,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "50kb",
+                  "maximumError": "40kb"
                 }
               ],
               "outputHashing": "all"

@@ -21,6 +21,8 @@ import { EmailModule } from './modules/global/email/email.module';
 import { PostLike } from './modules/api/posts/entities/PostLike';
 import { Comment } from './modules/api/comments/entities/Comment';
 import * as process from "process";
+import {ServeStaticModule} from "@nestjs/serve-static";
+import * as path from "path";
 
 
 @Module({
@@ -33,6 +35,9 @@ import * as process from "process";
         forceUtcTimezone: true,
       }),
     ),
+    ServeStaticModule.forRoot({
+      rootPath: path.join(__dirname, '..', '..', '..', '..', 'frontend', 'dist', 'forum-app/'),
+    }),
     UsersModule,
     AuthModule,
     ForumsModule,

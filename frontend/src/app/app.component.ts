@@ -42,9 +42,6 @@ export class AppComponent implements OnInit, OnDestroy {
   af = inject(AngularFireAuth);
 
   ngOnInit() {
-    this.af.onAuthStateChanged((user) => {
-      console.log(user);
-    });
     this.authState$ = this.store.select('auth');
     this.authService
       .checkAuth()

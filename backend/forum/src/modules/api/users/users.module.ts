@@ -19,7 +19,7 @@ import { FirebaseMiddleware } from '../../../shared/middleware/firebase.middlewa
 export class UsersModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(FirebaseMiddleware).forRoutes({
-      path: 'users',
+      path: 'api/users',
       method: RequestMethod.POST,
     });
   }

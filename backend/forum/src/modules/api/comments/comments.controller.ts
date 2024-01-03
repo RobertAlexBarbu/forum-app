@@ -12,7 +12,7 @@ import { CreateCommentDto } from './dto/create-comment.dto';
 import { IsAdminGuard } from '../../../shared/guards/is-admin.guard';
 import {FirebaseGuard} from "../../../shared/guards/firebase.guard";
 
-@Controller('comments')
+@Controller('api/comments')
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 
