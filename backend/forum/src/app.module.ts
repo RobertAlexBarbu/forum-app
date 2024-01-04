@@ -35,15 +35,10 @@ import * as fs from "fs";
         clientUrl: process.env.DATABASE_URL,
 
         forceUtcTimezone: true,
-        driverOptions: {
-          ssl: {
-            ca: fs.readFileSync('/Users/robertbarbu/Downloads/ca-certificate.crt').toString()
-          }
-        }
       }),
     ),
     ServeStaticModule.forRoot({
-      serveRoot: path.join(__dirname, '..', '..', '..', '..', 'frontend', 'dist', 'forum-app'),
+      rootPath: path.join(__dirname, '..', '..', '..', '..', 'frontend', 'dist', 'forum-app'),
     }),
     UsersModule,
     AuthModule,
@@ -59,10 +54,7 @@ import * as fs from "fs";
 })
 export class AppModule {
   constructor() {
-    console.log('aaa');
-    const cs = fs.readFileSync('/Users/robertbarbu/Downloads/ca-certificate.crt').toString();
-    console.log(cs);
-    console.log('hey');
+
 
   }
 }
