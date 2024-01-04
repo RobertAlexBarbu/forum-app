@@ -6,7 +6,6 @@ import { getAuth } from 'firebase-admin/auth';
 export class FirebaseService {
   private firebaseApp: App;
   constructor() {
-    console.log('firebase initialized');
     this.firebaseApp = initializeApp({
       credential: applicationDefault(),
     });

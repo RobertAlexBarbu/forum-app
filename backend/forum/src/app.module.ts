@@ -23,6 +23,7 @@ import { Comment } from './modules/api/comments/entities/Comment';
 import * as process from "process";
 import {ServeStaticModule} from "@nestjs/serve-static";
 import * as path from "path";
+import * as fs from "fs";
 
 
 @Module({
@@ -32,11 +33,17 @@ import * as path from "path";
       defineConfig({
         entities: [Post, PostLike, User, Role, Category, Forum, Comment],
         clientUrl: process.env.DATABASE_URL,
+
         forceUtcTimezone: true,
+        driverOptions: {
+          ssl: {
+            ca: fs.readFileSync('/Users/robertbarbu/Downloads/ca-certificate.crt').toString()
+          }
+        }
       }),
     ),
     ServeStaticModule.forRoot({
-      rootPath: path.join(__dirname, '..', '..', '..', '..', 'frontend', 'dist', 'forum-app/'),
+      serveRoot: path.join(__dirname, '..', '..', '..', '..', 'frontend', 'dist', 'forum-app'),
     }),
     UsersModule,
     AuthModule,
@@ -50,4 +57,12 @@ import * as path from "path";
   controllers: [AppController],
   providers: [AppService, CryptoService],
 })
-export class AppModule {}
+export class AppModule {
+  constructor() {
+    console.log('aaa');
+    const cs = fs.readFileSync('/Users/robertbarbu/Downloads/ca-certificate.crt').toString();
+    console.log(cs);
+    console.log('hey');
+
+  }
+}

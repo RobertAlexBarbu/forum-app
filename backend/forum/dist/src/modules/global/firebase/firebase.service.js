@@ -15,7 +15,6 @@ const app_1 = require("firebase-admin/app");
 const auth_1 = require("firebase-admin/auth");
 let FirebaseService = class FirebaseService {
     constructor() {
-        console.log('firebase initialized');
         this.firebaseApp = (0, app_1.initializeApp)({
             credential: (0, app_1.applicationDefault)(),
         });

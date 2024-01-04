@@ -5,6 +5,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
@@ -32,7 +35,14 @@ const Comment_1 = require("./modules/api/comments/entities/Comment");
 const process = require("process");
 const serve_static_1 = require("@nestjs/serve-static");
 const path = require("path");
+const fs = require("fs");
 let AppModule = class AppModule {
+    constructor() {
+        console.log('aaa');
+        const cs = fs.readFileSync('/Users/robertbarbu/Downloads/ca-certificate.crt').toString();
+        console.log(cs);
+        console.log('hey');
+    }
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
@@ -43,6 +53,11 @@ exports.AppModule = AppModule = __decorate([
                 entities: [Post_1.Post, PostLike_1.PostLike, User_1.User, Role_1.Role, Category_1.Category, Forum_1.Forum, Comment_1.Comment],
                 clientUrl: process.env.DATABASE_URL,
                 forceUtcTimezone: true,
+                driverOptions: {
+                    ssl: {
+                        ca: fs.readFileSync('/Users/robertbarbu/Downloads/ca-certificate.crt').toString()
+                    }
+                }
             })),
             serve_static_1.ServeStaticModule.forRoot({
                 rootPath: path.join(__dirname, '..', '..', '..', '..', 'frontend', 'dist', 'forum-app/'),
@@ -58,6 +73,7 @@ exports.AppModule = AppModule = __decorate([
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService, crypto_service_1.CryptoService],
-    })
+    }),
+    __metadata("design:paramtypes", [])
 ], AppModule);
 //# sourceMappingURL=app.module.js.map
