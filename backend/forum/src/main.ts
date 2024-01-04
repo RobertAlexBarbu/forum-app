@@ -13,7 +13,7 @@ async function bootstrap() {
   app.use(helmet({
     contentSecurityPolicy: {
       directives: {
-        connectSrc: ["'self'", '*.googleapis.com'],
+        connectSrc: ["'self'", '*.googleapis.com', '157.230.108.218'],
         imgSrc: ["'self'", '*.googleapis.com'],
         scriptSrcElem: ["'self'", 'apis.google.com'],
         frameSrc: ["'self'", '*.firebaseapp.com']
