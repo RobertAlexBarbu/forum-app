@@ -33,13 +33,12 @@ import * as fs from "fs";
       defineConfig({
         entities: [Post, PostLike, User, Role, Category, Forum, Comment],
         clientUrl: process.env.DATABASE_URL,
-
         forceUtcTimezone: true,
       }),
     ),
-    ServeStaticModule.forRoot({
-      rootPath: path.join(__dirname, '..', '..', '..', '..', 'frontend', 'dist', 'forum-app'),
-    }),
+    // ServeStaticModule.forRoot({
+    //   rootPath: path.join(__dirname, '..', '..', '..', '..', 'frontend', 'dist', 'forum-app'),
+    // }),
     UsersModule,
     AuthModule,
     ForumsModule,
@@ -54,7 +53,7 @@ import * as fs from "fs";
 })
 export class AppModule {
   constructor() {
-
+    console.log('hey');
 
   }
 }
