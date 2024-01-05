@@ -36,9 +36,9 @@ import * as fs from "fs";
         forceUtcTimezone: true,
       }),
     ),
-    // ServeStaticModule.forRoot({
-    //   rootPath: path.join(__dirname, '..', '..', '..', '..', 'frontend', 'dist', 'forum-app'),
-    // }),
+    ServeStaticModule.forRoot({
+      rootPath: path.join(__dirname, '..', '..', '..', '..', 'frontend', 'dist', 'forum-app'),
+    }),
     UsersModule,
     AuthModule,
     ForumsModule,
