@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import helmet from 'helmet';
 
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
@@ -14,7 +15,7 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    origin: ['http://localhost:4200', 'http://64.226.108.248'],
+    origin: ['http://localhost:4200', 'https://forumly.xyz', 'https://www.forumly.xyz'],
     credentials: true,
   });
 
