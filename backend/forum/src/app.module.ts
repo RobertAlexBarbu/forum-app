@@ -20,11 +20,10 @@ import { ProfileModule } from './modules/api/profile/profile.module';
 import { EmailModule } from './modules/global/email/email.module';
 import { PostLike } from './modules/api/posts/entities/PostLike';
 import { Comment } from './modules/api/comments/entities/Comment';
-import * as process from "process";
-import {ServeStaticModule} from "@nestjs/serve-static";
-import * as path from "path";
-import * as fs from "fs";
-
+import * as process from 'process';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import * as path from 'path';
+import * as fs from 'fs';
 
 @Module({
   imports: [
@@ -34,10 +33,22 @@ import * as fs from "fs";
         entities: [Post, PostLike, User, Role, Category, Forum, Comment],
         clientUrl: process.env.DATABASE_URL,
         forceUtcTimezone: true,
+        driverOptions: {
+          connection: {
+            ssl: {
+              ca: fs
+                .readFileSync(
+                  path.join(__dirname, '..', '..', '.ca-certificate.crt'),
+                )
+                .toString(),
+            },
+          },
+        },
       }),
     ),
     ServeStaticModule.forRoot({
-      rootPath: path.join(__dirname, '..', '..', '..', '..', 'frontend', 'dist', 'forum-app'),
+      rootPath: path.join(__dirname, '..', '..', 'client', 'dist', 'forum-app'),
+      exclude: ['/api/(.*)'],
     }),
     UsersModule,
     AuthModule,
@@ -52,8 +63,5 @@ import * as fs from "fs";
   providers: [AppService, CryptoService],
 })
 export class AppModule {
-  constructor() {
-    console.log('hey');
-
-  }
+  constructor() {}
 }

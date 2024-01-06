@@ -15,13 +15,14 @@ export class HttpService {
     withCredentials: true
   };
 
+
   scheme = this.environmentService.getEnvironmentVar('scheme');
 
   domain = this.environmentService.getEnvironmentVar('domain');
 
   port = this.environmentService.getEnvironmentVar('port');
 
-  server = `${this.scheme}://${this.domain}:${this.port}`;
+  server = `${this.scheme}://${this.domain}`;
 
   post<T, V = JsonObject>(url: string, body: V) {
     return this.http.post<T>(
@@ -52,7 +53,10 @@ export class HttpService {
   }
 
   deleteByID<T>(url: string, id: string | number) {
-    return this.http.delete<T>(`${this.server}/api/${url}/${id}`, this.httpOptions);
+    return this.http.delete<T>(
+      `${this.server}/api/${url}/${id}`,
+      this.httpOptions
+    );
   }
 
   get<T>(url: string) {
@@ -60,6 +64,9 @@ export class HttpService {
   }
 
   getByID<T>(url: string, id: string | number) {
-    return this.http.get<T>(`${this.server}/api/${url}/${id}`, this.httpOptions);
+    return this.http.get<T>(
+      `${this.server}/api/${url}/${id}`,
+      this.httpOptions
+    );
   }
 }

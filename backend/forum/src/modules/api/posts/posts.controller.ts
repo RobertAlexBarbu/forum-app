@@ -13,8 +13,8 @@ import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { IsAdminGuard } from '../../../shared/guards/is-admin.guard';
-import {CanEditPostGuard} from "../../../shared/guards/can-edit-post.guard";
-import {FirebaseGuard} from "../../../shared/guards/firebase.guard";
+import { CanEditPostGuard } from '../../../shared/guards/can-edit-post.guard';
+import { FirebaseGuard } from '../../../shared/guards/firebase.guard';
 
 @Controller('api/posts')
 export class PostsController {
@@ -59,6 +59,4 @@ export class PostsController {
   dislikePost(@Param('id') id: string, @Req() req) {
     return this.postsService.dislikePost(+id, req.user.id);
   }
-
-
 }

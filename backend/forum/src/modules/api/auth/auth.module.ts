@@ -12,10 +12,7 @@ import { FirebaseMiddleware } from '../../../shared/middleware/firebase.middlewa
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [
-    UsersModule,
-    ConfigModule,
-  ],
+  imports: [UsersModule, ConfigModule],
   providers: [AuthService, CryptoService],
   controllers: [AuthController],
 })

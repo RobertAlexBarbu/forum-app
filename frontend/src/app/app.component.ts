@@ -15,6 +15,8 @@ import { HeaderComponent } from './core/components/header/header.component';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { AuthStateModel } from './core/models/auth-state.model';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { HttpClient } from '@angular/common/http';
+import { HttpService } from './core/services/http/http.service';
 
 @Component({
   selector: 'app-root',
@@ -39,7 +41,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   router = inject(Router);
 
-  af = inject(AngularFireAuth);
+  http = inject(HttpClient);
+
 
   ngOnInit() {
     this.authState$ = this.store.select('auth');

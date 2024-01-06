@@ -11,7 +11,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateToAdminDto } from './dto/update-to-admin.dto';
 import { IsAdminGuard } from '../../../shared/guards/is-admin.guard';
-import {FirebaseGuard} from "../../../shared/guards/firebase.guard";
+import { FirebaseGuard } from '../../../shared/guards/firebase.guard';
 
 @Controller('api/users')
 export class UsersController {

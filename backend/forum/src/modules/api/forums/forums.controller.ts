@@ -12,7 +12,7 @@ import { ForumsService } from './forums.service';
 import { CreateForumDto } from './dto/create-forum.dto';
 import { UpdateForumDto } from './dto/update-forum.dto';
 import { IsAdminGuard } from '../../../shared/guards/is-admin.guard';
-import {FirebaseGuard} from "../../../shared/guards/firebase.guard";
+import { FirebaseGuard } from '../../../shared/guards/firebase.guard';
 
 @Controller('api/forums')
 export class ForumsController {

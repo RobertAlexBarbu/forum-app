@@ -1,6 +1,8 @@
-.firebase-account.json
+.firebase.json
+.ca-certificate.crt
 **/node_modules
 .env
+client
 .DS_Store
 .idea
 .dist

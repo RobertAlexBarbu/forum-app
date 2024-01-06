@@ -1,15 +1,13 @@
-import {ConflictException, Injectable} from '@nestjs/common';
-import {CreateUserDto} from './dto/create-user.dto';
-import {EntityManager, wrap} from '@mikro-orm/core';
-import {User} from './entities/User';
-import {UpdateToAdminDto} from './dto/update-to-admin.dto';
-import {Role} from './entities/Role';
+import { ConflictException, Injectable } from '@nestjs/common';
+import { CreateUserDto } from './dto/create-user.dto';
+import { EntityManager, wrap } from '@mikro-orm/core';
+import { User } from './entities/User';
+import { UpdateToAdminDto } from './dto/update-to-admin.dto';
+import { Role } from './entities/Role';
 
 @Injectable()
 export class UsersService {
-  constructor(
-    private readonly em: EntityManager,
-  ) {}
+  constructor(private readonly em: EntityManager) {}
 
   async create(createUserDto: CreateUserDto) {
     const exists = await this.em.findOne(User, { id: createUserDto.id });
@@ -32,7 +30,7 @@ export class UsersService {
       id: user.id,
       role: user.role.id,
       username: user.username,
-      email: user.email
+      email: user.email,
     };
   }
 
@@ -69,7 +67,7 @@ export class UsersService {
     if (user === null) {
       return null;
     }
-    user.role = this.em.getReference(Role, 2, {wrapped: true});
+    user.role = this.em.getReference(Role, 2, { wrapped: true });
     await this.em.flush();
     return user;
   }
