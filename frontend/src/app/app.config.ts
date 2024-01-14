@@ -43,7 +43,7 @@ export const appConfig: ApplicationConfig = {
     provideStoreDevtools({
       maxAge: 25, // Retains last 25 states
       logOnly: environment['production'] as boolean // Restrict extension to log-only mode
-    }),
+    , connectInZone: true}),
     provideAnimations(),
     importProvidersFrom(
       AngularFireModule.initializeApp({
