@@ -1,7 +1,5 @@
 import { Routes } from '@angular/router';
 import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
-import { AdminsPageComponent } from './pages/admins-page/admins-page.component';
-import { StatisticsPageComponent } from './pages/statistics-page/statistics-page.component';
 import { AdminService } from './services/admin/admin.service';
 import { ColorService } from './services/color/color.service';
 
@@ -13,11 +11,11 @@ export const adminRoutes: Routes = [
     children: [
       {
         path: '',
-        component: AdminsPageComponent
+        loadComponent: () => import('./pages/admins-page/admins-page.component').then(m => m.AdminsPageComponent)
       },
       {
         path: 'statistics',
-        component: StatisticsPageComponent
+        loadComponent: () => import('./pages/statistics-page/statistics-page.component').then(m => m.StatisticsPageComponent)
       }
     ]
   }

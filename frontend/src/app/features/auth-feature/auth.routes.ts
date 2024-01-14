@@ -1,6 +1,4 @@
-import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { Routes } from '@angular/router';
-import { SignupPageComponent } from './pages/signup-page/signup-page.component';
 
 export const authRoutes: Routes = [
   {
@@ -8,11 +6,11 @@ export const authRoutes: Routes = [
     children: [
       {
         path: 'login',
-        component: LoginPageComponent
+        loadComponent: () => import('./pages/login-page/login-page.component').then(m => m.LoginPageComponent)
       },
       {
         path: 'signup',
-        component: SignupPageComponent
+        loadComponent: () => import('./pages/signup-page/signup-page.component').then(m => m.SignupPageComponent)
       }
     ]
   }

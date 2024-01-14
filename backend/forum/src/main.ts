@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import helmet from 'helmet';
-
+import * as compression from 'compression';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -18,6 +18,8 @@ async function bootstrap() {
     origin: ['http://localhost:4200', 'https://forumly.xyz', 'https://www.forumly.xyz'],
     credentials: true,
   });
+
+  app.use(compression())
 
   // const options = {
   //   dotfiles: 'ignore',
@@ -45,6 +47,6 @@ async function bootstrap() {
   //       frameSrc: ["'self'", '*.firebaseapp.com']
   //   }
   // },
-  await app.listen(3000);
+  await app.listen(4200);
 }
 bootstrap();

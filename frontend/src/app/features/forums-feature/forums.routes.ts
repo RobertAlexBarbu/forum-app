@@ -1,23 +1,18 @@
 import { Routes } from '@angular/router';
-import { HomePageComponent } from './pages/home-page/home-page.component';
-import { ForumsPageComponent } from './pages/forums-page/forums-page.component';
-import { ForumPageComponent } from './pages/forum-page/forum-page.component';
-import { PostPageComponent } from './pages/post-page/post-page.component';
-import { PostsPageComponent } from './pages/posts-page/posts-page.component';
 import { isAdminGuard } from '../../core/guards/is-admin.guard';
 import { isAuthGuard } from '../../core/guards/is-auth.guard';
 
 export const forumsRoutes: Routes = [
   {
     path: '',
-    component: HomePageComponent
+    loadComponent: () => import('./pages/home-page/home-page.component').then(m => m.HomePageComponent)
   },
   {
     path: 'forums',
     children: [
       {
         path: '',
-        component: ForumsPageComponent
+        loadComponent: () => import('./pages/forums-page/forums-page.component').then(m => m.ForumsPageComponent)
       },
       {
         path: 'edit/:id',
@@ -37,16 +32,16 @@ export const forumsRoutes: Routes = [
       },
       {
         path: ':id',
-        component: ForumPageComponent,
+        loadComponent: () => import('./pages/forum-page/forum-page.component').then(m => m.ForumPageComponent),
         children: [
           {
             path: '',
-            component: PostsPageComponent
+            loadComponent: () => import('./pages/posts-page/posts-page.component').then(m => m.PostsPageComponent)
           },
 
           {
             path: 'posts/:post',
-            component: PostPageComponent
+            loadComponent: () => import('./pages/post-page/post-page.component').then(m => m.PostPageComponent)
           }
         ]
       },

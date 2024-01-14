@@ -47,7 +47,7 @@ import * as fs from 'fs';
       }),
     ),
     ServeStaticModule.forRoot({
-      rootPath: path.join(__dirname, '..', '..', 'client', 'dist', 'forum-app'),
+      rootPath: path.join(__dirname, '..', '..', 'client', 'dist', 'forum-app', 'browser'),
       exclude: ['/api/(.*)'],
     }),
     UsersModule,

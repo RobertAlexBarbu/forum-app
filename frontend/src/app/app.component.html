@@ -1,6 +1,7 @@
 <ng-container *ngIf="authState$ | async as authState">
   <app-header [authState]="authState" [check$]="check$"></app-header>
-  <div class="main">
-    <router-outlet></router-outlet>
-  </div>
+
 </ng-container>
+<div class="main">
+  <router-outlet></router-outlet>
+</div>

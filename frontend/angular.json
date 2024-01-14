@@ -28,7 +28,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/forum-app",
+            "outputPath": "../backend/forum/client/dist/forum-app",
             "index": "src/index.html",
             "styles": [
               "src/styles.css"
@@ -62,9 +62,7 @@
               "outputHashing": "all"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true,
