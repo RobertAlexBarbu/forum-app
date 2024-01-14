@@ -15,7 +15,7 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    origin: ['http://localhost:4200', 'https://forumly.xyz', 'https://www.forumly.xyz'],
+    origin: ['http://localhost:4200', 'http://localhost:3000', 'https://forumly.xyz', 'https://www.forumly.xyz'],
     credentials: true,
   });
 
@@ -47,6 +47,6 @@ async function bootstrap() {
   //       frameSrc: ["'self'", '*.firebaseapp.com']
   //   }
   // },
-  await app.listen(4200);
+  await app.listen(3000);
 }
 bootstrap();
