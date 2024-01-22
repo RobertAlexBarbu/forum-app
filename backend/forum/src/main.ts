@@ -15,7 +15,7 @@ async function bootstrap() {
   );
 
   app.enableCors({
-    origin: ['http://localhost:4200', 'http://localhost:3000', 'https://forumly.xyz', 'https://www.forumly.xyz'],
+    origin: ['http://localhost:4200', 'http://localhost:3000', 'https://forumly.xyz', 'https://www.forumly.xyz', 'http://206.81.27.78'],
     credentials: true,
   });
 
