@@ -19,8 +19,7 @@ jobs:
           cache: 'npm'
           cache-dependency-path: './backend/package-lock.json'
       - run: |
-          pwd
-          cd backend/forum
+          cd backend
           npm i
           npm run build
           echo 'hey'
