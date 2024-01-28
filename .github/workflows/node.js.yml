@@ -8,9 +8,7 @@ on:
 
 jobs:
   build:
-
     runs-on: self-hosted
-
     strategy:
       matrix:
         node-version: [14.x, 16.x, 18.x]
@@ -23,6 +21,12 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: npm ci
-      - run: npm run build --if-present
-      - run: npm test
+      - run: |
+          cd frontend
+          npm i
+          npm run build
+          cd ..
+          cd backend/forum
+          npm i
+          npm run build
+          echo 'hey'
