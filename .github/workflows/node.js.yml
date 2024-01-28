@@ -22,4 +22,4 @@ jobs:
           cd backend
           npm i
           npm run build
-          echo 'hey'
+          pm2 restart main
