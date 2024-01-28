@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "startLocal": "ng serve --host 0.0.0.0",
-    "build": "ng build && cd .. && pwd",
+    "build": "ng build && node angular-purgecss.js",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint"
@@ -29,6 +29,7 @@
     "firebase": "^10.7.1",
     "primeicons": "^6.0.1",
     "primeng": "^17.3.2",
+    "purgecss": "^5.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
