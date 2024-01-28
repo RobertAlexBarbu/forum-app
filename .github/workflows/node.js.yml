@@ -17,11 +17,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+          cache-dependency-path: './backend/forum/package-lock.json'
       - run: |
-          cd frontend
-          npm i
-          npm run build
-          cd ..
+          pwd
           cd backend/forum
           npm i
           npm run build
