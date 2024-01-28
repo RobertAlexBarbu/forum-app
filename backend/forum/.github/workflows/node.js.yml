@@ -1,0 +1,25 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [ cont2 ]
+  pull_request:
+    branches: [ cont2 ]
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - run:
+          cd ./frontend
+          npm install
+          npm run build
+          cd ..
+          cd ./backend/forum
+          npm install
+          npm run build
