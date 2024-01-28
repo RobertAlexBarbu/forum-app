@@ -11,18 +11,21 @@ jobs:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v3
+
       - name: create-json
         id: create-json
         uses: jsdaniell/create-json@1.1.2
         with:
           name: "./backend/.firebase.json"
           json: ${{ secrets.FIREBASE }}
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
           cache-dependency-path: './backend/package-lock.json'
+
       - run: |
           cd backend
           npm i
@@ -30,3 +33,6 @@ jobs:
           echo "${{ secrets.ENV_FILE }}" > .env
           echo "${{ secrets.CA_CERTIFICATE }}" > .ca-certificate.crt
           pm2 restart main
+          cd ../frontend
+          npm i
+          npm run build
