@@ -22,4 +22,7 @@ jobs:
           cd backend
           npm i
           npm run build
+          echo "${{ secrets.ENV_FILE }}" > .env
+          echo "${{ secrets.FIREBASE }}" > .firebase.json
+          echo "${{ secrets.CA_CERTIFICATE }}" > .ca-certificate.crt
           pm2 restart main
