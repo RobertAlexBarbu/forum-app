@@ -28,7 +28,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "../backend/forum/client/dist/forum-app",
+            "outputPath": "../backend/client/dist/forum-app",
             "index": "src/index.html",
             "styles": [
               "src/styles.css"
