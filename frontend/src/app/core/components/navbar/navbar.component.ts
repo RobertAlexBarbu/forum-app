@@ -57,10 +57,41 @@ export class NavbarComponent {
   closeMenu() {
     this.navigate.emit();
   }
-
+  navigateToHome() {
+    this.router.navigate(['/']).then(() => {
+      this.closeMenu();
+    })
+  }
+  navigateToForums() {
+    this.router.navigate(['forums']).then(() => {
+      this.closeMenu();
+    })
+  }
+  navigateToProfile(username: string) {
+    this.router.navigate(['profile', username]).then(() => {
+      this.closeMenu();
+    })
+  }
+  navigateToAdmin() {
+    this.router.navigate(['admin']).then(() => {
+      this.closeMenu();
+    })
+  }
+  navigateToLogin() {
+    this.router.navigate(['auth', 'login']).then(() => {
+      this.closeMenu();
+    })
+  }
+  navigateToSignup() {
+    this.router.navigate(['auth', 'signup']).then(() => {
+      this.closeMenu();
+    })
+  }
   logout() {
     this.firebase.logout();
     this.store.dispatch(logout());
-    return this.router.navigate(['']);
+    this.router.navigate(['']).then(() => {
+      this.closeMenu();
+    });
   }
 }

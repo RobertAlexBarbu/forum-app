@@ -1,76 +1,62 @@
-<div class="navbar" ontouchstart="">
-  <button
-    [routerLinkActiveOptions]="{exact: true}"
-    routerLinkActive="active-link"
+<div class="navbar" >
+  <button ontouchstart=""
     pButton
     class="p-button-sm p-button-text"
-    routerLink="/"
-    (click)="closeMenu()">
+    (click)="navigateToHome()">
     <ng-icon name="jamHomeF"></ng-icon>
     Home
   </button>
-  <button
-    routerLinkActive="active-link"
+  <button ontouchstart=""
     pButton
     class="p-button-sm p-button-text"
-    routerLink="/forums"
-    (click)="closeMenu()">
+    (click)="navigateToForums()">
     <ng-icon name="jamMessagesF"></ng-icon>
     Forum
   </button>
-  <button
+  <button ontouchstart=""
     *ngIf="authState | isAuth"
-    routerLinkActive="active-link"
     pButton
     class="p-button p-button-sm p-button-text"
-    [routerLink]="['/profile', authState.username]"
-    (click)="closeMenu()">
+    (click)="navigateToProfile(authState.username)">
     <ng-icon name="jamUser"></ng-icon>
     Profile
   </button>
-  <button
+  <button ontouchstart=""
     *ngIf="authState | isAdmin"
-    routerLinkActive="active-link"
     pButton
     class="p-button p-button-sm p-button-text"
-    routerLink="/admin"
-    (click)="closeMenu()">
+    (click)="navigateToAdmin()">
     <ng-icon name="jamPieChartF"></ng-icon>
     Dashboard
   </button>
 
   <div class="separator"></div>
-  <button
+  <button ontouchstart=""
     *ngIf="authState | isAuth"
     pButton
     class="p-button-sm p-button-text logout p-button"
-    (click)="logout(); closeMenu()">
+    (click)="logout()">
     Log Out
   </button>
-  <button
+  <button ontouchstart=""
     *ngIf="!(authState | isAuth)"
-    routerLinkActive="active-link"
     pButton
     class="p-button-sm p-button-text login mobile"
-    routerLink="/auth/login"
-    (click)="closeMenu()">
+    (click)="navigateToLogin()">
     Log in
   </button>
-  <button
+  <button ontouchstart=""
     *ngIf="!(authState | isAuth)"
-    routerLinkActive="active-link"
     pButton
     class="p-button-text p-button-sm signup"
-    routerLink="/auth/signup"
-    (click)="closeMenu()">
+    (click)="navigateToSignup()">
     Sign up
   </button>
-  <button
+  <button ontouchstart=""
     *ngIf="!(authState | isAuth)"
     pButton
     class="p-button-sm login desktop-btn login"
-    routerLink="/auth/login"
-    (click)="closeMenu()">
+    (click)="navigateToLogin()">
     Log in
   </button>
 </div>

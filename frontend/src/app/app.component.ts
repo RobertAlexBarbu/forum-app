@@ -14,9 +14,7 @@ import { isAuth } from './core/store/auth/auth.actions';
 import { HeaderComponent } from './core/components/header/header.component';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { AuthStateModel } from './core/models/auth-state.model';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { HttpClient } from '@angular/common/http';
-import { HttpService } from './core/services/http/http.service';
 
 @Component({
   selector: 'app-root',
