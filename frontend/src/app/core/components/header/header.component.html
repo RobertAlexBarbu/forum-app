@@ -1,5 +1,5 @@
-<div class="wrapper">
-  <div class="header"  *ngIf="check$ | async">
+<div class="wrapper" *ngIf="check$ | async">
+  <div class="header"  >
     <div class="name">Forumly</div>
     <div class="desktop">
       <app-navbar [authState]="authState"></app-navbar>
