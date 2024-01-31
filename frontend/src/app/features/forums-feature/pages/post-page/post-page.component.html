@@ -1,6 +1,24 @@
-<div class="mt-5">
+<div class="card" ontouchstart=""  *ngIf="authState$ | async as authState">
   <ng-container *ngIf="post$ | async as post">
-    <ng-container *ngIf="authState$ | async as authState">
+    <div class="header-nav">
+      <div class="title-nav">
+        <div  class="clickable" routerLink="/forums">Forums</div>
+        <div>/</div>
+        <div class="clickable" routerLink="/forums/{{post.forum.id}}">
+          {{post.forum.name}}
+        </div>
+      </div>
+      <button
+        *ngIf="authState | isAuth"
+        [routerLink]="['/forums', post.forum.id, 'new-post']"
+        pButton
+        class="smaller p-button-text p-button-sm smaller">
+        <ng-icon name="jamPlus"></ng-icon>
+        New Post
+      </button>
+    </div>
+<div class="mt-5">
+
       <div class="post">
         <div class="buttons">
           <button
@@ -42,6 +60,5 @@
       <app-post-comments
         [authState]="authState"
         [post]="post"></app-post-comments>
-    </ng-container>
-  </ng-container>
 </div>
+  </ng-container></div>

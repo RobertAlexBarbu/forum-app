@@ -33,7 +33,7 @@ export class PostsService {
       Post,
       { forum: id },
       {
-        populate: ['postLikes.user', 'category'],
+        populate: ['postLikes.user', 'category', 'forum'],
         orderBy: { createdAt: 'desc' },
       },
     );

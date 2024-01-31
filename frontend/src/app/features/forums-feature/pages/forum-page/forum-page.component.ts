@@ -11,11 +11,10 @@ import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { ForumsService } from '../../services/forums/forums.service';
 import { ForumsPageComponent } from '../forums-page/forums-page.component';
 import { PostComponent } from '../../components/post/post.component';
-import { PostsPageComponent } from '../posts-page/posts-page.component';
 import { Store } from '@ngrx/store';
 import { isAuthPipe } from '../../../../shared/pipes/is-auth.pipe';
 import { ForumModel } from '../../models/forum.model';
-import { Subject } from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 
 @Component({
   selector: 'app-forum-page',
@@ -27,7 +26,6 @@ import { Subject } from 'rxjs';
     RouterLink,
     ForumsPageComponent,
     PostComponent,
-    PostsPageComponent,
     RouterOutlet,
     isAuthPipe
   ],
@@ -41,7 +39,7 @@ export class ForumPageComponent {
 
   route = inject(ActivatedRoute);
 
-  forum$ = inject(ForumsService).getForum(this.route.snapshot.params['id']);
+  forum$: Observable<ForumModel> = inject(ForumsService).getForum(this.route.snapshot.params['id']);
 
   forum!: ForumModel;
 

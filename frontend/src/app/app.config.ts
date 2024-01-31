@@ -1,4 +1,8 @@
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import {
+  ApplicationConfig,
+  importProvidersFrom,
+  provideZoneChangeDetection
+} from '@angular/core';
 import {
   InMemoryScrollingOptions,
   provideRouter,
@@ -16,8 +20,6 @@ import { jwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { AngularFireModule } from '@angular/fire/compat';
 import { errorInterceptor } from './core/interceptors/error.interceptor';
-import { provideStoreDevtools } from '@ngrx/store-devtools';
-import { environment } from '../environments/environment';
 
 const scrollConfig: InMemoryScrollingOptions = {
   scrollPositionRestoration: 'top',
@@ -34,13 +36,14 @@ export const appConfig: ApplicationConfig = {
       })
     ),
     provideHttpClient(withInterceptors([jwtInterceptor, errorInterceptor])),
+    provideAnimations(),
+    provideZoneChangeDetection({eventCoalescing: true}),
     provideNgIconsConfig({ size: '1rem' }),
     provideStore(),
     provideState({
       name: 'auth',
       reducer: authReducer
     }),
-    provideAnimations(),
     importProvidersFrom(
       AngularFireModule.initializeApp({
         projectId: 'ssd-project-1f0eb',

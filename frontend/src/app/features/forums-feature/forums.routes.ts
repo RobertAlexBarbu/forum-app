@@ -33,17 +33,11 @@ export const forumsRoutes: Routes = [
       {
         path: ':id',
         loadComponent: () => import('./pages/forum-page/forum-page.component').then(m => m.ForumPageComponent),
-        children: [
-          {
-            path: '',
-            loadComponent: () => import('./pages/posts-page/posts-page.component').then(m => m.PostsPageComponent)
-          },
 
-          {
-            path: 'posts/:post',
-            loadComponent: () => import('./pages/post-page/post-page.component').then(m => m.PostPageComponent)
-          }
-        ]
+      },
+      {
+        path: ':id/posts/:post',
+        loadComponent: () => import('./pages/post-page/post-page.component').then(m => m.PostPageComponent)
       },
       {
         path: ':id/new-post',

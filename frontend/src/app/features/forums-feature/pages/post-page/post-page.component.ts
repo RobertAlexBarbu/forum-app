@@ -14,7 +14,7 @@ import {
   jamArrowSquareUp,
   jamArrowSquareUpF,
   jamMessageWritingF,
-  jamPencilF,
+  jamPencilF, jamPlus,
   jamTrashF
 } from '@ng-icons/jam-icons';
 import { Store } from '@ngrx/store';
@@ -29,6 +29,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { isAdminPipe } from '../../../../shared/pipes/is-admin.pipe';
 import { LikeComponent } from '../../components/like/like.component';
 import { PostCommentsComponent } from '../../components/post-comments/post-comments.component';
+import {isAuthPipe} from "../../../../shared/pipes/is-auth.pipe";
 
 @Component({
   selector: 'app-post-page',
@@ -46,7 +47,8 @@ import { PostCommentsComponent } from '../../components/post-comments/post-comme
     TooltipModule,
     isAdminPipe,
     LikeComponent,
-    PostCommentsComponent
+    PostCommentsComponent,
+    isAuthPipe
   ],
   templateUrl: './post-page.component.html',
   styleUrls: ['./post-page.component.scss'],
@@ -57,7 +59,8 @@ import { PostCommentsComponent } from '../../components/post-comments/post-comme
       jamArrowSquareUpF,
       jamMessageWritingF,
       jamTrashF,
-      jamPencilF
+      jamPencilF,
+      jamPlus
     })
   ]
 })
