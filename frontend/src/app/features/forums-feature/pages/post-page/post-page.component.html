@@ -27,12 +27,14 @@
             pButton
             class="p-button-sm nav p-button p-button-text"
             pTooltip="Edit Post"
+            aria-label="edit-post"
             tooltipPosition="top">
             <ng-icon name="jamPencilF"></ng-icon>
           </button>
           <button
             *ngIf="authState | isAdmin"
             (click)="deletePost(post)"
+            aria-label="delete-post"
             pButton
             class="p-button-sm nav p-button p-button-danger p-button-text"
             tooltipPosition="top"

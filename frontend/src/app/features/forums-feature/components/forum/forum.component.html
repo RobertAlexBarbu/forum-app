@@ -27,6 +27,7 @@
   </div>
   <div class="btn">
     <button
+      aria-label="edit-forum"
       *ngIf="authState | isAdmin"
       [routerLink]="['', 'forums', 'edit', forum.id]"
       pButton
@@ -36,6 +37,7 @@
       <ng-icon name="jamPencilF"></ng-icon>
     </button>
     <button
+      aria-label="delete-forum"
       *ngIf="authState | isAdmin"
       pButton
       (click)="delete()"
