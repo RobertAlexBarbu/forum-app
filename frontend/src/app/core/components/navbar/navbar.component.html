@@ -1,4 +1,4 @@
-<div class="navbar" >
+<div class="navbar">
   <button
     pButton
     class="p-button-sm p-button-text"
@@ -32,6 +32,7 @@
 
   <div class="separator"></div>
   <button
+
     *ngIf="authState | isAuth"
     pButton
     class="p-button-sm p-button-text logout p-button"
@@ -46,6 +47,7 @@
     Log in
   </button>
   <button
+
     *ngIf="!(authState | isAuth)"
     pButton
     class="p-button-text p-button-sm signup"

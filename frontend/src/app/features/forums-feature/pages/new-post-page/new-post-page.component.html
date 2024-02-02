@@ -1,4 +1,4 @@
-<div class="card" ontouchstart="">
+<div class="card">
   <ng-container *ngIf="forum$ | async as forumWithCategories">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <h2>New post</h2>

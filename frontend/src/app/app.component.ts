@@ -43,6 +43,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
+    document.addEventListener('touchstart', () => {}, {passive: true})
     this.authState$ = this.store.select('auth');
     this.authService
       .checkAuth()
