@@ -1,19 +1,19 @@
 <div class="navbar" >
-  <button ontouchstart=""
+  <button
     pButton
     class="p-button-sm p-button-text"
     (click)="navigateToHome()">
     <ng-icon name="jamHomeF"></ng-icon>
     Home
   </button>
-  <button ontouchstart=""
+  <button
     pButton
     class="p-button-sm p-button-text"
     (click)="navigateToForums()">
     <ng-icon name="jamMessagesF"></ng-icon>
     Forum
   </button>
-  <button ontouchstart=""
+  <button
     *ngIf="authState | isAuth"
     pButton
     class="p-button p-button-sm p-button-text"
@@ -21,7 +21,7 @@
     <ng-icon name="jamUser"></ng-icon>
     Profile
   </button>
-  <button ontouchstart=""
+  <button
     *ngIf="authState | isAdmin"
     pButton
     class="p-button p-button-sm p-button-text"
@@ -31,28 +31,28 @@
   </button>
 
   <div class="separator"></div>
-  <button ontouchstart=""
+  <button
     *ngIf="authState | isAuth"
     pButton
     class="p-button-sm p-button-text logout p-button"
     (click)="logout()">
     Log Out
   </button>
-  <button ontouchstart=""
+  <button
     *ngIf="!(authState | isAuth)"
     pButton
     class="p-button-sm p-button-text login mobile"
     (click)="navigateToLogin()">
     Log in
   </button>
-  <button ontouchstart=""
+  <button
     *ngIf="!(authState | isAuth)"
     pButton
     class="p-button-text p-button-sm signup"
     (click)="navigateToSignup()">
     Sign up
   </button>
-  <button ontouchstart=""
+  <button
     *ngIf="!(authState | isAuth)"
     pButton
     class="p-button-sm login desktop-btn login"

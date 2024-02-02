@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "startLocal": "ng serve --host 0.0.0.0",
+    "startHost": "ng serve --host 0.0.0.0",
+    "startLocalhost": "ng serve --configuration development",
     "build": "ng build && node angular-purgecss.js",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
