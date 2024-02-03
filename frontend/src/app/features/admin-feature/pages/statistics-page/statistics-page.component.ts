@@ -60,11 +60,8 @@ export class StatisticsPageComponent implements OnInit, OnDestroy {
     ]
   };
 
-  data$ = new Subject();
+  data$ = new Subject<{data1: object, data2: object, data3: object}>();
 
-  data2$ = new Subject();
-
-  data3$ = new Subject();
 
   options: any;
 
@@ -110,9 +107,11 @@ export class StatisticsPageComponent implements OnInit, OnDestroy {
             this.data3.datasets[0].backgroundColor.push(color);
             this.data3.datasets[0].hoverBackgroundColor.push(color + '90');
           });
-          this.data$.next(this.data);
-          this.data2$.next(this.data2);
-          this.data3$.next(this.data3);
+          this.data$.next({
+            data1: this.data,
+            data2: this.data2,
+            data3: this.data3
+          });
         }
       });
 
