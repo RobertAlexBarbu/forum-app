@@ -28,9 +28,6 @@ import {
 import {NgIcon, provideIcons} from '@ng-icons/core';
 import {jamGoogle} from '@ng-icons/jam-icons';
 import {
-  FirebaseService
-} from '../../services/firebase-auth/firebase.service';
-import {
   OrDividerComponent
 } from '../../../../shared/components/or-divider/or-divider.component';
 import {
@@ -38,6 +35,7 @@ import {
 } from '../../../../shared/components/error/error.component';
 import {signup} from '../../../../core/store/auth/auth.actions';
 import {AuthService} from '../../../../core/services/auth/auth.service';
+import {SignupService} from "../../services/signup/signup.service";
 
 @Component({
   selector: 'app-signup-page',
@@ -58,7 +56,7 @@ import {AuthService} from '../../../../core/services/auth/auth.service';
   styleUrls: ['./signup-page.component.scss', '../auth.styles.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   viewProviders: [provideIcons({ jamGoogle })],
-  providers: [FirebaseService]
+  providers: [SignupService]
 })
 export class SignupPageComponent implements OnDestroy {
   destroy$ = new Subject<boolean>();
@@ -83,7 +81,7 @@ export class SignupPageComponent implements OnDestroy {
     })
   });
 
-  firebaseService = inject(FirebaseService);
+  signupService = inject(SignupService);
 
   authService = inject(AuthService);
 
@@ -100,7 +98,7 @@ export class SignupPageComponent implements OnDestroy {
       return;
     }
     this.loading = true;
-    this.firebaseService
+    this.signupService
       .signupWithEmailAndPassword(this.form.getRawValue())
       .pipe(takeUntil(this.destroy$))
       .subscribe({
@@ -117,7 +115,7 @@ export class SignupPageComponent implements OnDestroy {
   }
 
   signupGoogle() {
-    this.firebaseService
+    this.signupService
       .signupWithGoogle()
       .pipe(takeUntil(this.destroy$))
       .subscribe({

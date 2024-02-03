@@ -26,13 +26,11 @@ import {
   ErrorComponent
 } from '../../../../shared/components/error/error.component';
 import {
-  FirebaseService
-} from '../../services/firebase-auth/firebase.service';
-import {
   OrDividerComponent
 } from '../../../../shared/components/or-divider/or-divider.component';
 import {AuthService} from '../../../../core/services/auth/auth.service';
 import {login} from '../../../../core/store/auth/auth.actions';
+import {LoginService} from "../../services/login/login.service";
 
 @Component({
   selector: 'app-login-page',
@@ -52,7 +50,7 @@ import {login} from '../../../../core/store/auth/auth.actions';
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss', '../auth.styles.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [FirebaseService]
+  providers: [LoginService]
 })
 export class LoginPageComponent implements OnDestroy {
   destroy$ = new Subject<boolean>();
@@ -72,7 +70,7 @@ export class LoginPageComponent implements OnDestroy {
     })
   });
 
-  firebaseService = inject(FirebaseService);
+  loginService = inject(LoginService);
 
   authService = inject(AuthService);
 
@@ -89,7 +87,7 @@ export class LoginPageComponent implements OnDestroy {
       return;
     }
     this.loading = true;
-    this.firebaseService
+    this.loginService
       .loginWithEmailAndPassword(this.form.getRawValue())
       .pipe(takeUntil(this.destroy$))
       .subscribe({
@@ -108,7 +106,7 @@ export class LoginPageComponent implements OnDestroy {
 
   loginGoogle() {
     this.error$.next('');
-    this.firebaseService
+    this.loginService
       .loginWithGoogle()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
