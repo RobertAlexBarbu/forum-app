@@ -4,8 +4,7 @@ import { FirebaseAuthDto } from '../../dto/firebase-auth.dto';
 import { catchError, from, switchMap, throwError } from 'rxjs';
 import { AuthService } from '../../../../core/services/auth/auth.service';
 import firebase from 'firebase/compat/app';
-import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
-import AuthProvider = firebase.auth.AuthProvider;
+import {GoogleAuthProvider, AuthProvider} from 'firebase/auth'
 import { ErrorService } from '../../../../core/services/error/error.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
