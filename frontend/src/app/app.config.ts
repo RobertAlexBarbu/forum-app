@@ -17,7 +17,6 @@ import { authReducer } from './core/store/auth/auth.reducer';
 import { provideNgIconsConfig } from '@ng-icons/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { jwtInterceptor } from './core/interceptors/jwt.interceptor';
-import { getAuth, provideAuth } from '@angular/fire/auth';
 import { AngularFireModule } from '@angular/fire/compat';
 import { errorInterceptor } from './core/interceptors/error.interceptor';
 
@@ -53,7 +52,6 @@ export const appConfig: ApplicationConfig = {
         authDomain: 'ssd-project-1f0eb.firebaseapp.com',
         messagingSenderId: '897753042865'
       })
-    ),
-    importProvidersFrom(provideAuth(() => getAuth()))
+    )
   ]
 };

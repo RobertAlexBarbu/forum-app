@@ -105,7 +105,6 @@ export class SignupPageComponent implements OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (data) => {
-          console.log(data);
           this.store.dispatch(signup({ authState: data }));
           this.loading = false;
           return this.router.navigate(['']);
@@ -123,7 +122,6 @@ export class SignupPageComponent implements OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (data) => {
-          console.log(data);
           this.store.dispatch(signup({ authState: data }));
           return this.router.navigate(['']);
         },

@@ -94,7 +94,7 @@ export class LoginPageComponent implements OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (data) => {
-          console.log(data);
+
           this.store.dispatch(login({ authState: data }));
           this.loading = false;
           return this.router.navigate(['']);
@@ -113,7 +113,7 @@ export class LoginPageComponent implements OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (data) => {
-          console.log(data);
+
           this.store.dispatch(login({ authState: data }));
           return this.router.navigate(['']);
         },

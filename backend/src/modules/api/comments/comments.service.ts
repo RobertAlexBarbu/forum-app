@@ -29,7 +29,6 @@ export class CommentsService {
           postName: createCommentDto.postName,
         })
         .catch((err) => {
-          console.log(err);
         });
     }
     const post = this.em.create(Comment, {

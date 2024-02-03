@@ -77,7 +77,8 @@ export class NavbarComponent {
       this.closeMenu();
     })
   }
-  navigateToLogin() {
+  async navigateToLogin() {
+
     this.router.navigate(['auth', 'login']).then(() => {
       this.closeMenu();
     })
@@ -90,6 +91,8 @@ export class NavbarComponent {
   logout() {
     this.firebaseAuth.signOut().then(() => {
       this.store.dispatch(logout());
+
+      localStorage.removeItem('access');
       this.router.navigate(['']).then(() => {
         this.closeMenu();
       });

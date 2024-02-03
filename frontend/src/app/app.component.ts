@@ -51,7 +51,7 @@ export class AppComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data) => {
           this.check$.next(true);
-          console.log(data);
+
           this.store.dispatch(isAuth({ authState: data }));
         },
         error: () => {
