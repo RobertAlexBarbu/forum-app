@@ -1,17 +1,15 @@
 import { inject, Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { FirebaseAuthDto } from '../../../features/auth-feature/dto/firebase-auth.dto';
+import { FirebaseAuthDto } from '../../dto/firebase-auth.dto';
 import { catchError, from, switchMap, throwError } from 'rxjs';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../../../../core/services/auth/auth.service';
 import firebase from 'firebase/compat/app';
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 import AuthProvider = firebase.auth.AuthProvider;
-import { ErrorService } from '../error/error.service';
+import { ErrorService } from '../../../../core/services/error/error.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class FirebaseService {
   errorService = inject(ErrorService);
 
@@ -112,14 +110,5 @@ export class FirebaseService {
     }
   };
 
-  logout() {
-    this.firebaseAuthService
-      .signOut()
-      .then(() => {
-        localStorage.removeItem('access');
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }
+
 }

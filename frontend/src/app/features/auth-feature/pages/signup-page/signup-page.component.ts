@@ -29,7 +29,7 @@ import {NgIcon, provideIcons} from '@ng-icons/core';
 import {jamGoogle} from '@ng-icons/jam-icons';
 import {
   FirebaseService
-} from '../../../../core/services/firebase/firebase.service';
+} from '../../services/firebase-auth/firebase.service';
 import {
   OrDividerComponent
 } from '../../../../shared/components/or-divider/or-divider.component';
@@ -57,7 +57,8 @@ import {AuthService} from '../../../../core/services/auth/auth.service';
   templateUrl: './signup-page.component.html',
   styleUrls: ['./signup-page.component.scss', '../auth.styles.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  viewProviders: [provideIcons({ jamGoogle })]
+  viewProviders: [provideIcons({ jamGoogle })],
+  providers: [FirebaseService]
 })
 export class SignupPageComponent implements OnDestroy {
   destroy$ = new Subject<boolean>();

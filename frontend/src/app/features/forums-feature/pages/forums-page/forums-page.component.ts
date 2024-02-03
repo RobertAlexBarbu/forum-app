@@ -47,7 +47,8 @@ import { FormUtilsService } from '../../../../core/services/form-utils/form-util
   templateUrl: './forums-page.component.html',
   styleUrls: ['./forums-page.component.scss'],
   viewProviders: [provideIcons({ jamPlus })],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ForumsService]
 })
 export class ForumsPageComponent implements OnInit, OnDestroy {
   destroy$ = new Subject<boolean>();

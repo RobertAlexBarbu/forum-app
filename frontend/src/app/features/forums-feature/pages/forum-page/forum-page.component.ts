@@ -32,7 +32,8 @@ import {Observable, Subject} from 'rxjs';
   templateUrl: './forum-page.component.html',
   styleUrls: ['./forum-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  viewProviders: [provideIcons({ jamPlus })]
+  viewProviders: [provideIcons({ jamPlus })],
+  providers: [ForumsService],
 })
 export class ForumPageComponent {
   destroy$ = new Subject<boolean>();

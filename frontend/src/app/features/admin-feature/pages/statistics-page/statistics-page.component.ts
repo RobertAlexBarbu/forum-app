@@ -18,7 +18,8 @@ import { ForumModel } from '../../../forums-feature/models/forum.model';
   imports: [CommonModule, ChartModule],
   templateUrl: './statistics-page.component.html',
   styleUrls: ['./statistics-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ColorService, ForumsService]
 })
 export class StatisticsPageComponent implements OnInit, OnDestroy {
   destroy$ = new Subject<boolean>();

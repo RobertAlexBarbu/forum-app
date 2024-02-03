@@ -42,7 +42,8 @@ import { UserModel } from '../../../../core/models/user.model';
   templateUrl: './admins-page.component.html',
   styleUrls: ['./admins-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  viewProviders: [provideIcons({ jamPlus })]
+  viewProviders: [provideIcons({ jamPlus })],
+  providers: [AdminService]
 })
 export class AdminsPageComponent implements OnDestroy, OnInit {
   adminService = inject(AdminService);

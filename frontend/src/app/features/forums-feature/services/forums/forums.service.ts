@@ -8,9 +8,7 @@ import { UpdateForumDto } from '../../dto/update-forum.dto';
 import { PostModel } from '../../models/post.model';
 import { CommentModel } from '../../models/comment.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ForumsService {
   http = inject(HttpService);
 

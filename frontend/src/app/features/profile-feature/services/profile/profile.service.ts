@@ -4,9 +4,7 @@ import { ProfileModel } from '../../models/profile.model';
 import { StorageService } from '../../../../core/services/storage/storage.service';
 import { catchError } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ProfileService {
   http = inject(HttpService);
 

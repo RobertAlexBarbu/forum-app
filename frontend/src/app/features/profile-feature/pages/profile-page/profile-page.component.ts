@@ -19,6 +19,9 @@ import { jamCameraF } from '@ng-icons/jam-icons';
 import { TimeAgoPipe } from '../../../../shared/pipes/time-ago.pipe';
 import { ModalComponent } from '../../../../shared/components/modal/modal.component';
 import { ProfilePictureComponent } from '../../components/profile-picture/profile-picture.component';
+import {
+  StorageService
+} from "../../../../core/services/storage/storage.service";
 
 @Component({
   selector: 'app-profile-page',
@@ -35,7 +38,8 @@ import { ProfilePictureComponent } from '../../components/profile-picture/profil
   templateUrl: './profile-page.component.html',
   styleUrls: ['./profile-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  viewProviders: [provideIcons({ jamCameraF })]
+  viewProviders: [provideIcons({ jamCameraF })],
+  providers: [ProfileService, StorageService]
 })
 export class ProfilePageComponent implements OnInit, OnDestroy {
   destroy$ = new Subject<boolean>();

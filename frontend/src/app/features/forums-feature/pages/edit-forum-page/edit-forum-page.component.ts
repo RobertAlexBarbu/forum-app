@@ -37,7 +37,8 @@ import { ForumModel } from '../../models/forum.model';
   templateUrl: './edit-forum-page.component.html',
   styleUrls: ['./edit-forum-page.component.scss'],
   viewProviders: [provideIcons({ jamPlus, jamTrashF, jamPencilF })],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ForumsService]
 })
 export class EditForumPageComponent implements OnInit, OnDestroy {
   destroy$ = new Subject<boolean>();

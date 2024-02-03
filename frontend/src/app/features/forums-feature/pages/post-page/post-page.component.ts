@@ -62,7 +62,8 @@ import {isAuthPipe} from "../../../../shared/pipes/is-auth.pipe";
       jamPencilF,
       jamPlus
     })
-  ]
+  ],
+  providers: [PostsService]
 })
 export class PostPageComponent implements OnInit, OnDestroy {
   postsService = inject(PostsService);

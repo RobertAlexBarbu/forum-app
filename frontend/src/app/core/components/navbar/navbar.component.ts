@@ -22,7 +22,7 @@ import {
   jamPieChartF,
   jamUser
 } from '@ng-icons/jam-icons';
-import {FirebaseService} from "../../services/firebase/firebase.service";
+import {getAuth} from "@angular/fire/auth";
 
 @Component({
   selector: 'app-navbar',
@@ -49,8 +49,6 @@ export class NavbarComponent {
   @Output() navigate = new EventEmitter();
 
   store = inject(Store<AuthStateModel>);
-
-  firebase = inject(FirebaseService);
 
   router = inject(Router);
 
@@ -88,10 +86,11 @@ export class NavbarComponent {
     })
   }
   logout() {
-    this.firebase.logout();
-    this.store.dispatch(logout());
-    this.router.navigate(['']).then(() => {
-      this.closeMenu();
-    });
+    getAuth().signOut().then(() => {
+      this.store.dispatch(logout());
+      this.router.navigate(['']).then(() => {
+        this.closeMenu();
+      });
+    })
   }
 }

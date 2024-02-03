@@ -11,6 +11,7 @@ import {
 } from '@ng-icons/jam-icons';
 import { LikeComponent } from '../like/like.component';
 import { AuthStateModel } from '../../../../core/models/auth-state.model';
+import {PostsService} from "../../services/posts/posts.service";
 
 @Component({
   selector: 'app-post',
@@ -18,7 +19,7 @@ import { AuthStateModel } from '../../../../core/models/auth-state.model';
   imports: [CommonModule, TimeAgoPipe, RouterLink, NgIcon, LikeComponent],
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.scss'],
-  providers: [TimeAgoPipe],
+  providers: [TimeAgoPipe, PostsService],
   changeDetection: ChangeDetectionStrategy.OnPush,
   viewProviders: [
     provideIcons({
@@ -26,7 +27,8 @@ import { AuthStateModel } from '../../../../core/models/auth-state.model';
       jamArrowSquareUpF,
       jamMessageWritingF
     })
-  ]
+  ],
+
 })
 export class PostComponent {
   @Input() forum = false;

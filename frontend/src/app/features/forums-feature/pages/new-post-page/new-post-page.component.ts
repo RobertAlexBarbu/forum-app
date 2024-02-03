@@ -40,7 +40,8 @@ import { ErrorComponent } from '../../../../shared/components/error/error.compon
   ],
   templateUrl: './new-post-page.component.html',
   styleUrls: ['./new-post-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ForumsService, PostsService]
 })
 export class NewPostPageComponent implements OnInit, OnDestroy {
   destroy$ = new Subject<boolean>();

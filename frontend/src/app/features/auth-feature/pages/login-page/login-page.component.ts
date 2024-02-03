@@ -27,7 +27,7 @@ import {
 } from '../../../../shared/components/error/error.component';
 import {
   FirebaseService
-} from '../../../../core/services/firebase/firebase.service';
+} from '../../services/firebase-auth/firebase.service';
 import {
   OrDividerComponent
 } from '../../../../shared/components/or-divider/or-divider.component';
@@ -51,7 +51,8 @@ import {login} from '../../../../core/store/auth/auth.actions';
   ],
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss', '../auth.styles.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [FirebaseService]
 })
 export class LoginPageComponent implements OnDestroy {
   destroy$ = new Subject<boolean>();

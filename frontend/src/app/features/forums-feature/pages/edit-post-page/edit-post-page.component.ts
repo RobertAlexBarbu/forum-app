@@ -39,7 +39,8 @@ import { ErrorComponent } from '../../../../shared/components/error/error.compon
   ],
   templateUrl: './edit-post-page.component.html',
   styleUrls: ['./edit-post-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [PostsService, ForumsService]
 })
 export class EditPostPageComponent implements OnInit, OnDestroy {
   destroy$ = new Subject<boolean>();

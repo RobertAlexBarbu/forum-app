@@ -7,9 +7,7 @@ import { CommentModel } from '../../models/comment.model';
 import { PostLike } from '../../models/post-like.model';
 import { UpdatePostDto } from '../../dto/update-post.dto';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class PostsService {
   http = inject(HttpService);
 

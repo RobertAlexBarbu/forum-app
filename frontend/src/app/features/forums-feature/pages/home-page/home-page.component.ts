@@ -8,12 +8,14 @@ import {Observable} from "rxjs";
 import {PostModel} from "../../models/post.model";
 import {CommentModel} from "../../models/comment.model";
 
+
 @Component({
   selector: 'app-home-page',
   standalone: true,
   imports: [CommonModule, PostComponent, CommentComponent],
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss'],
+  providers: [ForumsService],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomePageComponent {
