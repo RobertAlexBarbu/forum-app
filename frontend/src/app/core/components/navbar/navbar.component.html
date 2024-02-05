@@ -1,59 +1,45 @@
 <div class="navbar">
-  <button
-    pButton
-    class="p-button-sm p-button-text"
+  <a
+    class="nav-link"
     (click)="navigateToHome()">
-    <ng-icon name="jamHomeF"></ng-icon>
     Home
-  </button>
-  <button
-    pButton
-    class="p-button-sm p-button-text"
+  </a>
+  <a
+    class="nav-link"
     (click)="navigateToForums()">
-    <ng-icon name="jamMessagesF"></ng-icon>
-    Forum
-  </button>
-  <button
+    Forums
+  </a>
+  <a
     *ngIf="authState | isAuth"
-    pButton
-    class="p-button p-button-sm p-button-text"
+    class="nav-link"
     (click)="navigateToProfile(authState.username)">
-    <ng-icon name="jamUser"></ng-icon>
     Profile
-  </button>
-  <button
+  </a>
+  <a
     *ngIf="authState | isAdmin"
-    pButton
-    class="p-button p-button-sm p-button-text"
+    class="nav-link"
     (click)="navigateToAdmin()">
-    <ng-icon name="jamPieChartF"></ng-icon>
     Dashboard
-  </button>
-
-  <div class="separator"></div>
-  <button
-
+  </a>
+  <a
     *ngIf="authState | isAuth"
-    pButton
-    class="p-button-sm p-button-text logout p-button"
+    class="nav-link logout"
     (click)="logout()">
     Log Out
-  </button>
-  <button
+  </a>
+  <a
     *ngIf="!(authState | isAuth)"
-    pButton
-    class="p-button-sm p-button-text login mobile"
+    class="nav-link login mobile"
     (click)="navigateToLogin()">
     Log in
-  </button>
-  <button
+  </a>
+  <a
 
     *ngIf="!(authState | isAuth)"
-    pButton
-    class="p-button-text p-button-sm signup"
+    class="nav-link signup"
     (click)="navigateToSignup()">
     Sign up
-  </button>
+  </a>
   <button
     *ngIf="!(authState | isAuth)"
     pButton

@@ -1,4 +1,4 @@
-<div class="card" >
+<div class="card card-form" >
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <h2>Log in</h2>
 
@@ -56,6 +56,7 @@
         </ng-container>
       </button>
     </div>
+    <div class="link mt-5">Forgot your password?</div>
     <app-or-divider></app-or-divider>
     <button
       (click)="loginGoogle()"

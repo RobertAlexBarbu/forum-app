@@ -11,11 +11,12 @@ button{
 .question {
   color: var(--text-gray);
   margin-bottom: 1rem;
+  font-weight: 600;
 }
 .help {
   text-align: center;
 }
-.card {
+.auth-card {
   max-width: 30rem;
 }
 .google {
@@ -24,4 +25,10 @@ button{
 }
 .auth-button {
   color: var(--base-text);
+}
+.auth-button:hover {
+  background-color: #21212110;
+}
+.auth-button:active {
+  background-color: #21212115;
 }

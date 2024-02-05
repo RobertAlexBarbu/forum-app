@@ -1,18 +1,39 @@
 
-
 .navbar {
   display: flex;
   flex-direction: column;
-
-  padding: 0 1rem 0 1rem;
-  row-gap: 0.5rem;
+  user-select: none;
+  padding: 1rem 1rem 0 1rem;
+  row-gap: 1.5rem;
 }
 ng-icon {
   margin-right: 5px;
 }
+.nav-link {
+  user-select: none;
+  font-size: 1rem;
+  font-weight: 700;
+  transition: 120ms ease-in-out;
+  margin: 0 0.7rem;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+.nav-link:hover {
+  color: var(--contrast);
+  cursor: pointer;
+}
+.nav-link:active {
+  transform: scale(0.975);
+}
 
 .active-link.p-button.p-element {
   background-color: rgba(59, 130, 246, .10) !important;
+}
+@media (max-width: 767px) {
+  .nav-link {
+    font-size: 1.8rem;
+    text-underline-offset: 7px;
+  }
 }
 @media (min-width: 768px) {
   .navbar {
