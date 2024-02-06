@@ -4,12 +4,9 @@
 }
 @media (max-width: 767px) {
   .post {border: none;
-  padding: 0.5rem 0.5rem;
-    transition: background-color 100ms ease-in-out;
+  padding: 0.5rem 0rem;
   }
-  .post:active {
-    background-color: #e5e5e580;
-  }
+
 }
 @media (min-width: 768px) {
   .post {
