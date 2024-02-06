@@ -7,11 +7,15 @@ import {
   OnInit
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgIcon } from '@ng-icons/core';
+import {NgIcon, provideIcons} from '@ng-icons/core';
 import { PostsService } from '../../services/posts/posts.service';
 import { AuthStateModel } from '../../../../core/models/auth-state.model';
 import { PostModel } from '../../models/post.model';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
+import {Event} from "@angular/router";
+import {heroHeartSolid} from "@ng-icons/heroicons/solid";
+import {heroHeart} from "@ng-icons/heroicons/outline";
+import {jamHeart, jamHeartF} from "@ng-icons/jam-icons";
 
 @Component({
   selector: 'app-like',
@@ -19,7 +23,8 @@ import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
   imports: [CommonModule, NgIcon],
   templateUrl: './like.component.html',
   styleUrls: ['./like.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  viewProviders: [provideIcons({ jamHeart, jamHeartF })]
 })
 export class LikeComponent implements OnInit, OnDestroy {
   @Input()
@@ -53,17 +58,22 @@ export class LikeComponent implements OnInit, OnDestroy {
     this.likes$.next(this.post.postLikes.length);
   }
 
-  likePost() {
+  likePost(event: any) {
+    event.stopPropagation();
+    const audio = new Audio('assets/blop.wav');
+    audio.play();
+    this.likes += 1;
+    this.likes$.next(this.likes);
+    this.liked = true;
     this.postsService
       .likePost(this.post.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe();
-    this.likes += 1;
-    this.likes$.next(this.likes);
-    this.liked = true;
+
   }
 
-  dislikePost() {
+  dislikePost(event: any) {
+    event.stopPropagation();
     this.likes -= 1;
     this.likes$.next(this.likes);
     this.postsService

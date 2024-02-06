@@ -3,13 +3,27 @@
   align-items: center;
   display: flex;
   column-gap: 0.2rem;
-  font-size: 0.9rem;
+  font-size: 1rem;
+  user-select: none;
 }
-.liked {
-  color: coral;
+.likes {
+  width: 45px;
+}
+.liked ng-icon{
+  color: var(--error);
 }
 button {
   padding: 0;
   border: none;
   background-color: transparent;
+}
+ng-icon {
+  transition: 50ms ease-in-out;
+  cursor: pointer;
+}
+ng-icon:hover {
+  color: var(--error);
+}
+ng-icon:active {
+  transform: scale(0.95)
 }

@@ -1,29 +1,33 @@
-<div class="post">
+<div class="post ml-4 mr-4" routerLink="/forums/{{post.forum.id}}/posts/{{post.id}}">
   <div class="top">
     <ng-container *ngIf="forum">
-      <div>{{post.forum.name}}</div>
+      <div class="link" (click)="goToForum($event, post.forum.id)">{{post.forum.name}}</div>
       <div class="sphere"></div>
     </ng-container>
-    <div class="clickable" [routerLink]="['/profile', post.user.username]">
-      {{post.user.username}}
-    </div>
-    <div class="sphere"></div>
+    <ng-container *ngIf="user">
+      <div class="link" (click)="goToProfile($event, post.user.username)" [routerLink]="['/profile', post.user.username]">
+        {{post.user.username}}
+      </div>
+      <div class="sphere"></div>
+    </ng-container>
     <div>{{post.createdAt | timeAgo}}</div>
   </div>
-  <div class="body">
+  <div class="body mt-2">
     <div class="category" *ngIf="post.category">{{post.category.name}}</div>
     <div
-      class="title clickable"
-      routerLink="/forums/{{post.forum.id}}/posts/{{post.id}}">
+      class="title text-xl font-bold"
+      >
       {{post.title}}
     </div>
   </div>
-  <div class="bottom">
+  <div class="content mt-4 mb-4">
+    {{post.content}}
+  </div>
+  <div class="bottom flex gap-3">
     <app-like [post]="post" [authState]="authState"></app-like>
     <div class="comments">
-      <ng-icon name="jamMessageWritingF" size="1.2rem"></ng-icon>
+      <ng-icon name="heroChatBubbleLeftSolid" size="1.3rem"></ng-icon>
       {{post.comments.length }}
-      <div class="desktop">comments</div>
     </div>
   </div>
 </div>

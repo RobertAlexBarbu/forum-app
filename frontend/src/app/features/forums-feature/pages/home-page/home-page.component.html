@@ -1,10 +1,26 @@
 <div class="card">
   <div class="home" *ngIf="authState$ | async as authState">
     <ng-container *ngIf="trending$ | async as trending">
+      <div class="top">
+        <div class="font-bold text-xl ml-4">Home</div>
+        <button
+          pButton
+          class="p-button p-button-text smaller ml-2"
+        ><ng-icon class="mr-1"  name="heroFireMini"></ng-icon>New</button>
+        <button
+          pButton
+          class="p-button p-button-text smaller"
+        ><ng-icon class="mr-1" name="heroHeartSolid"></ng-icon>Top</button>
+      </div>
+      <div class="mr-4 ml-4 mb-4">
+        <input placeholder="Create New Post"  class="mt-2 input" type="text" pInputText>
+      </div>
+
       <div class="posts">
-        <div class="text-xl font-bold">Latest posts</div>
         <ng-container *ngFor="let post of trending.latestPosts">
-          <app-post [authState]="authState" [post]="post"></app-post>
+          <div class="desktop mt-4 mb-4"></div>
+          <div class="post-separator mt-2 mb-2 mobile"></div>
+          <app-post [user]="false" [forum]="true" [authState]="authState" [post]="post"></app-post>
         </ng-container>
       </div>
     </ng-container>

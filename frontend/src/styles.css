@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --border: #E0E0E0;
+  --border: rgb(209, 213, 219);
   --base: #FEFEFE;
   --error: #dc2626;
   --base-text: #212121;
@@ -159,6 +159,7 @@ h2 {
 }
 .p-component {
   border-width: 2px;
+
 }
 .input {
   width: 100%;
@@ -239,4 +240,13 @@ label {
     background-color: transparent;
   }
 }
+.post-separator {
 
+
+}
+@media (max-width: 767px) {
+  .post-separator {
+    height: 2px;
+    background-color: var(--border);
+  }
+}

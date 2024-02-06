@@ -4,7 +4,7 @@
   flex-direction: column;
   user-select: none;
   padding: 1rem 1rem 0 1rem;
-  row-gap: 1.5rem;
+
 }
 ng-icon {
   margin-right: 5px;
@@ -17,6 +17,7 @@ ng-icon {
   margin: 0 0.7rem;
   text-decoration-thickness: 2px;
   text-underline-offset: 4px;
+  padding: 0.6rem 0;
 }
 .nav-link:hover {
   color: var(--contrast);
