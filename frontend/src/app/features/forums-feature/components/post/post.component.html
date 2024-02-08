@@ -1,5 +1,5 @@
 <div class="post ml-4 mr-4" routerLink="/forums/{{post.forum.id}}/posts/{{post.id}}">
-  <div class="top">
+  <div class="flex gap-2 mb-2 items-center font-semibold">
     <ng-container *ngIf="forum">
       <div class="link" (click)="goToForum($event, post.forum.id)">{{post.forum.name}}</div>
       <div class="sphere"></div>
