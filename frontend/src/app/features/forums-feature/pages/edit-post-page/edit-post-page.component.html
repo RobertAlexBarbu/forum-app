@@ -1,5 +1,5 @@
-<div class="card" >
-  <ng-container *ngIf="forum$ | async as forumWithCategories">
+<div class="card card-form" *ngIf="forum$ | async as forumWithCategories">
+
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <h2>Edit post</h2>
       <app-error [errorMessage]="error$ | async"></app-error>
@@ -70,5 +70,4 @@
         <button pButton class="p-button">Save</button>
       </div>
     </form>
-  </ng-container>
 </div>

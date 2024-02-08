@@ -23,6 +23,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ButtonModule } from 'primeng/button';
 import { ErrorComponent } from '../../../../shared/components/error/error.component';
 import { FormUtilsService } from '../../../../core/services/form-utils/form-utils.service';
+import {PaginatorModule} from "primeng/paginator";
 
 @Component({
   selector: 'app-post-comments',
@@ -34,7 +35,8 @@ import { FormUtilsService } from '../../../../core/services/form-utils/form-util
     FormsModule,
     ReactiveFormsModule,
     ButtonModule,
-    ErrorComponent
+    ErrorComponent,
+    PaginatorModule
   ],
   templateUrl: './post-comments.component.html',
   styleUrls: ['./post-comments.component.scss'],

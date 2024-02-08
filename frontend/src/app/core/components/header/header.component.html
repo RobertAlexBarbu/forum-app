@@ -1,19 +1,22 @@
 <div class="wrapper"  >
   <div class="header"  >
     <div class="name">Forumly</div>
-    <div class="desktop" *ngIf="check$ | async">
-      <app-navbar [authState]="authState"></app-navbar>
-    </div>
-    <div class="mobile">
-      <button
-        aria-label="open-navigation"
-        pButton
-        class="nav nav-icon p-button-sm p-button-text"
-        icon="pi"
-        (click)="openMenu()">
-        <ng-icon name="jamAlignJustify" size="2.5rem"></ng-icon>
-      </button>
-    </div>
+    <ng-container *ngIf="check$ | async">
+      <div class="desktop" >
+        <app-navbar [authState]="authState"></app-navbar>
+      </div>
+      <div class="mobile">
+        <button
+          aria-label="open-navigation"
+          pButton
+          class="nav nav-icon p-button-sm p-button-text"
+          icon="pi"
+          (click)="openMenu()">
+          <ng-icon name="jamAlignJustify" size="2.5rem"></ng-icon>
+        </button>
+      </div>
+    </ng-container>
+
   </div>
 </div>
 <app-modal [(isVisible)]="isVisible">

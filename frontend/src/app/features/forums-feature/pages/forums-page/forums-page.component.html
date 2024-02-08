@@ -1,23 +1,33 @@
 <div class="card" *ngIf="authState$ | async as authState">
-  <div class="header">
-    <div class="title">Forums</div>
+  <div class="top ml-4 mr-4">
+    <div class="text-2xl font-bold">Forums</div>
+    <button
+      pButton
+      class="p-button p-button-text smaller invisible"
+    ></button>
     <button
       *ngIf="authState | isAdmin"
       (click)="openAddModal()"
       pButton
-      class="smaller p-button-text p-button-sm smaller">
+      class="smaller p-button-text p-button-sm smaller ml-auto">
       <ng-icon name="jamPlus"></ng-icon>
       New Forum
     </button>
+
   </div>
-  <ng-container *ngIf="forums$ | async as forums">
-    <ng-container *ngFor="let forum of forums">
-      <app-forum
-        [authState]="authState"
-        [forum]="forum"
-        (deleteForum)="openDeleteModal($event)"></app-forum>
+
+  <div class="forums mt-4 ml-4 mr-4">
+    <ng-container *ngIf="forums$ | async as forums">
+      <ng-container *ngFor="let forum of forums">
+        <div class="mt-4 mb-4"></div>
+        <app-forum
+          [authState]="authState"
+          [forum]="forum"
+          (deleteForum)="openDeleteModal($event)"></app-forum>
+      </ng-container>
     </ng-container>
-  </ng-container>
+  </div>
+
 </div>
 
 <app-modal [(isVisible)]="addForumModal">

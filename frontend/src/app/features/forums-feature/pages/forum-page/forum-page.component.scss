@@ -12,15 +12,12 @@
   padding: 5px 0;
   border-bottom: 1px solid var(--border);
 }
-.card {
-  max-width: 70rem;
-  transition: height 2s;
-}
 
-@media (min-width: 768px) {
-  .card {
-    padding-left: 8rem;
-    padding-right: 8rem;
-    padding-bottom: 3rem;
-  }
+
+
+
+.top {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
 }

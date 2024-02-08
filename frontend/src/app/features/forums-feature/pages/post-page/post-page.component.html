@@ -1,32 +1,48 @@
 <div class="card"  *ngIf="authState$ | async as authState">
   <ng-container *ngIf="post$ | async as post">
-    <div class="header-nav">
-      <div class="title-nav">
-        <div  class="clickable" routerLink="/forums">Forums</div>
-        <div>/</div>
-        <div class="clickable" routerLink="/forums/{{post.forum.id}}">
-          {{post.forum.name}}
-        </div>
-      </div>
-      <button
-        *ngIf="authState | isAuth"
-        [routerLink]="['/forums', post.forum.id, 'new-post']"
-        pButton
-        class="smaller p-button-text p-button-sm smaller">
-        <ng-icon name="jamPlus"></ng-icon>
-        New Post
-      </button>
+  <div class="top">
+    <div class="font-bold text-2xl ml-4 link underline" routerLink="/forums/{{post.forum.id}}">
+      {{post.forum.name}}
     </div>
-<div class="mt-5">
+    <button
+      pButton
+      class="p-button p-button-text smaller invisible"
+    ></button>
+  </div>
+<div class="mt-4">
 
-      <div class="post">
-        <div class="buttons">
+      <div class="post mr-4 ml-4">
+        <div class="flex gap-2 mb-2 items-center font-semibold">
+          <div
+            class="link"
+            [routerLink]="['/profile', post.user.username]">
+            {{post.user.username}}
+          </div>
+          <div class="sphere"></div>
+          <div>{{post.createdAt | timeAgo}}</div>
+        </div>
+
+        <div class="header">
+          <div class="body mt-2">
+            <div class="category" *ngIf="post.category">{{post.category.name}}</div>
+            <div
+              class="title text-xl font-bold"
+            >
+              {{post.title}}
+            </div>
+          </div>
+        </div>
+
+        <div class="content mt-2 whitespace-pre-line">{{post.content}}</div>
+
+        <div class="buttons flex items-center gap-2 mt-2">
+          <app-like class="mr-auto" [authState]="authState" [post]="post"></app-like>
           <button
             *ngIf="authState.id === post.user.id"
             routerLink="/forums/{{post.forum.id}}/posts/edit/{{post.id}}"
             pButton
             class="p-button-sm nav p-button p-button-text"
-            pTooltip="Edit Post"
+            pTooltip="Edit"
             aria-label="edit-post"
             tooltipPosition="top">
             <ng-icon name="jamPencilF"></ng-icon>
@@ -38,27 +54,12 @@
             pButton
             class="p-button-sm nav p-button p-button-danger p-button-text"
             tooltipPosition="top"
-            pTooltip="Delete Post">
+            pTooltip="Delete">
             <ng-icon name="jamTrashF"></ng-icon>
           </button>
         </div>
-        <div class="header">
-          <span class="category" *ngIf="post.category"
-            >{{post.category.name}}</span
-          ><span class="title">{{post.title}}</span>
-        </div>
-        <div class="top">
-          <div
-            class="clickable"
-            [routerLink]="['/profile', post.user.username]">
-            {{post.user.username}}
-          </div>
-          <div class="sphere"></div>
-          <div>{{post.createdAt | timeAgo}}</div>
-        </div>
-        <div class="content">{{post.content}}</div>
-        <app-like [authState]="authState" [post]="post"></app-like>
       </div>
+        <div class="text-lg font-bold mt-5 ml-4 comments">Comments</div>
       <app-post-comments
         [authState]="authState"
         [post]="post"></app-post-comments>

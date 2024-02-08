@@ -83,7 +83,7 @@ export class EditForumPageComponent implements OnInit, OnDestroy {
           this.categories = data.categories;
           this.categories$.next(this.categories);
           this.forumName.patchValue(data.name);
-          this.loaded$.next(true);
+
         }
       });
   }

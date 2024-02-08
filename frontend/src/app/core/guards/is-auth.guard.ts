@@ -14,12 +14,12 @@ export const isAuthGuard: CanMatchFn = () => {
       if (authService.isAuth(state)) {
         return true;
       } else {
-        return router.parseUrl('');
+        return router.parseUrl('auth/login');
       }
     }),
     catchError(() => {
       store.dispatch(logout());
-      return of(router.parseUrl(''));
+      return of(router.parseUrl('auth/login'));
     })
   );
 };

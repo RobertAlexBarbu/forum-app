@@ -1,26 +1,31 @@
 .forum {
-  border: 1px solid var(--border);
+  border: 2px solid var(--border);
   border-radius: var(--radius);
   padding: 0.5rem 0.5rem;
   display: flex;
-  margin-top: 1rem;
   align-items: center;
   word-break: break-all !important;
 }
+@media (min-width: 768px) {
+  .forum:hover {
+    border-color: var(--text);
+    cursor: pointer;
+  }
+}
+
 .forum-icon {
   color: var(--base);
 
 }
 .forum-icon-container {
-  background-color: #3B82F6;
   margin-right: 1rem;
-  padding: 0.5rem;
   width: 3.5rem;
   height: 3.5rem;
-  border-radius: 5px;
+  border-radius: 500px;
   display: flex;
   justify-content: center;
   align-items: center;
+  color: var(--contrast);
 }
 .name {
   font-weight: 700;
@@ -35,7 +40,8 @@
 }
 .info {
   color: var(--text-gray);
-  font-size: 0.9rem;
+  font-size: 1rem;
+  font-weight: 600;
   display: flex;
   align-items: center;
   margin-bottom: 0.1rem;

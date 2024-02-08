@@ -12,12 +12,13 @@ import {NgIcon, provideIcons} from "@ng-icons/core";
 import {heroFireMini} from "@ng-icons/heroicons/mini";
 import {heroHeartSolid} from "@ng-icons/heroicons/solid";
 import {ChipsModule} from "primeng/chips";
+import {PaginatorModule} from "primeng/paginator";
 
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [CommonModule, PostComponent, CommentComponent, ButtonModule, NgIcon, ChipsModule],
+  imports: [CommonModule, PostComponent, CommentComponent, ButtonModule, NgIcon, ChipsModule, PaginatorModule],
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss'],
   providers: [ForumsService],

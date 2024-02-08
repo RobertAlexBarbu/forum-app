@@ -1,26 +1,28 @@
 <div class="card"  *ngIf="authState$ | async as authState">
   <ng-container *ngIf="forum$ | async as forum">
-    <div class="header">
-      <div class="title">
-        <div  class="clickable" routerLink="/forums">Forums</div>
-        <div>/</div>
-        <div class="clickable" routerLink="/forums/{{forum.id}}">
-          {{forum.name}}
-        </div>
-      </div>
+    <div class="top">
+      <div class="link font-bold text-2xl ml-4 underline" routerLink="/forums/{{forum.id}}">{{forum.name}}</div>
       <button
-        *ngIf="authState | isAuth"
-        routerLink="./new-post"
         pButton
-        class="smaller p-button-text p-button-sm smaller">
-        <ng-icon name="jamPlus"></ng-icon>
-        New Post
-      </button>
+        class="p-button p-button-text smaller ml-2"
+      ><ng-icon class="mr-1"  name="heroFireMini"></ng-icon>New</button>
+      <button
+        pButton
+        class="p-button p-button-text smaller"
+      ><ng-icon class="mr-1" name="heroHeartSolid"></ng-icon>Top</button>
+    </div>
+    <div class="mr-4 ml-4 mb-4">
+      <input routerLink="./new-post" placeholder="Create New Post"  class="mt-2 input" type="text" pInputText>
     </div>
         <ng-container *ngIf="forum.posts.length > 0; else noPosts">
           <ng-container *ngFor="let post of forum.posts">
-            <app-post [authState]="authState" [post]="post"></app-post>
+            <div class="desktop mt-4 mb-4"></div>
+            <div class="post-separator mt-2 mb-2 mobile"></div>
+            <app-post [user]="true" [forum]="false" [authState]="authState" [post]="post"></app-post>
           </ng-container>
+          <div class="ml-4 mr-4">
+            <p-paginator class="ml-4" [totalRecords]="120" [rows]="10" [pageLinkSize]="3"></p-paginator>
+          </div>
         </ng-container>
         <ng-template #noPosts>
           <div class="flex justify-center">

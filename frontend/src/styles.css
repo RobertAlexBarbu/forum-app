@@ -27,7 +27,7 @@ body {
   color: var(--base-text);
   background-color: var(--base);
   overflow-y: scroll;
-
+  scroll-behavior: smooth !important;
 }
 
 
@@ -249,4 +249,18 @@ label {
     height: 2px;
     background-color: var(--border);
   }
+}
+
+.p-paginator {
+  border: none;
+  font-size: 1rem;
+  padding: 0;
+}
+.p-paginator-element {
+  padding: 0;
+  margin: 0;
+  height: 2em;
+}
+ .p-paginator-page, .p-paginator-element {
+  min-width: 2rem;
 }

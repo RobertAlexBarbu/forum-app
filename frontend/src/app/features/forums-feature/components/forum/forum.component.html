@@ -1,25 +1,28 @@
-<div class="forum">
-  <div class="forum-icon-container">
-    <ng-icon class="forum-icon" name="jamMessagesF" size="2.5rem"></ng-icon>
+<div class="forum" [routerLink]="['', 'forums', forum.id]">
+  <div class="forum-icon-container desktop">
+    <ng-icon class="desktop" name="heroChatBubbleOvalLeftEllipsisSolid" size="3rem"></ng-icon>
   </div>
   <div class="forum-info">
-    <div class="name clickable" [routerLink]="['', 'forums', forum.id]">
+    <div class="text-xl font-bold mb-2">
       {{forum.name}}
     </div>
+<!--    <div class="mt-1 mb-1 font-semibold text-lg">A basic forum description.</div>-->
     <div class="data">
       <div class="data-group">
         <div class="info">
-          <ng-icon name="jamMessageF" size="0.8rem"></ng-icon>
+          <ng-icon name="heroChatBubbleOvalLeftSolid" size="1rem"></ng-icon>
           <div>{{forum.posts.length}} discussions</div>
         </div>
       </div>
       <div class="data-group desktop">
         <div class="info">
+          <ng-icon name="heroClockSolid" size="1rem"></ng-icon>
           <div *ngIf="forum.posts.length; else noDisc">
-            Latest: {{forum.posts[0].createdAt | timeAgo}}
+            latest: {{forum.posts[0].createdAt | timeAgo}}
           </div>
           <ng-template #noDisc>
-            <div>Latest: Nothing yet</div>
+
+            <div>latest: Nothing yet</div>
           </ng-template>
         </div>
       </div>
@@ -29,7 +32,7 @@
     <button
       aria-label="edit-forum"
       *ngIf="authState | isAdmin"
-      [routerLink]="['', 'forums', 'edit', forum.id]"
+      (click)="edit($event, forum.id)"
       pButton
       class="p-button-text p-button nav"
       pTooltip="Edit"
@@ -40,7 +43,7 @@
       aria-label="delete-forum"
       *ngIf="authState | isAdmin"
       pButton
-      (click)="delete()"
+      (click)="delete($event)"
       class="p-button-text p-button p-button-danger nav"
       pTooltip="Delete"
       tooltipPosition="right">

@@ -1,5 +1,5 @@
-<div class="card">
-  <ng-container *ngIf="forum$ | async as forumWithCategories">
+<div class="card card-form" *ngIf="forum$ | async as forumWithCategories">
+  <ng-container >
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <h2>New post</h2>
       <app-error [errorMessage]="error$ | async"></app-error>
