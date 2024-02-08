@@ -1,11 +1,12 @@
 <ng-container *ngIf="comments$ | async as comments">
   <div class="comments mt-5 ml-4 mr-4">
     <ng-container *ngFor="let comment of comments">
-      <div class="mt-5"></div>
+
       <app-comment
         [authState]="authState"
         (delete)="deleteComment($event)"
         [comment]="comment"></app-comment>
+      <div class="mb-8"></div>
     </ng-container>
   </div>
   <div class="create-comment ml-4 mr-4 mt-7">
