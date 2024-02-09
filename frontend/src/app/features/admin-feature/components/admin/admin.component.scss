@@ -1,16 +1,39 @@
 .admin {
   display: flex;
-  max-width: 30rem;
-  border: 1px solid var(--border);
+  flex-direction: column;
+
   padding: 0.3rem;
-  align-items: center;
-  border-radius: 5px;
+  justify-items: center;
+
   column-gap: 10px;
   flex-wrap: wrap;
+  gap: 0.5rem;
+  word-break: break-word;
+}
+.admin-component {
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  padding: 4px;
 }
 .username {
   font-weight: 600;
 }
 button {
   margin-left: auto;
+}
+
+@media(max-width: 380px) {
+  .admin-component {
+    flex-direction: column;
+    padding: 0;
+  }
+  button {
+    margin: 0;
+  }
+  .admin {
+    text-align: center;
+  }
+;
 }

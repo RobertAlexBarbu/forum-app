@@ -4,13 +4,10 @@
 .admins {
   display: flex;
   flex-direction: column;
-  row-gap: 0.5rem;
+  row-gap: 1rem;
   flex-grow: 1;
 }
-.page {
-  max-width: 30rem;
-  margin: auto;
-}
+
 .title {
   flex-grow: 1;
 }

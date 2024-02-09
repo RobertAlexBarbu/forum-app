@@ -1,6 +1,6 @@
 <div class="card">
-  <div class="top">
-    <h3 class="desktop">Dashboard</h3>
+  <div class="top ml-4 mr-4">
+    <h3 class="desktop text-2xl font-bold">Dashboard</h3>
     <button
       [routerLinkActiveOptions]="{exact: true}"
       routerLinkActive="active-link"
@@ -17,5 +17,8 @@
       Statistics
     </button>
   </div>
-  <router-outlet></router-outlet>
+  <div class="mr-4 ml-4">
+    <router-outlet></router-outlet>
+  </div>
+
 </div>

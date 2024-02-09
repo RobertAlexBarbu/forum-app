@@ -1,4 +1,4 @@
-<div class="page">
+<div class="card items-center">
   <div class="title mt-5">
     <app-error [errorMessage]="error$ | async"></app-error>
     <div class="p-inputgroup mt-1 mb-1">
@@ -22,7 +22,7 @@
     </div>
   </div>
   <div class="admins">
-    <div class="text">Existing admins:</div>
+    <div class="text font-semibold">Existing admins:</div>
     <ng-container *ngIf="admins$ | async as admins">
       <ng-container *ngFor="let admin of admins">
         <app-admin (demote)="demoteAdmin($event)" [admin]="admin"></app-admin>

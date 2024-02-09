@@ -1,7 +1,9 @@
-<div class="admin">
-  <div class="username">{{admin.username}}</div>
-  <div class="sphere"></div>
-  <div>{{admin.email}}</div>
+<div class="admin-component">
+  <div class="admin">
+    <div class="username link" [routerLink]="['/profile', admin.username]">{{admin.username}}</div>
+    <div>{{admin.email}}</div>
+  </div>
+
   <button
     (click)="demoteAdmin()"
     pTooltip="Demote"
