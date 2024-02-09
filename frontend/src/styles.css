@@ -264,3 +264,9 @@ label {
  .p-paginator-page, .p-paginator-element {
   min-width: 2rem;
 }
+.post-form .card, .card-form {
+  max-width: 45rem;
+}
+.post-form form {
+  max-width: 35rem;
+}

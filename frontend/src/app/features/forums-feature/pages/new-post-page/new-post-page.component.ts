@@ -64,7 +64,7 @@ export class NewPostPageComponent implements OnInit, OnDestroy {
     category: new FormControl<CategoryModel | null>(null, {}),
     title: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.maxLength(32)]
+      validators: [Validators.required, Validators.maxLength(64)]
     }),
     content: new FormControl('', {
       nonNullable: true,

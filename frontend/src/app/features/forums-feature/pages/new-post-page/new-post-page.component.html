@@ -1,4 +1,4 @@
-<div class="card card-form" *ngIf="forum$ | async as forumWithCategories">
+<div class="card card-form post-form" *ngIf="forum$ | async as forumWithCategories">
   <ng-container >
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <h2>New post</h2>
@@ -41,12 +41,11 @@
       <div class="input-last">
         <label for="content">Content</label>
         <textarea
-          rows="5"
+          rows="15"
           id="content"
           formControlName="content"
-          cols="30"
-          pInputTextarea
-          [autoResize]="true"></textarea>
+          cols="60"
+          pInputTextarea></textarea>
         <div class="error">
           <ng-container *ngIf="form.controls['content'] as content">
             <ng-container *ngIf="content.errors && content.dirty">
