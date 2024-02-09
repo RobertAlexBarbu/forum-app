@@ -104,6 +104,9 @@ button.test {
     border-radius: 15px;
     max-width: 35rem;
   }
+  .card-form.login-form {
+    max-width: 35rem;
+  }
 }
 
 /* LINK STYLES */
