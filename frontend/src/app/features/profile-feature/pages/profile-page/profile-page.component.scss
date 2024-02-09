@@ -1,16 +1,10 @@
 
-.page {
-  max-width: 40rem;
-  margin: auto;
-}
-  .card {
-    max-width: 70rem;
-}
 .profile {
   display: flex;
   justify-content: center;
-  gap: 1rem;
+  gap: 1rem 2rem;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 

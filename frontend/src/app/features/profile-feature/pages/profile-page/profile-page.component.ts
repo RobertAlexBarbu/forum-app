@@ -22,6 +22,7 @@ import { ProfilePictureComponent } from '../../components/profile-picture/profil
 import {
   StorageService
 } from "../../../../core/services/storage/storage.service";
+import {PaginatorModule} from "primeng/paginator";
 
 @Component({
   selector: 'app-profile-page',
@@ -33,7 +34,8 @@ import {
     NgIcon,
     TimeAgoPipe,
     ModalComponent,
-    ProfilePictureComponent
+    ProfilePictureComponent,
+    PaginatorModule
   ],
   templateUrl: './profile-page.component.html',
   styleUrls: ['./profile-page.component.scss'],
