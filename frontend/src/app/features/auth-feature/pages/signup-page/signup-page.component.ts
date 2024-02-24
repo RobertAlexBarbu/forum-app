@@ -120,6 +120,20 @@ export class SignupPageComponent implements OnDestroy {
         }
       });
   }
+  signupFacebook() {
+    this.signupService
+      .signupWithFacebook()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (data) => {
+          this.store.dispatch(signup({ authState: data }));
+          return this.router.navigate(['']);
+        },
+        error: (err) => {
+          this.formUtils.handleSubmitError(err, this.form, this.error$);
+        }
+      });
+  }
 
   ngOnDestroy() {
     this.destroy$.next(true);

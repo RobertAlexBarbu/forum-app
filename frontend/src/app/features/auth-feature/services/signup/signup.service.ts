@@ -5,7 +5,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FirebaseAuthDto } from '../../dto/firebase-auth.dto';
 import { catchError, from, switchMap, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
-import { AuthProvider, GoogleAuthProvider } from 'firebase/auth';
+import { AuthProvider, GoogleAuthProvider, FacebookAuthProvider } from 'firebase/auth';
 import firebase from 'firebase/compat';
 
 @Injectable({
@@ -37,6 +37,14 @@ export class SignupService {
     provider.setCustomParameters({
       prompt: 'select_account'
     });
+    return this.signupWithProvider(provider);
+  }
+
+  signupWithFacebook() {
+    const provider = new FacebookAuthProvider();
+    provider.setCustomParameters({
+      prompt: 'select-account'
+    })
     return this.signupWithProvider(provider);
   }
 
