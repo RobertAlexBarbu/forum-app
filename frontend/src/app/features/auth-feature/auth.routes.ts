@@ -17,6 +17,20 @@ export const authRoutes: Routes = [
           import('./pages/signup-page/signup-page.component').then(
             (m) => m.SignupPageComponent
           )
+      },
+      {
+        path: 'reset',
+        loadComponent: () =>
+          import('./pages/reset-password-page/reset-password-page.component').then(
+            (m) => m.ResetPasswordPageComponent
+          )
+      },
+      {
+        path: 'reset-success',
+        loadComponent: () =>
+          import('./pages/reset-succesful-page/reset-succesful-page.component').then(
+            (m) => m.ResetSuccesfulPageComponent
+          )
       }
     ]
   }
