@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
 
-
 export const adminRoutes: Routes = [
   {
     path: '',
@@ -9,11 +8,17 @@ export const adminRoutes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () => import('./pages/admins-page/admins-page.component').then(m => m.AdminsPageComponent)
+        loadComponent: () =>
+          import('./pages/admins-page/admins-page.component').then(
+            (m) => m.AdminsPageComponent
+          )
       },
       {
         path: 'statistics',
-        loadComponent: () => import('./pages/statistics-page/statistics-page.component').then(m => m.StatisticsPageComponent)
+        loadComponent: () =>
+          import('./pages/statistics-page/statistics-page.component').then(
+            (m) => m.StatisticsPageComponent
+          )
       }
     ]
   }

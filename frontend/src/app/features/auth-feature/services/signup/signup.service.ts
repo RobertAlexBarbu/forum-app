@@ -1,18 +1,17 @@
-import {inject, Injectable} from '@angular/core';
-import {ErrorService} from "../../../../core/services/error/error.service";
-import {AuthService} from "../../../../core/services/auth/auth.service";
-import {AngularFireAuth} from "@angular/fire/compat/auth";
-import {FirebaseAuthDto} from "../../dto/firebase-auth.dto";
-import {catchError, from, switchMap, throwError} from "rxjs";
-import {HttpErrorResponse} from "@angular/common/http";
-import {AuthProvider, GoogleAuthProvider} from "firebase/auth";
-import firebase from "firebase/compat";
+import { inject, Injectable } from '@angular/core';
+import { ErrorService } from '../../../../core/services/error/error.service';
+import { AuthService } from '../../../../core/services/auth/auth.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { FirebaseAuthDto } from '../../dto/firebase-auth.dto';
+import { catchError, from, switchMap, throwError } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+import { AuthProvider, GoogleAuthProvider } from 'firebase/auth';
+import firebase from 'firebase/compat';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SignupService {
-
   errorService = inject(ErrorService);
 
   authService = inject(AuthService);
@@ -33,8 +32,6 @@ export class SignupService {
     );
   }
 
-
-
   signupWithGoogle() {
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({
@@ -42,7 +39,6 @@ export class SignupService {
     });
     return this.signupWithProvider(provider);
   }
-
 
   private signupWithProvider(provider: AuthProvider) {
     return from(this.firebaseAuthService.signInWithPopup(provider)).pipe(
@@ -52,8 +48,6 @@ export class SignupService {
       switchMap(this.handleUserData)
     );
   }
-
-
 
   private handleUserData = (firebaseUserData: firebase.auth.UserCredential) => {
     const currentUser = firebaseUserData.user;

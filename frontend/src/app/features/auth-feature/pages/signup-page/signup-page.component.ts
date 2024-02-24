@@ -4,7 +4,7 @@ import {
   inject,
   OnDestroy
 } from '@angular/core';
-import {CommonModule} from '@angular/common';
+import { CommonModule } from '@angular/common';
 import {
   FormControl,
   FormGroup,
@@ -12,30 +12,22 @@ import {
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
-import {InputTextModule} from 'primeng/inputtext';
-import {Router, RouterLink} from '@angular/router';
-import {Store} from '@ngrx/store';
-import {Subject, takeUntil} from 'rxjs';
-import {AuthStateModel} from '../../../../core/models/auth-state.model';
-import {ButtonModule} from 'primeng/button';
-import {PasswordModule} from 'primeng/password';
-import {
-  passwordValidator
-} from '../../../../shared/validators/password.validator';
-import {
-  FormUtilsService
-} from '../../../../core/services/form-utils/form-utils.service';
-import {NgIcon, provideIcons} from '@ng-icons/core';
-import {jamGoogle} from '@ng-icons/jam-icons';
-import {
-  OrDividerComponent
-} from '../../../../shared/components/or-divider/or-divider.component';
-import {
-  ErrorComponent
-} from '../../../../shared/components/error/error.component';
-import {signup} from '../../../../core/store/auth/auth.actions';
-import {AuthService} from '../../../../core/services/auth/auth.service';
-import {SignupService} from "../../services/signup/signup.service";
+import { InputTextModule } from 'primeng/inputtext';
+import { Router, RouterLink } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Subject, takeUntil } from 'rxjs';
+import { AuthStateModel } from '../../../../core/models/auth-state.model';
+import { ButtonModule } from 'primeng/button';
+import { PasswordModule } from 'primeng/password';
+import { passwordValidator } from '../../../../shared/validators/password.validator';
+import { FormUtilsService } from '../../../../core/services/form-utils/form-utils.service';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { jamGoogle } from '@ng-icons/jam-icons';
+import { OrDividerComponent } from '../../../../shared/components/or-divider/or-divider.component';
+import { ErrorComponent } from '../../../../shared/components/error/error.component';
+import { signup } from '../../../../core/store/auth/auth.actions';
+import { AuthService } from '../../../../core/services/auth/auth.service';
+import { SignupService } from '../../services/signup/signup.service';
 
 @Component({
   selector: 'app-signup-page',

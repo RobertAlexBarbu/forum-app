@@ -273,3 +273,7 @@ label {
 .post-form form {
   max-width: 35rem;
 }
+
+.active-link.p-button.p-element {
+  background-color: rgba(59, 130, 246, .10) !important;
+}

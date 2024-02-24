@@ -12,7 +12,7 @@ export class TimeAgoPipe implements PipeTransform {
       if (seconds < 29) return 'Just now';
       const intervals: { [key: string]: number } = {
         y: 31536000,
-        m: 2592000,
+        mon: 2592000,
         w: 604800,
         d: 86400,
         h: 3600,
@@ -24,9 +24,9 @@ export class TimeAgoPipe implements PipeTransform {
         counter = Math.floor(seconds / intervals[i]);
         if (counter > 0)
           if (counter === 1) {
-            return counter  + i + ' ago';
+            return counter + i + ' ago';
           } else {
-            return counter  + i + ' ago';
+            return counter + i + ' ago';
           }
       }
     }

@@ -15,7 +15,6 @@ export class HttpService {
     withCredentials: true
   };
 
-
   scheme = this.environmentService.getEnvironmentVar('scheme');
 
   domain = this.environmentService.getEnvironmentVar('domain');

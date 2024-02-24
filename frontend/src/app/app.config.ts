@@ -36,7 +36,7 @@ export const appConfig: ApplicationConfig = {
     ),
     provideHttpClient(withInterceptors([jwtInterceptor, errorInterceptor])),
     provideAnimations(),
-    provideZoneChangeDetection({eventCoalescing: true}),
+    provideZoneChangeDetection({ eventCoalescing: true }),
     provideNgIconsConfig({ size: '1rem' }),
     provideStore(),
     provideState({

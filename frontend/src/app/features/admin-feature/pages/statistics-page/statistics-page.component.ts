@@ -61,8 +61,7 @@ export class StatisticsPageComponent implements OnInit, OnDestroy {
     ]
   };
 
-  data$ = new Subject<{data1: object, data2: object, data3: object}>();
-
+  data$ = new Subject<{ data1: object; data2: object; data3: object }>();
 
   options: any;
 

@@ -1,21 +1,17 @@
-<div class="card"  *ngIf="authState$ | async as authState">
+<div class="card" *ngIf="authState$ | async as authState">
   <ng-container *ngIf="post$ | async as post">
-  <div class="top">
-    <div class="font-bold text-2xl ml-4 link underline" routerLink="/forums/{{post.forum.id}}">
-      {{post.forum.name}}
+    <div class="top">
+      <div
+        class="font-bold text-2xl ml-4 link underline"
+        routerLink="/forums/{{post.forum.id}}">
+        {{post.forum.name}}
+      </div>
+      <button pButton class="p-button p-button-text smaller invisible"></button>
     </div>
-    <button
-      pButton
-      class="p-button p-button-text smaller invisible"
-    ></button>
-  </div>
-<div class="mt-4">
-
+    <div class="mt-4">
       <div class="post mr-4 ml-4">
         <div class="flex gap-2 mb-2 items-center font-semibold">
-          <div
-            class="link"
-            [routerLink]="['/profile', post.user.username]">
+          <div class="link" [routerLink]="['/profile', post.user.username]">
             {{post.user.username}}
           </div>
           <div class="sphere"></div>
@@ -24,19 +20,20 @@
 
         <div class="header">
           <div class="body mt-2">
-            <div class="category" *ngIf="post.category">{{post.category.name}}</div>
-            <div
-              class="title text-xl font-bold"
-            >
-              {{post.title}}
+            <div class="category" *ngIf="post.category">
+              {{post.category.name}}
             </div>
+            <div class="title text-xl font-bold">{{post.title}}</div>
           </div>
         </div>
 
         <div class="content mt-2 whitespace-pre-line">{{post.content}}</div>
 
         <div class="buttons flex items-center gap-2 mt-2">
-          <app-like class="mr-auto" [authState]="authState" [post]="post"></app-like>
+          <app-like
+            class="mr-auto"
+            [authState]="authState"
+            [post]="post"></app-like>
           <button
             *ngIf="authState.id === post.user.id"
             routerLink="/forums/{{post.forum.id}}/posts/edit/{{post.id}}"
@@ -59,9 +56,10 @@
           </button>
         </div>
       </div>
-        <div class="text-lg font-bold mt-5 ml-4 mr-4 comments">Comments</div>
+      <div class="text-lg font-bold mt-5 ml-4 mr-4 comments">Comments</div>
       <app-post-comments
         [authState]="authState"
         [post]="post"></app-post-comments>
+    </div>
+  </ng-container>
 </div>
-  </ng-container></div>

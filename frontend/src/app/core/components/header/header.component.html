@@ -1,8 +1,8 @@
-<div class="wrapper"  >
-  <div class="header"  >
+<div class="wrapper">
+  <div class="header">
     <div class="name">Forumly</div>
     <ng-container *ngIf="check$ | async">
-      <div class="desktop" >
+      <div class="desktop">
         <app-navbar [authState]="authState"></app-navbar>
       </div>
       <div class="mobile">
@@ -16,7 +16,6 @@
         </button>
       </div>
     </ng-container>
-
   </div>
 </div>
 <app-modal [(isVisible)]="isVisible">

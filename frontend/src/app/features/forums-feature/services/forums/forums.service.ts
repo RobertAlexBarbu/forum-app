@@ -24,15 +24,11 @@ export class ForumsService {
     return this.http.get<ForumModel[]>('forums');
   }
 
-  getTrending() {
-    return this.http.get<{
-      latestPosts: PostModel[];
-      latestComments: CommentModel[];
-    }>('forums/trending');
-  }
-
   getForum(id: number) {
     return this.http.getByID<ForumModel>('forums', id);
+  }
+  getForumWithTopPosts(id: number) {
+    return this.http.getByID<ForumModel>('forums/top', id);
   }
 
   getForumByName(name: string) {

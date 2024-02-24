@@ -1,27 +1,25 @@
 <div class="">
   <div>
-  <div class="top">
-    <ng-container *ngIf="comment.createdAt">
-      <div class="link" [routerLink]="['/profile', comment.user.username]">
-        {{comment.user.username}}
-      </div>
-      <div class="sphere"></div>
-      <div>{{comment.createdAt | timeAgo}}</div>
-      <button
-        *ngIf="authState | isAdmin"
-        (click)="onDelete()"
-        pTooltip="Delete"
-        pButton
-        aria-label="delete-comment"
-        class="nav p-button p-button-sm p-button-text p-button-danger">
-        <ng-icon name="jamTrashF" size="1rem"></ng-icon>
-      </button>
-    </ng-container>
+    <div class="top">
+      <ng-container *ngIf="comment.createdAt">
+        <div class="link" [routerLink]="['/profile', comment.user.username]">
+          {{comment.user.username}}
+        </div>
+        <div class="sphere"></div>
+        <div>{{comment.createdAt | timeAgo}}</div>
+        <button
+          *ngIf="authState | isAdmin"
+          (click)="onDelete()"
+          pTooltip="Delete"
+          pButton
+          aria-label="delete-comment"
+          class="nav p-button p-button-sm p-button-text p-button-danger">
+          <ng-icon name="jamTrashF" size="1rem"></ng-icon>
+        </button>
+      </ng-container>
+    </div>
+    <div class="content">
+      <div>{{comment.content}}</div>
+    </div>
   </div>
-  <div class="content">
-    <div>{{comment.content}}</div>
-
-  </div>
-  </div>
-
 </div>

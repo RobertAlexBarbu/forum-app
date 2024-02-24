@@ -1,36 +1,34 @@
 <ng-container *ngIf="data$ | async as statisticsData">
-<div class="pie mt-5">
-  <div class="text-xl font-bold">Post</div>
-  <div class="text-gray-400">The distribution of posts per forum</div>
-  <div class="separator"></div>
+  <div class="pie mt-5">
+    <div class="text-xl font-bold">Post</div>
+    <div class="text-gray-400">The distribution of posts per forum</div>
+    <div class="separator"></div>
     <p-chart
       width="min(100%, 500px)"
       type="pie"
       [data]="statisticsData.data1"
       [options]="options"></p-chart>
-</div>
-<div class="pie mt-5">
-  <div class="text-xl font-bold">Comment</div>
-  <div class="text-gray-400">The distribution of comments per forum</div>
-  <div class="separator"></div>
+  </div>
+  <div class="pie mt-5">
+    <div class="text-xl font-bold">Comment</div>
+    <div class="text-gray-400">The distribution of comments per forum</div>
+    <div class="separator"></div>
 
     <p-chart
       width="min(100%, 1000px)"
       type="bar"
       [data]="statisticsData.data3"
       [options]="options3"></p-chart>
-
-</div>
-<div class="pie mt-5">
-  <div class="text-xl font-bold">Activity</div>
-  <div class="text-gray-400">The distribution of likes per forum</div>
-  <div class="separator"></div>
+  </div>
+  <div class="pie mt-5">
+    <div class="text-xl font-bold">Activity</div>
+    <div class="text-gray-400">The distribution of likes per forum</div>
+    <div class="separator"></div>
 
     <p-chart
       width="min(100%, 1000px)"
       type="bar"
       [data]="statisticsData.data2"
       [options]="options2"></p-chart>
-
-</div>
+  </div>
 </ng-container>

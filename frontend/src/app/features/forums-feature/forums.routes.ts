@@ -4,15 +4,21 @@ import { isAuthGuard } from '../../core/guards/is-auth.guard';
 
 export const forumsRoutes: Routes = [
   {
-    path: '',
-    loadComponent: () => import('./pages/home-page/home-page.component').then(m => m.HomePageComponent)
+    path: 'home',
+    loadComponent: () =>
+      import('./pages/home-page/home-page.component').then(
+        (m) => m.HomePageComponent
+      )
   },
   {
     path: 'forums',
     children: [
       {
         path: '',
-        loadComponent: () => import('./pages/forums-page/forums-page.component').then(m => m.ForumsPageComponent)
+        loadComponent: () =>
+          import('./pages/forums-page/forums-page.component').then(
+            (m) => m.ForumsPageComponent
+          )
       },
       {
         path: 'edit/:id',
@@ -32,12 +38,17 @@ export const forumsRoutes: Routes = [
       },
       {
         path: ':id',
-        loadComponent: () => import('./pages/forum-page/forum-page.component').then(m => m.ForumPageComponent),
-
+        loadComponent: () =>
+          import('./pages/forum-page/forum-page.component').then(
+            (m) => m.ForumPageComponent
+          )
       },
       {
         path: ':id/posts/:post',
-        loadComponent: () => import('./pages/post-page/post-page.component').then(m => m.PostPageComponent)
+        loadComponent: () =>
+          import('./pages/post-page/post-page.component').then(
+            (m) => m.PostPageComponent
+          )
       },
       {
         path: ':id/new-post',

@@ -4,7 +4,7 @@ import {
   inject,
   OnDestroy
 } from '@angular/core';
-import {CommonModule} from '@angular/common';
+import { CommonModule } from '@angular/common';
 import {
   FormControl,
   FormGroup,
@@ -12,25 +12,19 @@ import {
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
-import {InputTextModule} from 'primeng/inputtext';
-import {Store} from '@ngrx/store';
-import {Router, RouterLink} from '@angular/router';
-import {Subject, takeUntil} from 'rxjs';
-import {ButtonModule} from 'primeng/button';
-import {PasswordModule} from 'primeng/password';
-import {
-  FormUtilsService
-} from '../../../../core/services/form-utils/form-utils.service';
-import {DropdownModule} from 'primeng/dropdown';
-import {
-  ErrorComponent
-} from '../../../../shared/components/error/error.component';
-import {
-  OrDividerComponent
-} from '../../../../shared/components/or-divider/or-divider.component';
-import {AuthService} from '../../../../core/services/auth/auth.service';
-import {login} from '../../../../core/store/auth/auth.actions';
-import {LoginService} from "../../services/login/login.service";
+import { InputTextModule } from 'primeng/inputtext';
+import { Store } from '@ngrx/store';
+import { Router, RouterLink } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
+import { ButtonModule } from 'primeng/button';
+import { PasswordModule } from 'primeng/password';
+import { FormUtilsService } from '../../../../core/services/form-utils/form-utils.service';
+import { DropdownModule } from 'primeng/dropdown';
+import { ErrorComponent } from '../../../../shared/components/error/error.component';
+import { OrDividerComponent } from '../../../../shared/components/or-divider/or-divider.component';
+import { AuthService } from '../../../../core/services/auth/auth.service';
+import { login } from '../../../../core/store/auth/auth.actions';
+import { LoginService } from '../../services/login/login.service';
 
 @Component({
   selector: 'app-login-page',
@@ -92,7 +86,6 @@ export class LoginPageComponent implements OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (data) => {
-
           this.store.dispatch(login({ authState: data }));
           this.loading = false;
           return this.router.navigate(['']);
@@ -111,7 +104,6 @@ export class LoginPageComponent implements OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (data) => {
-
           this.store.dispatch(login({ authState: data }));
           return this.router.navigate(['']);
         },

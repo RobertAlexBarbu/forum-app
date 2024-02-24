@@ -16,21 +16,21 @@
     <div class="error"></div>
     <div class="categories">
       <div class="subtitle">Categories</div>
-        <div *ngFor="let cate of categories; let i = index">
-          <div class="category">
-            <div class="text">{{cate.name}}</div>
-            <div class="btns">
-              <button
-                pButton
-                aria-label="delete-forum"
-                (click)="deleteCategory(cate, i)"
-                type="button"
-                class="nav p-button p-button-text p-button-danger">
-                <ng-icon name="jamTrashF"></ng-icon>
-              </button>
-            </div>
+      <div *ngFor="let cate of categories; let i = index">
+        <div class="category">
+          <div class="text">{{cate.name}}</div>
+          <div class="btns">
+            <button
+              pButton
+              aria-label="delete-forum"
+              (click)="deleteCategory(cate, i)"
+              type="button"
+              class="nav p-button p-button-text p-button-danger">
+              <ng-icon name="jamTrashF"></ng-icon>
+            </button>
           </div>
         </div>
+      </div>
     </div>
     <div class="error"></div>
     <div class="input-last">

@@ -1,10 +1,18 @@
-<div aria-label="like-or-dislike" *ngIf="!liked" class="likes" (click)="likePost($event)">
+<div
+  aria-label="like-or-dislike"
+  *ngIf="!liked"
+  class="likes"
+  (click)="likePost($event)">
   <ng-container>
     <ng-icon name="jamHeart" size="1.7rem"></ng-icon>
     {{likes$ | async}}
   </ng-container>
 </div>
-<div aria-label="like-or-dislike" *ngIf="liked" class="likes liked" (click)="dislikePost($event)">
+<div
+  aria-label="like-or-dislike"
+  *ngIf="liked"
+  class="likes liked"
+  (click)="dislikePost($event)">
   <ng-container>
     <ng-icon name="jamHeartF" size="1.7rem"></ng-icon>
     {{likes$ | async}}

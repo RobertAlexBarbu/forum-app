@@ -1,12 +1,13 @@
 <div class="forum" [routerLink]="['', 'forums', forum.id]">
   <div class="forum-icon-container desktop">
-    <ng-icon class="desktop" name="heroChatBubbleOvalLeftEllipsisSolid" size="3rem"></ng-icon>
+    <ng-icon
+      class="desktop"
+      name="heroChatBubbleOvalLeftEllipsisSolid"
+      size="3rem"></ng-icon>
   </div>
   <div class="forum-info">
-    <div class="text-xl font-bold mb-2">
-      {{forum.name}}
-    </div>
-<!--    <div class="mt-1 mb-1 font-semibold text-lg">A basic forum description.</div>-->
+    <div class="text-xl font-bold mb-2">{{forum.name}}</div>
+    <!--    <div class="mt-1 mb-1 font-semibold text-lg">A basic forum description.</div>-->
     <div class="data">
       <div class="data-group">
         <div class="info">
@@ -21,7 +22,6 @@
             latest: {{forum.posts[0].createdAt | timeAgo}}
           </div>
           <ng-template #noDisc>
-
             <div>latest: Nothing yet</div>
           </ng-template>
         </div>

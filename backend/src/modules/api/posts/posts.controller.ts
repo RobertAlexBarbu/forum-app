@@ -20,6 +20,16 @@ import { FirebaseGuard } from '../../../shared/guards/firebase.guard';
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
+  @Get('new')
+  getNewPosts() {
+    return this.postsService.getNewPosts()
+  }
+
+  @Get('top')
+  getTopPosts() {
+    return this.postsService.getTopPosts();
+  }
+
   @Post()
   @UseGuards(FirebaseGuard)
   create(@Body() createPostDto: CreatePostDto, @Req() req) {
@@ -59,4 +69,7 @@ export class PostsController {
   dislikePost(@Param('id') id: string, @Req() req) {
     return this.postsService.dislikePost(+id, req.user.id);
   }
+
+
+
 }

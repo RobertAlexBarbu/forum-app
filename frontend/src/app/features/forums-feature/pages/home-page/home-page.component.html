@@ -1,30 +1,45 @@
 <div class="card">
   <div class="home" *ngIf="authState$ | async as authState">
-    <ng-container *ngIf="trending$ | async as trending">
-      <div class="top">
-        <div class="font-bold text-2xl ml-4">Home</div>
-        <button
-          pButton
-          class="p-button p-button-text smaller ml-2"
-        ><ng-icon class="mr-1"  name="heroFireMini"></ng-icon>New</button>
-        <button
-          pButton
-          class="p-button p-button-text smaller"
-        ><ng-icon class="mr-1" name="heroHeartSolid"></ng-icon>Top</button>
-      </div>
-
+    <div class="top">
+      <div class="font-bold text-2xl ml-4">Home</div>
+      <button
+        routerLink="/home"
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{exact: true}"
+        pButton
+        class="p-button p-button-text smaller ml-2">
+        <ng-icon class="mr-1" name="heroFireMini"></ng-icon>New
+      </button>
+      <button
+        routerLink="/home"
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{exact: true}"
+        [queryParams]="{
+          'sorted' : 'top'
+          }"
+        pButton
+        class="p-button p-button-text smaller">
+        <ng-icon class="mr-1" name="heroHeartSolid"></ng-icon>Top
+      </button>
+    </div>
+    <div class="desktop mt-4 mb-4"></div>
+    <div class="post-separator mt-4 mb-2 mobile"></div>
+    <ng-container *ngIf="trending$ | async as trendingData$">
+      <ng-container *ngIf="trendingData$ | async as posts">
 
       <div class="posts mt-4">
-        <ng-container *ngFor="let post of trending.latestPosts">
+        <ng-container *ngFor="let post of posts">
+
+          <app-post
+            [user]="false"
+            [forum]="true"
+            [authState]="authState"
+            [post]="post"></app-post>
           <div class="desktop mt-4 mb-4"></div>
           <div class="post-separator mt-2 mb-2 mobile"></div>
-          <app-post [user]="false" [forum]="true" [authState]="authState" [post]="post"></app-post>
         </ng-container>
-        <div class="post-separator mt-2 mb-2 mobile"></div>
       </div>
-      <div class="ml-4 mr-4">
-        <p-paginator class="ml-4" [totalRecords]="120" [rows]="10" [pageLinkSize]="3"></p-paginator>
-      </div>
+      </ng-container>
     </ng-container>
   </div>
 </div>

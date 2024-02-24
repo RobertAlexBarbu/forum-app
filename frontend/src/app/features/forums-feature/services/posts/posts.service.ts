@@ -42,4 +42,11 @@ export class PostsService {
   deleteComment(id: number) {
     return this.http.deleteByID<CommentModel>('comments', id);
   }
+
+  getNewPosts() {
+    return this.http.get<PostModel[]>('posts/new');
+  }
+  getTopPosts() {
+    return this.http.get<PostModel[]>('posts/top');
+  }
 }

@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpService } from '../../../../core/services/http/http.service';
 import { ProfileModel } from '../../models/profile.model';
 import { StorageService } from '../../../../core/services/storage/storage.service';
-import {catchError, of} from 'rxjs';
+import { catchError, of } from 'rxjs';
 
 @Injectable()
 export class ProfileService {
@@ -27,7 +27,7 @@ export class ProfileService {
       .getDownloadFileURL(`profile/users/${name}`, 'profile.jpg')
       .pipe(
         catchError(() => {
-          return of('assets/default.webp')
+          return of('assets/default.webp');
         })
       );
   }

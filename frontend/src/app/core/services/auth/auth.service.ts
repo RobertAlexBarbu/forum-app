@@ -26,8 +26,6 @@ export class AuthService {
     );
   }
 
-
-
   checkAuth() {
     return this.httpService.post<AuthStateModel>('auth/check', {});
   }
@@ -43,5 +41,4 @@ export class AuthService {
   isUser(state: AuthStateModel, id: string) {
     return state.id === id;
   }
-
 }

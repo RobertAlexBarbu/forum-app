@@ -14,7 +14,7 @@ import { jamTrashF } from '@ng-icons/jam-icons';
 import { TooltipModule } from 'primeng/tooltip';
 import { AuthStateModel } from '../../../../core/models/auth-state.model';
 import { isAdminPipe } from '../../../../shared/pipes/is-admin.pipe';
-import {RouterLink} from "@angular/router";
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-comment',

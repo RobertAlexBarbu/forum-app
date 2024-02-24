@@ -1,10 +1,7 @@
 <div class="card" *ngIf="authState$ | async as authState">
   <div class="top ml-4 mr-4">
     <div class="text-2xl font-bold">Forums</div>
-    <button
-      pButton
-      class="p-button p-button-text smaller invisible"
-    ></button>
+    <button pButton class="p-button p-button-text smaller invisible"></button>
     <button
       *ngIf="authState | isAdmin"
       (click)="openAddModal()"
@@ -13,7 +10,6 @@
       <ng-icon name="jamPlus"></ng-icon>
       New Forum
     </button>
-
   </div>
 
   <div class="forums mt-4 ml-4 mr-4">
@@ -27,7 +23,6 @@
       </ng-container>
     </ng-container>
   </div>
-
 </div>
 
 <app-modal [(isVisible)]="addForumModal">
@@ -108,4 +103,3 @@
     </div>
   </form>
 </app-modal>
-

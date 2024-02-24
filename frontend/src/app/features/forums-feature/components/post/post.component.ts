@@ -1,8 +1,13 @@
-import {ChangeDetectionStrategy, Component, inject, Input} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  Input
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PostModel } from '../../models/post.model';
 import { TimeAgoPipe } from '../../../../shared/pipes/time-ago.pipe';
-import {Router, RouterLink} from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
   jamArrowSquareUp,
@@ -11,8 +16,8 @@ import {
 } from '@ng-icons/jam-icons';
 import { LikeComponent } from '../like/like.component';
 import { AuthStateModel } from '../../../../core/models/auth-state.model';
-import {PostsService} from "../../services/posts/posts.service";
-import {heroChatBubbleLeftSolid} from "@ng-icons/heroicons/solid";
+import { PostsService } from '../../services/posts/posts.service';
+import { heroChatBubbleLeftSolid } from '@ng-icons/heroicons/solid';
 
 @Component({
   selector: 'app-post',
@@ -29,8 +34,7 @@ import {heroChatBubbleLeftSolid} from "@ng-icons/heroicons/solid";
       jamMessageWritingF,
       heroChatBubbleLeftSolid
     })
-  ],
-
+  ]
 })
 export class PostComponent {
   @Input() user: boolean = true;
@@ -47,12 +51,12 @@ export class PostComponent {
 
   goToProfile(event: any, username: string) {
     event.stopPropagation();
-    this.router.navigate(['profile', username])
+    this.router.navigate(['profile', username]);
   }
 
   goToForum(event: any, forumId: number) {
     console.log(forumId);
     event.stopPropagation();
-    this.router.navigate(['forums', forumId])
+    this.router.navigate(['forums', forumId]);
   }
 }

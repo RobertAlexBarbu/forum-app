@@ -8,7 +8,12 @@
             [user]="profile.user"></app-profile-picture>
           <div class="text-lg flex-col justify-center">
             <div class="font-semibold">{{profile.user.username}}</div>
-            <div>Joined Forumly <span class="font-semibold">{{profile.user.createdAt | timeAgo}}</span></div>
+            <div>
+              Joined Forumly
+              <span class="font-semibold"
+                >{{profile.user.createdAt | timeAgo}}</span
+              >
+            </div>
             <div>
               Role:
               <span class="font-bold"
@@ -19,7 +24,9 @@
         </div>
 
         <div class="posts mt-5 mb-5">
-          <div class="text-lg font-semibold mb-2 ml-4 mr-4">{{profile.user.username}}'s posts:</div>
+          <div class="text-lg font-semibold mb-2 ml-4 mr-4">
+            {{profile.user.username}}'s posts:
+          </div>
           <ng-container *ngFor="let post of profile.posts;">
             <div class="desktop mt-4 mb-4"></div>
             <div class="post-separator mt-2 mb-2 mobile"></div>
@@ -27,12 +34,10 @@
               [forum]="true"
               [authState]="authState"
               [post]="post"
-            [user]="false"></app-post>
+              [user]="false"></app-post>
           </ng-container>
           <div class="post-separator mt-2 mb-2 mobile"></div>
-          <div class="ml-4 mr-4">
-            <p-paginator class="ml-4" [totalRecords]="120" [rows]="10" [pageLinkSize]="3"></p-paginator>
-          </div>
+
         </div>
       </div>
     </ng-container>

@@ -7,15 +7,15 @@ import {
   OnInit
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {NgIcon, provideIcons} from '@ng-icons/core';
+import { NgIcon, provideIcons } from '@ng-icons/core';
 import { PostsService } from '../../services/posts/posts.service';
 import { AuthStateModel } from '../../../../core/models/auth-state.model';
 import { PostModel } from '../../models/post.model';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
-import {Event} from "@angular/router";
-import {heroHeartSolid} from "@ng-icons/heroicons/solid";
-import {heroHeart} from "@ng-icons/heroicons/outline";
-import {jamHeart, jamHeartF} from "@ng-icons/jam-icons";
+import { Event } from '@angular/router';
+import { heroHeartSolid } from '@ng-icons/heroicons/solid';
+import { heroHeart } from '@ng-icons/heroicons/outline';
+import { jamHeart, jamHeartF } from '@ng-icons/jam-icons';
 
 @Component({
   selector: 'app-like',
@@ -69,7 +69,6 @@ export class LikeComponent implements OnInit, OnDestroy {
       .likePost(this.post.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe();
-
   }
 
   dislikePost(event: any) {

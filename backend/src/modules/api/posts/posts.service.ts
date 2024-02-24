@@ -1,17 +1,15 @@
-import { Injectable } from '@nestjs/common';
-import { CreatePostDto } from './dto/create-post.dto';
-import { UpdatePostDto } from './dto/update-post.dto';
-import { EntityManager } from '@mikro-orm/core';
-import { Post } from './entities/Post';
-import { User } from '../users/entities/User';
-import { PostLike } from './entities/PostLike';
-import { Category } from '../forums/entities/Category';
+import {Injectable} from '@nestjs/common';
+import {CreatePostDto} from './dto/create-post.dto';
+import {UpdatePostDto} from './dto/update-post.dto';
+import {EntityManager} from '@mikro-orm/core';
+import {Post} from './entities/Post';
+import {User} from '../users/entities/User';
+import {PostLike} from './entities/PostLike';
+import {Category} from '../forums/entities/Category';
 
 @Injectable()
 export class PostsService {
   constructor(private readonly em: EntityManager) {}
-
-  // @Inject(EntityManager) private readonly em: EntityManager;
 
   async create(createPostDto: CreatePostDto, userId: string) {
     const user = this.em.getReference(User, userId);
@@ -102,5 +100,28 @@ export class PostsService {
     this.em.remove(post);
     await this.em.flush();
     return post;
+  }
+
+  async getNewPosts() {
+    const posts= await this.em.find(Post, {}, {populate: ['postLikes', 'user', 'forum', 'comments', 'category'], orderBy: {createdAt: 'desc'}, limit: 8});
+    return posts.map((post) => {
+      if (post.content.length > 64) {
+        post.content = post.content.slice(0, 64) + '...'
+      }
+      return post;
+    })
+  }
+
+  async getTopPosts() {
+    const posts = await this.em.find(Post, {}, {populate: ['postLikes', 'user', 'forum', 'comments', 'category'], orderBy: {createdAt: 'desc'}, limit: 8})
+    posts.sort((a, b) => {
+      return b.postLikes.length - a.postLikes.length
+    })
+    return posts.map((post) => {
+      if (post.content.length > 64) {
+        post.content = post.content.slice(0, 64) + '...'
+      }
+      return post;
+    });
   }
 }

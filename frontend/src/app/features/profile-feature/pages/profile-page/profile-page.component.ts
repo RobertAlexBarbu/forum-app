@@ -19,10 +19,8 @@ import { jamCameraF } from '@ng-icons/jam-icons';
 import { TimeAgoPipe } from '../../../../shared/pipes/time-ago.pipe';
 import { ModalComponent } from '../../../../shared/components/modal/modal.component';
 import { ProfilePictureComponent } from '../../components/profile-picture/profile-picture.component';
-import {
-  StorageService
-} from "../../../../core/services/storage/storage.service";
-import {PaginatorModule} from "primeng/paginator";
+import { StorageService } from '../../../../core/services/storage/storage.service';
+import { PaginatorModule } from 'primeng/paginator';
 
 @Component({
   selector: 'app-profile-page',

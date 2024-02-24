@@ -73,6 +73,7 @@ export class EditForumPageComponent implements OnInit, OnDestroy {
     nonNullable: true,
     validators: [Validators.required]
   });
+
   ngOnInit() {
     this.forumsService
       .getForumForEdit(this.route.snapshot.params['id'])
@@ -83,7 +84,6 @@ export class EditForumPageComponent implements OnInit, OnDestroy {
           this.categories = data.categories;
           this.categories$.next(this.categories);
           this.forumName.patchValue(data.name);
-
         }
       });
   }
