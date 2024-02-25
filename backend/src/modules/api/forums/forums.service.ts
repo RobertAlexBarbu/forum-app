@@ -1,11 +1,11 @@
-import { Injectable } from '@nestjs/common';
-import { CreateForumDto } from './dto/create-forum.dto';
-import { UpdateForumDto } from './dto/update-forum.dto';
-import { EntityManager } from '@mikro-orm/core';
-import { Forum } from './entities/Forum';
-import { Category } from './entities/Category';
-import { Post } from '../posts/entities/Post';
-import { Comment } from '../comments/entities/Comment';
+import {Injectable} from '@nestjs/common';
+import {CreateForumDto} from './dto/create-forum.dto';
+import {UpdateForumDto} from './dto/update-forum.dto';
+import {EntityManager, wrap} from '@mikro-orm/core';
+import {Forum} from './entities/Forum';
+import {Category} from './entities/Category';
+import {Post} from '../posts/entities/Post';
+import {Comment} from '../comments/entities/Comment';
 
 @Injectable()
 export class ForumsService {
@@ -51,7 +51,7 @@ export class ForumsService {
   }
 
   async findOne(id: number) {
-    return await this.em.findOne(
+    const forum = await this.em.findOne(
       Forum,
       { id: id },
       {
@@ -66,6 +66,16 @@ export class ForumsService {
         ],
       },
     );
+    // @ts-ignore
+    wrap(forum).assign({
+      posts: forum.posts.map((post) => {
+        if (post.content.length > 96) {
+          post.content = post.content.slice(0, 96) + '...'
+        }
+        return post
+      })
+    })
+    return forum
   }
   async findOneForEdit(id: number) {
     return await this.em.findOne(

@@ -105,8 +105,8 @@ export class PostsService {
   async getNewPosts() {
     const posts= await this.em.find(Post, {}, {populate: ['postLikes', 'user', 'forum', 'comments', 'category'], orderBy: {createdAt: 'desc'}, limit: 8});
     return posts.map((post) => {
-      if (post.content.length > 64) {
-        post.content = post.content.slice(0, 64) + '...'
+      if (post.content.length > 96) {
+        post.content = post.content.slice(0, 96) + '...'
       }
       return post;
     })
@@ -118,8 +118,8 @@ export class PostsService {
       return b.postLikes.length - a.postLikes.length
     })
     return posts.map((post) => {
-      if (post.content.length > 64) {
-        post.content = post.content.slice(0, 64) + '...'
+      if (post.content.length > 96) {
+        post.content = post.content.slice(0, 96) + '...'
       }
       return post;
     });

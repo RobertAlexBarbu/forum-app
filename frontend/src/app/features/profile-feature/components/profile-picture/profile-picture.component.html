@@ -20,6 +20,8 @@
         alt="user profile picture" />
     </div>
   </ng-container>
+  <ng-container *ngIf="authState | isUser:user.id">
+
 
   <button
     aria-label="upload-photo"
@@ -35,4 +37,5 @@
     id="file-btn"
     accept="image/*"
     (change)="onUpload($event)" />
+  </ng-container>
 </div>
