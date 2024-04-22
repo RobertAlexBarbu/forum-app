@@ -33,17 +33,17 @@ import * as fs from 'fs';
         entities: [Post, PostLike, User, Role, Category, Forum, Comment],
         clientUrl: process.env.DATABASE_URL,
         forceUtcTimezone: true,
-        driverOptions: {
-          connection: {
-            ssl: {
-              ca: fs
-                .readFileSync(
-                  path.join(__dirname, '..', '..', '.ca-certificate.crt'),
-                )
-                .toString(),
-            },
-          },
-        },
+        // driverOptions: {
+        //   connection: {
+        //     ssl: {
+        //       ca: fs
+        //         .readFileSync(
+        //           path.join(__dirname, '..', '..', '.ca-certificate.crt'),
+        //         )
+        //         .toString(),
+        //     },
+        //   },
+        // },
       }),
     ),
     ServeStaticModule.forRoot({
